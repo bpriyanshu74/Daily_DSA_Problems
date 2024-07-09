@@ -8,6 +8,6 @@ var isAnagram = function(s, t) {
 
     let char_t = t.split("").sort().join("")
 
-    return char_s == char_t ? true : false
+    return char_s == char_t
     
 };
