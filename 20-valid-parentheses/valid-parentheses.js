@@ -3,10 +3,10 @@
  * @return {boolean}
  */
 var isValid = function(s) {
-    let stack = []
-    let hashmap = {"(": ")", "[": "]", "{":"}"}
+    var stack = []
+    var hashmap = {"(": ")", "[": "]", "{":"}"}
 
-    for(let ele of s){
+    for(var ele of s){
         if(ele in hashmap){
             stack.push(hashmap[ele])
         }
