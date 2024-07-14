@@ -3,24 +3,18 @@
  * @return {number}
  */
 var maxDepth = function(s) {
-    var stack = []
+    var currentDepth = 0
     var maxDepth = 0
-    for(var i=0; i<s.length; i++){
-        if(s[i]=="(" || s[i] == ")"){
-            if(s[i] == "("){
-                stack.push("(")
+    for( var i= 0; i< s.length; i++){
+        if(s[i] == "("){
+            currentDepth++
+            maxDepth = Math.max(currentDepth, maxDepth)
+        }else if(s[i] == ")" ){
+            if(currentDepth > 0){
+                 currentDepth--
             }
-            else{
-                maxDepth = Math.max(maxDepth, stack.length)
-                if(stack.length > 0){
-                    stack.pop()
-                }
-            }
-        }
-        else{
-            continue
+           
         }
     }
     return maxDepth
-    
 };
