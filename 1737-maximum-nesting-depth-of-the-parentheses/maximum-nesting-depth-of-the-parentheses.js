@@ -12,7 +12,7 @@ var maxDepth = function(s) {
             }
             else{
                 maxDepth = Math.max(maxDepth, stack.length)
-                if(stack.length > 0 && stack[stack.length - 1] == "("){
+                if(stack.length > 0){
                     stack.pop()
                 }
             }
