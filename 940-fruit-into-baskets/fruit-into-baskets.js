@@ -13,11 +13,9 @@ var totalFruit = function(fruits) {
             map.set(fruits[r],1)
         }
         if(map.size > 2){
-            while(map.size > 2){
-                map.set(fruits[l], map.get(fruits[l]) - 1)
-                if(map.get(fruits[l]) == 0) map.delete(fruits[l])
-                l++
-            }
+            map.set(fruits[l], map.get(fruits[l]) - 1)   
+            if(map.get(fruits[l]) == 0) map.delete(fruits[l])
+            l++
         }
         if(map.size <= 2){
             maxl = Math.max(maxl, r-l+1)
