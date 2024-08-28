@@ -14,10 +14,6 @@ var characterReplacement = function(s, k) {
         if(right-left+1 - maxf > k){
             let indexl = s[left].charCodeAt(0) - 'A'.charCodeAt(0)
             hash[indexl]--
-            let maxf = 0
-            for(let ele of hash){
-                maxf = Math.max(maxf, ele)
-            }
             left++
         }
         maxl = Math.max(right-left+1, maxl) 
