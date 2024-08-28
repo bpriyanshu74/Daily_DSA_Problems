@@ -4,24 +4,21 @@
  * @return {number}
  */
 var numberOfSubarrays = function(nums, k) {
-    let map = new Map()
-    map.set(0,1)
-    let left = 0, sum = 0, res = 0
-    while(left < nums.length){
-        if(nums[left] % 2 != 0){
-            sum += 1
+    function helper(arr,goal){
+        if(goal < 0) return 0
+        let count = 0, left = 0, right = 0, sum = 0
+        while(right < arr.length){
+            if(arr[right] % 2 != 0){
+                sum += 1
+            }
+            while(sum > goal){
+                if(arr[left] % 2 != 0) sum -= 1
+                left++
+            }
+            count += right - left + 1
+            right++
         }
-        else{
-            sum += 0
-        }
-      
-        prefix = sum - k
-        if(map.has(prefix)){
-            res+= map.get(prefix)
-        }
-        map.set(sum, (map.get(sum) || 0) + 1)
-        
-        left++
+        return count
     }
-    return res
+    return helper(nums,k) - helper(nums, k-1)
 };
