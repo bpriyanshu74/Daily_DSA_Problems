@@ -4,26 +4,21 @@
  * @return {number}
  */
 var subarraysWithKDistinct = function(nums, k) {
-    function atmostk(k){
-        let count = 0, l=0, r = 0, map= new Map()
-        while(r < nums.length){
-            if(map.has(nums[r])){
-                map.set(nums[r] ,map.get(nums[r])+1)
+    function helper(arr,goal){
+        if(goal < 0) return 0
+        let count = 0, left = 0, right = 0, map = new Map()
+        while(right < arr.length){
+            map.set(arr[right], (map.get(arr[right]) || 0) + 1)
+            while(map.size > goal){
+                map.set(arr[left], map.get(arr[left]) - 1)
+                if(map.get(arr[left]) == 0) map.delete(arr[left])
+                left++
             }
-            else{
-                map.set(nums[r], 1)
-            }
-            while(map.size > k){
-                map.set(nums[l] ,map.get(nums[l])-1)
-                if(map.get(nums[l]) == 0) map.delete(nums[l])
-                l++
-            }
-            count += r-l+1
-            r++
+            count += right - left + 1
+            right++
         }
         return count
     }
-
-    return atmostk(k) - atmostk(k-1)
+    return helper(nums,k) - helper(nums, k-1)
     
 };
