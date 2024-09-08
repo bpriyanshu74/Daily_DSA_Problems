@@ -12,25 +12,37 @@
  * @return {_Node}
  */
 var copyRandomList = function(head) {
-    let map = new Map()
-
-    // creating nodes
     let temp = head
+    // inserting the nodes in between
     while(temp){
-        map.set(temp, new ListNode(temp.val))
-        temp = temp.next
+        let copynode = new ListNode(temp.val)
+        copynode.next = temp.next || null
+        temp.next = copynode
+
+        temp = temp.next.next || null
     }
-    // setting the next values and random values
+
+    // assigning the random pointer values
+
     temp = head
     while(temp){
-        let copyNode = map.get(temp)
-        copyNode.next = map.get(temp.next) || null
-        copyNode.random = map.get(temp.random) || null
+        let copynode = temp.next
+        copynode.random = temp.random ? temp.random.next : null;
 
-        temp = temp.next
+        temp = temp.next.next || null
     }
 
-    // returning the copy head
-    return map.get(head) || null
+    // seperating the copy and original list
+    temp = head
+    let dummynode = new ListNode(-1), res = dummynode
+    while(temp){
+        res.next = temp.next
+        temp.next = temp.next.next
 
+        temp = temp.next
+        res = res.next
+    }
+
+    return dummynode.next
+    
 };
