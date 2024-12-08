@@ -7,7 +7,7 @@ var totalFruit = function(fruits) {
     while(right < fruits.length){
         map.set(fruits[right], map.get(fruits[right]) + 1 || 1)
 
-        while(map.size > 2){
+        if(map.size > 2){
             map.set(fruits[left], map.get(fruits[left]) - 1)
             if(map.get(fruits[left]) == 0){[
                 map.delete(fruits[left])
