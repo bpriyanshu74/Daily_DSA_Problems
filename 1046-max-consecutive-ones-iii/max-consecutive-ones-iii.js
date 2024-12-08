@@ -16,8 +16,11 @@ var longestOnes = function(nums, k) {
             }
             left++
         }
-        len = right - left + 1
-        maxl = Math.max(maxl,len)
+        if(zeros <= k){
+            len = right - left + 1
+            maxl = Math.max(maxl,len)
+        }
+        
         right++
 
     }
