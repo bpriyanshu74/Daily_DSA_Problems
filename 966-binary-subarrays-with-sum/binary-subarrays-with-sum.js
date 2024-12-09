@@ -4,24 +4,18 @@
  * @return {number}
  */
 var numSubarraysWithSum = function(nums, goal) {
-    function findsubarrays(arr, goal){
-        if(goal <0) return 0
-        let total = 0, count = 0, left = 0, right = 0
-        while(right < arr.length){
-            total += arr[right]
 
-            while(total > goal){
-                total -= arr[left]
-                left++
-            }
+    let prefixsum = 0, count = 0, map = new Map()
+    map.set(0,1)
+    for(let i=0; i< nums.length; i++){
+        prefixsum += nums[i]
 
-            count += right-left+1
-            right++
+        if(map.get(prefixsum - goal)){
+            count += map.get(prefixsum - goal)
         }
-        return count
+        map.set(prefixsum, map.get(prefixsum)+1 || 1)
     }
 
-    return findsubarrays(nums,goal) - findsubarrays(nums,goal-1)
-    
+    return count
     
 };
