@@ -3,34 +3,28 @@
  * @return {void} Do not return anything, modify matrix in-place instead.
  */
 var setZeroes = function(matrix) {
-    // function find(arr,ele){
-    //     for(let i=0; i< arr.length; i++){
-    //         if(ele == arr[i]){
-    //             return true
-    //         }
-    //     }
-    //     return false
-    // }
+    let m = matrix.length
+    let n = matrix[0].length
 
-    let rowset = new Set(), colset = new Set()
-    for(let row=0; row< matrix.length; row++){
-        for(let col = 0; col < matrix[row].length; col++){
-            if(matrix[row][col] == 0){
-                rowset.add(row)
-                colset.add(col)
+    let rowset = new Array(m).fill(0)
+    let colset = new Array(n).fill(0)
+
+    for(let i=0; i<m; i++){
+        for(let j=0; j<n; j++){
+            if(matrix[i][j] == 0){
+                rowset[i] = 1
+                colset[j] = 1
             }
         }
     }
 
-    for(let i=0; i<matrix.length; i++){
-        for(let j=0; j<matrix[i].length; j++){
-            if(rowset.has(i) || colset.has(j)){
+    for(let i=0; i<m; i++){
+        for(let j=0; j<n; j++){
+            if(rowset[i] == 1 || colset[j] == 1){
                 matrix[i][j] = 0
             }
         }
     }
-
     return matrix
-    
     
 };
