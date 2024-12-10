@@ -3,58 +3,43 @@
  * @return {void} Do not return anything, modify nums in-place instead.
  */
 var nextPermutation = function(nums) {
-    
-    let i = nums.length - 1
-    let j = nums.length - 1
-    // finding index which breaks the increasing order
-    while(i >= 0){
-        if(nums[i-1] < nums[i]){
+    function reverse(arr,i,j)
+    {
+        while(i<j)
+        {
+            [arr[i], arr[j]] = [arr[j], arr[i]]
+            i++
+            j--
+        }
+        return arr
+    }
+    let breakpoint = -1;
+    let n = nums.length;
+    for (let i = n - 1; i > 0; i--) 
+    {
+        if (nums[i] > nums[i - 1]) 
+        {
+            breakpoint = i - 1;
             break
         }
-        i--
     }
-    if(i < 0){
-        let low = i+1
-    let high = nums.length - 1
 
-    while(low <= high){
-        let temp = nums[low]
-    nums[low] = nums[high]
-    nums[high] = temp
-    low++
-    high--
-    }
-    return nums
-
-    }
-    i--;
-    console.log(i)
-    // finding number which is exactly greater than the break point number
-    while(j >= 0){
-        if(nums[j] > nums[i]){
-            break
+    if (breakpoint == -1) 
+    {
+        return reverse(nums, 0, nums.length-1)
+    } 
+    else 
+    {
+        // finding the next greater than breakpoint
+        for (let i = n-1; i > breakpoint; i--) 
+        {
+            if (nums[i] > nums[breakpoint]) 
+            {
+                [nums[i], nums[breakpoint]] = [nums[breakpoint], nums[i]]
+                break
+            }
         }
-        j--
+        return reverse(nums, breakpoint+1, nums.length-1)
     }
-    console.log(j)
-    // swapping
-    let temp = nums[i]
-    nums[i] = nums[j]
-    nums[j] = temp
-
-// reversal
-    let low = i+1
-    let high = nums.length - 1
-
-    while(low <= high){
-        let temp = nums[low]
-    nums[low] = nums[high]
-    nums[high] = temp
-    low++
-    high--
-    }
-
-    return nums
-
     
 };
