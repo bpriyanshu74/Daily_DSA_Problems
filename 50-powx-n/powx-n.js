@@ -4,28 +4,20 @@
  * @return {number}
  */
 var myPow = function(x, n) {
+    if(n == 0) return 1
 
-    let tempn = n
-    let ans = 1.0
-
-    if(tempn < 0){
-        tempn = -1 * tempn
-    }
-
-    while(tempn > 0){
-        if(tempn%2){
-            ans = ans*x 
-            tempn -= 1
-
-        }else{
-            x = x * x
-            tempn = Math.floor(tempn/2)
-        }
-    }
-    console.log(ans)
     if(n < 0){
-        ans = 1.0 / ans
+        n = -n
+        x = 1/x
     }
-    return ans
+
+    if(n%2 == 0){
+        let halfPower = myPow(x,n/2)
+        return halfPower * halfPower 
+    }
+    else{
+        return x * myPow(x,n-1)
+    }
+
     
 };
