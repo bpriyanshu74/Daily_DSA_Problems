@@ -4,28 +4,14 @@
  * @return {number[]}
  */
 var twoSum = function(nums, target) {
+    let hash = new Map()
 
-    let n = nums.length
-    let temparr = new Array(n)
-
-    function findIndex(arr, key){
-        for(let i=0; i< arr.length; i++){
-            if(arr[i] == key) return i
+    for(let i=0; i< nums.length; i++){
+        let num = nums[i]
+        if(hash.has(target-num)){
+            return [hash.get(target-num),i]
         }
-        return -1
-        
+        hash.set(num,i)
     }
-
-    for(let i=0 ;i< n ;i++){
-        let diff = target - nums[i]
-        let key = findIndex(temparr, diff)
-
-        if(key == -1){
-            temparr[i] = nums[i]
-        }
-        else{
-            return [i,key]
-        }
-    }
-
+    return []
 };
