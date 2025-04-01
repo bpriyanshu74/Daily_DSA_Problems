@@ -3,18 +3,26 @@
  * @return {number[][]}
  */
 var permute = function(nums) {
-    let res = []
-    function helper(arr,currentPermutation){
-        if(arr.length == 0){
-            res.push(currentPermutation)
+    function helper(ds,ans,freq,arr){
+        if(ds.length == arr.length){
+            ans.push([...ds])
+            return
         }
-        for(let i=0; i<arr.length ; i++){
-            let val = arr[i]
-            let remainingArr = arr.slice(0,i).concat(arr.slice(i+1))
-            helper(remainingArr,currentPermutation.concat(val)) 
+        for(let i=0; i< nums.length; i++){
+            if(!freq[i]){
+                freq[i] = 1
+                ds.push(nums[i])
+                helper(ds,ans,freq,arr)
+                ds.pop()
+                freq[i] = 0
+            }
         }
+
+        return ans
+
     }
-    helper(nums,[])
-    return res
+
+    let ds = [], ans = [], freq = new Array(nums.length).fill(0)
+    return helper(ds,ans,freq,nums)
     
 };
