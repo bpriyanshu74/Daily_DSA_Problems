@@ -3,9 +3,10 @@
  * @return {number}
  */
 var singleNumber = function(nums) {
-    let result = 0
-    for(let num of nums){
-        result ^= num
+    let ans = 0
+    for(let i=0; i<nums.length; i++){
+        ans = ans ^ nums[i]
     }
-    return result
+    return ans
+    
 };
