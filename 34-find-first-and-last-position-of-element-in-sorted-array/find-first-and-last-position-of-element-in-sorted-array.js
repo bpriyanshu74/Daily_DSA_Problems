@@ -4,31 +4,37 @@
  * @return {number[]}
  */
 var searchRange = function(nums, target) {
-    function binarySearch(arr, target, l, r){
+    function lowerbound(arr,target){
+        let l=0, r = arr.length-1, ans = -1
         while(l <= r){
-            let mid = Math.floor(l + (r-l)/2)
-            if(arr[mid] == target){
-                return mid
-            }
-            else if(arr[mid] > target){
+            let mid = l + Math.floor((r-l)/2)
+            if(arr[mid] >= target){
+                ans = mid
                 r = mid - 1
             }
             else{
                 l = mid + 1
             }
         }
+        return arr[ans] === target ? ans : -1
+    }
+    function upperbound(arr,target){
+        let l=0, r = arr.length-1, ans = -1
+        while(l <= r){
+            let mid = l + Math.floor((r-l)/2)
+            if(arr[mid] > target){
+                ans = mid
+                r = mid - 1
+            }
+            else{
+                l = mid + 1
+            }
+        }
+        let uindex = ans !== -1 ? ans - 1: arr.length - 1
+        if(arr[uindex] == target) return uindex
         return -1
     }
-    let l = 0, r = nums.length - 1
-    let index = binarySearch(nums, target, l, r)
-    let tempindex = index, res = []
-    
-    while(index >= 0 && nums[index-1] == target) index--
-    res.push(index)
 
-    while(tempindex <= nums.length-1 && nums[tempindex+1] == target) tempindex++
-    res.push(tempindex)
-
-    return res
+    return [lowerbound(nums,target), upperbound(nums,target)]
     
 };
