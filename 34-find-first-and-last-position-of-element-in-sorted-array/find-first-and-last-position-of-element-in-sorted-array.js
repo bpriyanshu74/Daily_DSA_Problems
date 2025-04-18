@@ -8,16 +8,16 @@ var searchRange = function(nums, target) {
         let l = 0, r = arr.length-1, first = -1
         while(l <= r){
             let mid = l + Math.floor((r-l)/2)
-            if(arr[mid] == target){
+            if(arr[mid] >= target){
                 first = mid
                 r = mid -1
             }
-            else if(arr[mid] < target){
+            else{
                 l = mid + 1
             }
-            else{
-                r = mid - 1
-            }
+            // else{
+            //     r = mid - 1
+            // }
         }
         return arr[first] == target ? first : -1
     }
@@ -25,12 +25,9 @@ var searchRange = function(nums, target) {
         let l=0, r = arr.length-1, last = -1
         while(l <= r){
             let mid = l + Math.floor((r-l)/2)
-            if(arr[mid] == target){
+            if(arr[mid] <= target){
                 last = mid
                 l = mid + 1
-            }
-            else if(arr[mid] < target){
-                l = mid +1
             }
             else{
                 r = mid - 1
@@ -41,7 +38,9 @@ var searchRange = function(nums, target) {
     }
 
     let f = first(nums, target)
-    let l = last(nums, target)
-    return [f,l]
+    if(f == -1) return [-1,-1]
+    else{
+        return [f, last(nums, target)]
+    }
     
 };
