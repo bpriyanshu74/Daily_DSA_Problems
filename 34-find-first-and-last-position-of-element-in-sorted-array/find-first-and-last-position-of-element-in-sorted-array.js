@@ -4,37 +4,44 @@
  * @return {number[]}
  */
 var searchRange = function(nums, target) {
-    function lowerbound(arr,target){
-        let l=0, r = arr.length-1, ans = -1
+    function first(arr,target){
+        let l = 0, r = arr.length-1, first = -1
         while(l <= r){
             let mid = l + Math.floor((r-l)/2)
-            if(arr[mid] >= target){
-                ans = mid
-                r = mid - 1
+            if(arr[mid] == target){
+                first = mid
+                r = mid -1
             }
-            else{
+            else if(arr[mid] < target){
                 l = mid + 1
             }
+            else{
+                r = mid - 1
+            }
         }
-        return arr[ans] === target ? ans : -1
+        return arr[first] == target ? first : -1
     }
-    function upperbound(arr,target){
-        let l=0, r = arr.length-1, ans = -1
+    function last(arr,target){
+        let l=0, r = arr.length-1, last = -1
         while(l <= r){
             let mid = l + Math.floor((r-l)/2)
-            if(arr[mid] > target){
-                ans = mid
-                r = mid - 1
-            }
-            else{
+            if(arr[mid] == target){
+                last = mid
                 l = mid + 1
             }
+            else if(arr[mid] < target){
+                l = mid +1
+            }
+            else{
+                r = mid - 1
+            }
         }
-        let uindex = ans !== -1 ? ans - 1: arr.length - 1
-        if(arr[uindex] == target) return uindex
-        return -1
+
+        return arr[last] !== -1 ? last : arr.length - 1
     }
 
-    return [lowerbound(nums,target), upperbound(nums,target)]
+    let f = first(nums, target)
+    let l = last(nums, target)
+    return [f,l]
     
 };
