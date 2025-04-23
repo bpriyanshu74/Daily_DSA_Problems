@@ -4,32 +4,20 @@
  * @return {number}
  */
 var smallestDivisor = function(nums, threshold) {
-    // let minm = 1
-    // let maxm = Math.max(...nums)
-
-    // let ans = maxm
-    // for(let i=minm; i<= maxm; i++){
-    //     let div_sum = 0
-    //     for(let j=0; j< nums.length; j++){
-    //         div_sum += Math.ceil(nums[j] / i)
-    //     }
-    //     if(div_sum <= threshold){
-    //         ans = Math.min(ans, i)
-    //     }
-    // }
-    // return ans
-    function checkPossible(arr, n, th){
+    function check(n, nums, th){
         let div_sum = 0
-        for(let i=0; i< arr.length; i++){
-            div_sum += Math.ceil(arr[i]/n)
+        for(let i=0; i< nums.length; i++){
+            div_sum += Math.ceil(nums[i]/n)
+            if(div_sum > th) break
         }
         return div_sum <= th
+        
     }
 
-    let l = 1, r = Math.max(...nums), ans = r
-    while( l<=r){
+    let l = 1, r = Math.max(...nums), ans = Math.max(...nums)
+    while(l <= r){
         let mid = l + Math.floor((r-l)/2)
-        if(checkPossible(nums, mid, threshold)){
+        if(check(mid, nums, threshold)){
             ans = Math.min(ans, mid)
             r = mid - 1
         }
