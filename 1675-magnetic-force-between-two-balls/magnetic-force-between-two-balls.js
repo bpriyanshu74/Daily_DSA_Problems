@@ -5,15 +5,17 @@
  */
 var maxDistance = function(position, m) {
 
-    function can_we_place(pos, dis){
+    const can_we_place = (pos, dis) => {
         let ball_count = 1, last = pos[0]
         for(let i=1; i<pos.length; i++){
             if(pos[i] - last >= dis){
                 ball_count++
                 last = pos[i]
             }
+            if(ball_count == m)return true
         }
-        return ball_count
+        return false
+        
     }
     position.sort((a,b) => a-b)
     let max = position[position.length-1], min = position[0], ans = -1
@@ -23,7 +25,7 @@ var maxDistance = function(position, m) {
     let l = 1, r = max-min
     while(l<=r){
         let mid = l + Math.floor((r-l)/2)
-        if(can_we_place(position, mid) >= m){
+        if(can_we_place(position, mid)){
             ans = mid
             l = mid + 1
         }
