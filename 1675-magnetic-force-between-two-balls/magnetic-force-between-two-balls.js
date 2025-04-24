@@ -15,8 +15,10 @@ var maxDistance = function(position, m) {
         }
         return ball_count
     }
-    let max = Math.max(...position), min = Math.min(...position), ans = 0
     position.sort((a,b) => a-b)
+    let max = position[position.length-1], min = position[0], ans = -1
+
+    
 
     let l = 1, r = max-min
     while(l<=r){
