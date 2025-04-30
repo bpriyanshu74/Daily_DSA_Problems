@@ -4,27 +4,23 @@
  * @return {number[][]}
  */
 var combinationSum = function(candidates, target) {
-    let result = [], ds = []
-
-    function comb_sum(arr,index,target, ds,result){
-        if(index == arr.length){
-            if(target == 0){
-                result.push([...ds])
-            }
+    let ans = [], ds = [], index=0
+    function helper(arr,ans,ds,target,index){
+        if(target == 0){
+            ans.push([...ds])
             return
         }
-        // take condition
-        if(arr[index] <= target){
-            ds.push(arr[index])
-            comb_sum(arr,index, target-arr[index], ds, result)
-            ds.pop()
+
+        for(let i=index; i<arr.length; i++){
+            if(arr[i] <= target){
+                ds.push(arr[i])
+                helper(arr,ans,ds,target-arr[i],i)
+                ds.pop()
+            }  
+            
         }
-        // not take condition
-        comb_sum(arr,index+1, target, ds,result)
     }
-
-    comb_sum(candidates, 0, target, ds, result)
-
-    return result
+    helper(candidates,ans,ds,target,index)
+    return ans
     
 };
