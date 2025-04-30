@@ -4,26 +4,25 @@
  * @return {number[][]}
  */
 var combinationSum2 = function(candidates, target) {
-
-    function comb_sum(arr,index,ds,result, target){
+    function helper(index,ds,ans,arr,target){
         if(target == 0){
-            result.push([...ds])
+            ans.push([...ds])
             return
         }
-
         for(let i=index; i<arr.length; i++){
-            if(i>index && arr[i] == arr[i-1]) continue
+            if(i > index && arr[i] == arr[i-1]) continue
             if(arr[i] > target) break
-
-            ds.push(arr[i])
-            comb_sum(arr,i+1, ds, result, target-arr[i])
-            ds.pop()
+            if(arr[i] <= target){
+                ds.push(arr[i])
+                helper(i+1, ds,ans,arr,target-arr[i])
+                ds.pop()
+            }
         }
     }
 
-    let ds = [], result = []
+    let ans = [], ds = []
     candidates.sort((a,b) => a-b)
-    comb_sum(candidates, 0,ds, result, target)
-    return result
+    helper(0,ds,ans,candidates, target)
+    return ans
     
 };
