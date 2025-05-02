@@ -3,39 +3,37 @@
  * @return {string[][]}
  */
 var partition = function(s) {
-
-    let ans = [], current_partition = []
-    helper(s,ans,current_partition)
+    let cur = [], ans = []
+    helper(s,cur,ans)
     return ans
-
-    function helper(s,ans, current_partition){
+    function helper(s, cur,ans){
         if(s.length == 0){
-            ans.push([...current_partition])
+            ans.push([...cur])
             return
         }
-        // taking first partition at index 1
-        for(let partition=1; partition <= s.length; partition++){
-            let prefix = s.substring(0,partition)
-            let remaining = s.substring(partition,s.length)
-            if(isPallindrome(prefix)){
-                current_partition.push(prefix)
-                helper(remaining, ans, current_partition)
-                current_partition.pop()
+
+        for(let i=1; i<=s.length; i++){
+            let prefix = s.substring(0,i)
+            let remaining = s.substring(i)
+            if(isPalindrome(prefix)){
+                cur.push(prefix)
+                helper(remaining, cur, ans)
+                cur.pop()
             }
         }
-        function isPallindrome(s){
-            let l = 0, r = s.length-1
-                while(l<=r){
-                    if(s[l] == s[r]){
-                        l++
-                        r--
-                    }
-                    else{
-                        return false
-                    }
-                }
-            return true
+    }
+
+    function isPalindrome(s){
+        let l=0, r=s.length-1
+        while(l <= r){
+            if(s[l] != s[r]){
+                return false
+            }else{
+                l++
+                r--
+            }
         }
+        return true
     }
     
 };
