@@ -14,6 +14,7 @@ var combinationSum2 = function(candidates, target) {
         }
 
         for(let i=index; i<candidates.length; i++){
+            if(candidates[i] > target) break
             if(i > index && candidates[i] == candidates[i-1]) continue
             if(candidates[i] <= target){
                 cur_combination.push(candidates[i])
