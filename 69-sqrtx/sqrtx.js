@@ -3,17 +3,10 @@
  * @return {number}
  */
 var mySqrt = function(x) {
-    let l = 1, r = x, ans = 1
-    while(l <= r){
-        let mid = l + Math.floor((r-l)/2)
-        if(mid*mid <= x){
-            ans = mid
-            l = mid + 1
-        }
-        else{
-            r = mid - 1
-        }
+    let sqrt= 1
+    while(sqrt*sqrt <= x){
+        sqrt++
     }
-    return r
+    return sqrt-1
     
 };
