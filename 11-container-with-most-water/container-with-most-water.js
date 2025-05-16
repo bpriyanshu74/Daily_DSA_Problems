@@ -3,15 +3,22 @@
  * @return {number}
  */
 var maxArea = function(height) {
-    let areamax = 0
-    let lo = 0, hi = height.length - 1
-    while(lo <= hi){
-        let area = Math.min(height[lo],height[hi]) * (hi - lo)
-        areamax = Math.max(area,areamax)
-        if(height[lo] < height[hi]) lo++
-        else hi--
-        
+    // brute force
+    let maxm_water = -1
+
+    let l=0; r = height.length-1
+
+    while(l<r){
+        let water = Math.min(height[l], height[r]) * (r-l)
+        maxm_water = Math.max(maxm_water, water)
+
+        if(height[l] < height[r]){
+            l++
+        }
+        else{
+            r--
+        }
     }
-    return areamax
+    return maxm_water
     
 };
