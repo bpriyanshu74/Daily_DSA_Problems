@@ -5,8 +5,8 @@
 var captureForts = function(forts) {
 
     function capture(arr){
-        let max_cap = 0
-        for(let i=0; i<arr.length-1; i++){
+        let max_cap = 0, i=0
+        while(i<arr.length-1){
             if(arr[i] == 1){
                 let k = i+1, count = 0
                 while(k < arr.length){
@@ -19,9 +19,10 @@ var captureForts = function(forts) {
                         break
                     }
                 }
+                i = k
             }
             else{
-                continue
+                i++
             }
         }
         return max_cap
