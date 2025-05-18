@@ -3,35 +3,18 @@
  * @return {number}
  */
 var captureForts = function(forts) {
+    let last_fort_index = -1, maxm = 0
 
-    function capture(arr){
-        let max_cap = 0, i=0
-        while(i<arr.length-1){
-            if(arr[i] == 1){
-                let k = i+1, count = 0
-                while(k < arr.length){
-                    if(arr[k] == 0){
-                        count++
-                        k++
-                    }
-                    else{
-                        if(arr[k] == -1) max_cap = Math.max(max_cap, count)
-                        break
-                    }
-                }
-                i = k
+    for(let i=0; i<forts.length; i++){
+        if(forts[i] !== 0){
+            if(last_fort_index != -1 && forts[i] != forts[last_fort_index]){
+                let between = i-last_fort_index-1
+                maxm = Math.max(between,maxm)
             }
-            else{
-                i++
-            }
+            last_fort_index = i
         }
-        return max_cap
     }
+    return maxm
 
-    let left_capture = capture(forts)
-    let reversed_forts = [...forts].reverse()
-    let right_capture = capture(reversed_forts)
-
-    return Math.max(left_capture, right_capture)
     
 };
