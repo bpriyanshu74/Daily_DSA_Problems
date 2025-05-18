@@ -4,24 +4,17 @@
  * @return {number}
  */
 var maxScore = function(cardPoints, k) {
-    let initialsum = 0, maxsum = 0, n = cardPoints.length
-    for(let i=0; i< k; i++){
-        initialsum += cardPoints[i]
+    let sum=0
+    for(let i=0;i<k; i++){
+        sum += cardPoints[i]
     }
+    let maxsum = sum
+    if(cardPoints.length == k) return maxsum
 
-    maxsum = initialsum
-
-    let left = k-1, right = n-1
-    while(left >= 0){
-        initialsum = (initialsum - cardPoints[left]) + cardPoints[right]
-
-        maxsum = Math.max(maxsum, initialsum)
-
-        left--
-        right--
+    for(let i=0; i<k; i++){
+        sum = sum - cardPoints[k-i-1] + cardPoints[cardPoints.length-1-i]
+        maxsum = Math.max(sum,maxsum)
     }
-
     return maxsum
-
     
 };
