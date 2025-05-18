@@ -3,24 +3,22 @@
  * @return {number}
  */
 var lengthOfLongestSubstring = function(s) {
-    let maxl = 0, substring_set = new Set()
-    // brute froce: create all the valid substrings
-
-    if(s.length == 1) return 1
-
-    for(let i=0; i<s.length; i++){
-        for(let j=i ;j<s.length; j++){
-            if(substring_set.has(s[j])){
-                maxl = Math.max(maxl, substring_set.size)
-                substring_set.clear()
-                break
+    let l=0,r=0,dic=new Set(), maxl=0
+    while(r < s.length){
+        if(dic.has(s[r])){
+            while(s[l] != s[r]){
+                dic.delete(s[l])
+                l++
             }
-            substring_set.add(s[j])
+            dic.delete(s[l])
+            l++
+            
         }
+        maxl = Math.max(maxl, r-l+1)
+        dic.add(s[r])
+        r++
     }
-    maxl = Math.max(maxl, substring_set.size)
 
     return maxl
-
     
 };
