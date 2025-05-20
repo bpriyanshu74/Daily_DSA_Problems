@@ -3,22 +3,18 @@
  * @return {number}
  */
 var numberOfSubstrings = function(s) {
-    let count = 0, n = s.length
-    let map = [-1,-1,-1]
-    for(let i=0; i<n; i++){
-        switch(s[i]){
-            case 'a':
-                map[0] = i 
-                break;
-            case 'b': 
-                map[1] = i 
-                break;
-            case 'c':
-                map[2] = i
-                break;
-        }
-        if(map[0] != -1 && map[1] != -1 && map[2] != -1){
-        count += 1 + Math.min(map[0],map[1],map[2])
+    // optimization using two pointer with sliding window
+    // hasmap will contain all the three character and the last index they were seen, once all the character are != -1 them we'll pick the min index of the three and add it to the count with + 1. 
+    let count = 0, hashmap = new Map()
+    hashmap.set('a',-1)
+    hashmap.set('b', -1)
+    hashmap.set('c', -1)
+    for(let r = 0; r<s.length; r++){
+        hashmap.set(s[r], r)
+        
+        if(hashmap.get('a') != -1 && hashmap.get('b') != -1 && hashmap.get('c') != -1){
+            let v = [...hashmap.values()]
+            count += Math.min(...v) + 1
         }
     }
     return count
