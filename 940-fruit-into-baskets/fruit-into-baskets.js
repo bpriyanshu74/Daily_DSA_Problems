@@ -3,22 +3,23 @@
  * @return {number}
  */
 var totalFruit = function(fruits) {
-    let map = new Map(), maxl = 0, left = 0, right = 0
-    while(right < fruits.length){
-        map.set(fruits[right], map.get(fruits[right]) + 1 || 1)
+    let l=0, r=0, maxcount = 0, map = new Map()
+
+    while( r < fruits.length){
+        map.set(fruits[r], (map.get(fruits[r])||0) +1)
 
         if(map.size > 2){
-            map.set(fruits[left], map.get(fruits[left]) - 1)
-            if(map.get(fruits[left]) == 0){[
-                map.delete(fruits[left])
-            ]}
-            left++
+            map.set(fruits[l], map.get(fruits[l]) - 1)
+            if(map.get(fruits[l]) == 0){
+                map.delete(fruits[l])
+            }
+            l++
         }
-
-        maxl = Math.max(maxl, right-left+1)
-        right++
+        
+        maxcount = Math.max(maxcount, r-l+1)
+        
+        r++
     }
-
-    return maxl
+    return maxcount
     
 };
