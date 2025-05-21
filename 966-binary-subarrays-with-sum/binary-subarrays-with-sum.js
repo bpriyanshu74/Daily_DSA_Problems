@@ -4,23 +4,14 @@
  * @return {number}
  */
 var numSubarraysWithSum = function(nums, goal) {
-    function findsubarrays(arr,goal){
-        if(goal < 0) return 0
-        let left = 0, right = 0, total = 0, count = 0
-        while(right < arr.length){
-            total += arr[right]
-
-            while(total > goal){
-                total -= arr[left]
-                left++
-            }
-
-            count += right-left+1
-            right++
-        }
-        return count
+    let count = 0
+    for(let i=0; i<nums.length; i++){
+        let sum = 0
+        for(let j=i; j<nums.length; j++){
+            sum += nums[j]
+            if(sum == goal) count++
+        } 
     }
-    
-    return findsubarrays(nums, goal) - findsubarrays(nums, goal-1)
+    return count
     
 };
