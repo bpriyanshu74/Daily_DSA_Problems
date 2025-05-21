@@ -4,21 +4,24 @@
  * @return {number}
  */
 var numberOfSubarrays = function(nums, k) {
-    function helper(arr,goal){
-        if(goal < 0) return 0
-        let count = 0, left = 0, right = 0, sum = 0
-        while(right < arr.length){
-            if(arr[right] % 2 != 0){
-                sum += 1
+    // trying k and k-1 logic
+
+    function atMost(arr,k){
+        let l=0, r=0, count = 0, odd_count = 0
+        while(r < arr.length){
+            if(arr[r]%2!= 0){
+                odd_count++
             }
-            while(sum > goal){
-                if(arr[left] % 2 != 0) sum -= 1
-                left++
+            while(odd_count > k){
+                if(arr[l] % 2 != 0){
+                    odd_count--
+                }
+                l++
             }
-            count += right - left + 1
-            right++
+            count += r-l+1
+            r++
         }
         return count
     }
-    return helper(nums,k) - helper(nums, k-1)
+    return atMost(nums, k) - atMost(nums, k-1)
 };
