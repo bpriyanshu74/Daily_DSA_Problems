@@ -4,22 +4,32 @@
  * @return {number}
  */
 var characterReplacement = function(s, k) {
-    let left = 0, right = 0, maxl = 0, map = new Map(), maxf = 0, curwindow = 0
-    while(right < s.length){
-        map.set(s[right], map.get(s[right])+1 || 1)
-        maxf = Math.max(...map.values())
-        
 
-        while((right-left+1) - maxf > k){
-            map.set(s[left], map.get(s[left])-1)
-            left++
-            maxf = Math.max(...map.values())
+    function calculatemax(arr){
+        let maxm = 0
+        for(let i=0; i<arr.length; i++){
+            maxm = Math.max(maxm, arr[i])
         }
-
-        maxl = Math.max(right-left+1, maxl)
-        right++
+        return maxm
     }
+    let maxl = 0,l=0,r=0, freq_arr = new Array(26).fill(0), maxf = 0
+    while(r < s.length){
+        let characterIndex = s.charCodeAt(r) - 'A'.charCodeAt(0)
+        freq_arr[characterIndex]++ 
+        maxf = Math.max(maxf, freq_arr[characterIndex])
+        let changes = (r-l+1) - maxf
 
-    return maxl
+        if(changes > k){
+            let leftcharindex = s.charCodeAt(l) - 'A'.charCodeAt(0)
+            freq_arr[leftcharindex]--
+            maxf = calculatemax(freq_arr)
+            l++
+        }
+        if(changes <= k){
+            maxl = Math.max(r-l+1, maxl)
+        }
+        r++
+    }
+    return maxl  
     
 };
