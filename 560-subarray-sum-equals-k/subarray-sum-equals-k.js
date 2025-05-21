@@ -4,16 +4,19 @@
  * @return {number}
  */
 var subarraySum = function(nums, k) {
-    let map = new Map(), prefixsum = 0, count = 0, compliment = 0
-    map.set(0,1)
-    for(let i=0; i< nums.length; i++){
+    // this will be done using prefix sum
+    let prefixsum = 0, hashmap = new Map(), count = 0
+    hashmap.set(0,1)
+    for(let i=0; i<nums.length; i++){
         prefixsum += nums[i]
 
-        if(map.get(prefixsum-k)){
-            count += map.get(prefixsum-k)
+        if(hashmap.has(prefixsum-k)){
+            count += hashmap.get(prefixsum-k)
         }
 
-        map.set(prefixsum, map.get(prefixsum)+1 || 1)
+        hashmap.set(prefixsum, (hashmap.get(prefixsum)||0)+1)
     }
+
     return count
+    
 };
