@@ -4,14 +4,23 @@
  * @return {number}
  */
 var numSubarraysWithSum = function(nums, goal) {
-    let count = 0
-    for(let i=0; i<nums.length; i++){
-        let sum = 0
-        for(let j=i; j<nums.length; j++){
-            sum += nums[j]
-            if(sum == goal) count++
-        } 
+    // for exact k, we'll need to find for k and k-1 and later subtract k and k-1
+
+    function atMost(arr, k){
+        let l=0, r=0, res = 0, sum=0
+        while(r < arr.length){
+            sum += arr[r]
+
+            while(sum > k && l <= r){
+                sum -= arr[l]
+                l++
+            }
+            res += r-l+1
+            r++
+        }
+        return res
     }
-    return count
+
+    return atMost(nums,goal) - atMost(nums,goal-1)
     
 };
