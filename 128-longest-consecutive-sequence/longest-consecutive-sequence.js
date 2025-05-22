@@ -3,22 +3,32 @@
  * @return {number}
  */
 var longestConsecutive = function(nums) {
-    if(nums.length < 1) return 0
-    let numset = Array.from(new Set(nums))
 
-    numset.sort((a,b) => a-b)
+    // Insert all elements into a set for O(1) lookup
+    const numSet = new Set(nums);
+    let longestStreak = 0;
 
-    let curlen = 1, maxl = 1
+    // Iterate through each number in the array
 
-    for(let i=1;i<numset.length; i++){
-        if(numset[i] == numset[i-1]+1){
-            curlen++
+    for (let num of numSet) {
+
+        // Only start counting from the beginning of a sequence
+
+        if (!numSet.has(num - 1)) {
+            let currentNum = num;
+            let currentStreak = 1;
+
+            // Find the length of the consecutive sequence starting at 'num'
+            while (numSet.has(currentNum + 1)) {
+                currentNum++;
+                currentStreak++;
+            }
+
+            // Update the longest streak found
+            longestStreak = Math.max(longestStreak, currentStreak);
         }
-        else{
-            curlen = 1
-        }
-        maxl = Math.max(maxl, curlen)
     }
 
-    return maxl
+    return longestStreak;
+    
 };
