@@ -3,40 +3,25 @@
  * @return {void} Do not return anything, modify matrix in-place instead.
  */
 var setZeroes = function(matrix) {
-    let col0 = 1
+    let rows_with_zero = new Set()
+    let cols_with_zero = new Set()
+
     for(let i=0; i<matrix.length; i++){
         for(let j=0; j<matrix[0].length; j++){
             if(matrix[i][j] == 0){
-                matrix[i][0] = 0
-                if(j!= 0){
-                    matrix[0][j] = 0
-                }
-                else{
-                    col0 = 0
-                }
+                rows_with_zero.add(i)
+                cols_with_zero.add(j)
             }
         }
     }
 
-    for(let i=1; i<matrix.length; i++){
-        for(let j=1; j< matrix[0].length; j++){
-            if(matrix[i][j] != 0){
-                if(matrix[i][0] == 0 || matrix[0][j] == 0){
-                    matrix[i][j] = 0
-                }
+    for(let i=0; i<matrix.length; i++){
+        for(let j=0; j<matrix[0].length; j++){
+            if(rows_with_zero.has(i) || cols_with_zero.has(j)){
+                matrix[i][j] = 0
             }
         }
     }
-
-    if(matrix[0][0] == 0){
-        for(j=0; j < matrix[0].length; j++){
-            matrix[0][j] = 0
-        }
-    }
-    if(col0 == 0){
-        for(let i=0; i<matrix.length; i++){
-            matrix[i][0] = 0
-        }
-    }
+    
     
 };
