@@ -13,36 +13,39 @@
  */
 var getIntersectionNode = function(headA, headB) {
     let len1 = 0, len2 = 0
-    let temp1 = headA, temp2 = headB
 
-    while(temp1){
+    let tempa = headA, tempb = headB
+
+    while(tempa){
         len1++
-        temp1 = temp1.next
+        tempa = tempa.next
     }
-    while(temp2){
+    while(tempb){
         len2++
+        tempb = tempb.next
+    }
+
+    let temp1 = headA, temp2 = headB, diff = Math.abs(len1-len2)
+    if(len1 > len2){
+        while(diff > 0){
+            temp1 = temp1.next
+            diff--
+        }
+    }
+    else{
+        while(diff > 0){
+            temp2 = temp2.next
+            diff--
+        }
+    }
+
+
+    while(temp1 && temp2){
+        if(temp1 == temp2) return temp1
+        temp1 = temp1.next
         temp2 = temp2.next
     }
-    console.log(len1)
-    console.log(len2)
-    if(len1 > len2){
-        let diff = len1-len2
-        while(diff > 0){
-            headA = headA.next
-            diff--
-        }
-    }else{
-        let diff = len2 - len1
-        while(diff > 0){
-            headB = headB.next
-            diff--
-        }
-    }
-    while(headA && headB){
-        if(headA == headB){
-            return headA
-        }
-        headA = headA.next
-        headB = headB.next
-    }
+
+    return null
+    
 };
