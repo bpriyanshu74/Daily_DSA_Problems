@@ -10,28 +10,28 @@
  * @return {boolean}
  */
 var isPalindrome = function(head) {
-    let arr = []
 
-    let temp = head
+    let slow = head, fast = head, temp = head
 
-    while(temp){
-        arr.push(temp.val)
-        temp = temp.next
+    while(fast && fast.next){
+        slow = slow.next
+        fast = fast.next.next
     }
 
-    // reversing
-    let cur = head, prev = null
+    // reversing the second half
+    let cur = slow, prev = null
     while(cur){
         let nxt = cur.next
         cur.next = prev
         prev = cur
         cur = nxt
     }
-    let i=0
-    while(prev){
-        if(prev.val != arr[i]) return false
-        i++
+
+    while(temp && prev){
+        if(temp.val != prev.val) return false
+        temp = temp.next
         prev = prev.next
     }
     return true
+    
 };
