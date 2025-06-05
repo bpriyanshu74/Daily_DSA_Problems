@@ -11,16 +11,20 @@
  * @return {boolean}
  */
 var hasCycle = function(head) {
+    // fast and slow pointer approach
 
-    if(!head || !head.next) return false
+    if(head == null || head.next == null) return false
+
     let slow = head, fast = head.next
 
     while(fast && fast.next){
-        if(slow == fast){
-            return true
-        }
+        if(slow == fast) return true
         slow = slow.next
         fast = fast.next.next
+        
+        // temp = temp.next
     }
+
     return false
+    
 };
