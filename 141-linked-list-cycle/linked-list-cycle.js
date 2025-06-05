@@ -12,7 +12,7 @@
  */
 var hasCycle = function(head) {
 
-    var slow = head, fast = head
+   let slow = head, fast = head
 
     while(fast && fast.next){
         slow = slow.next
