@@ -10,29 +10,20 @@
  * @return {ListNode}
  */
 var oddEvenList = function(head) {
-    let temp = head, count = 1
+    if(!head || !head.next) return head
 
-    let odd = new ListNode(-1)
-    let even = new ListNode(-1)
+    let odd = head, even = head.next, evenhead = even
 
-    let oddhead = odd, evenhead = even
+    while(even && even.next){
+        odd.next = even.next
+        odd = odd.next
 
-    while(temp){
-        if(count % 2 == 1){
-            odd.next = temp
-            odd = odd.next
-        }
-        else{
-            even.next = temp
-            even = even.next
-        }
-        count++
-        temp = temp.next
+        even.next = odd.next
+        even = even.next
     }
-    even.next = null
-    odd.next = evenhead.next
 
-    return oddhead.next
+    odd.next = evenhead
 
+    return head
     
 };
