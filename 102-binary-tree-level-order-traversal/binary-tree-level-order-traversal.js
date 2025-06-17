@@ -11,8 +11,8 @@
  * @return {number[][]}
  */
 var levelOrder = function(root) {
-    if(root == null) return []
     let q = [], ans = []
+    if(root == null) return ans
 
     q.push(root)
 
