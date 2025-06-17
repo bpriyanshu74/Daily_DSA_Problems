@@ -13,13 +13,15 @@
 var inorderTraversal = function(root) {
     let res = []
 
-    function dfs(root, res){
-        if(root == null) return 
-        dfs(root.left, res)
+    function dfs(root){
+        if(root == null) return
+        dfs(root.left)
         res.push(root.val)
-        dfs(root.right, res)
+        dfs(root.right)
     }
-    dfs(root,res)
+
+    dfs(root)
+
     return res
     
 };
