@@ -12,21 +12,34 @@
  */
 var postorderTraversal = function(root) {
     if(root == null) return []
-    let op = [], st1 = [], st2 = []
-    st1.push(root)
-    while(st1.length != 0){
-        let node = st1.pop()
 
-        st2.push(node)
+    let stack = [], cur = root, post = []
 
-        if(node.left) st1.push(node.left)
-        if(node.right) st1.push(node.right)
+    while(cur != null || stack.length != 0){
+        if(cur != null){
+            stack.push(cur)
+            cur = cur.left
+        }
+        else{
+            let temp = stack[stack.length-1].right
+            if(temp == null){
+                temp = stack[stack.length-1]
+                stack.pop()
+                post.push(temp.val)
 
+                while(stack.length != 0 && temp == stack[stack.length-1].right){
+                    temp = stack[stack.length-1]
+                    stack.pop()
+                    post.push(temp.val)
+                }
+
+            }
+            else{
+                cur = temp
+            }
+        }
     }
-    while(st2.length != 0){
-        let node = st2.pop()
-        op.push(node.val)
-    }
 
-    return op
+    return post
+    
 };
