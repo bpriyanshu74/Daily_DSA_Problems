@@ -11,17 +11,23 @@
  * @return {number[]}
  */
 var inorderTraversal = function(root) {
-    let res = []
+    let st = [], inorder = [], node = new TreeNode()
 
-    function dfs(root){
-        if(root == null) return
-        dfs(root.left)
-        res.push(root.val)
-        dfs(root.right)
+    node = root
+
+
+    while(true){
+        if(node != null){
+            st.push(node)
+            node = node.left
+        }
+        else{
+            if(!st.length) break
+            node = st[st.length-1]
+            st.pop()
+            inorder.push(node.val)
+            node = node.right
+        }
     }
-
-    dfs(root)
-
-    return res
-    
+    return inorder
 };
