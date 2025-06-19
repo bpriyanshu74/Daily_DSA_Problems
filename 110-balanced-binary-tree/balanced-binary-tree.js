@@ -12,26 +12,24 @@
  */
 var isBalanced = function(root) {
 
-    function findh(node){
-        if(node == null) return 0
-        let lh = findh(node.left)
-        let rh = findh(node.right)
-
-        if(lh==-1 || rh == -1) return -1
-        if(Math.abs(lh-rh) > 1) return -1
-
-        return 1 + Math.max(lh,rh)
-    }
-
     if(root == null) return true
 
-    let lh = findh(root.left)
-    let rh = findh(root.right)
-
-    if((lh == -1 || rh == -1) || (Math.abs(lh-rh) > 1)) return false
-
-    return true
-
-
-    
+    return helper(root) != -1
 };
+
+function helper(node){
+    if(node == null) return 0
+
+    let left = helper(node.left)
+
+    if(left === -1) return -1
+
+    let right = helper(node.right)
+
+    if(right === -1) return -1
+
+    if(Math.abs(left-right) > 1) return -1
+
+    return 1 + Math.max(left,right)
+}
+
