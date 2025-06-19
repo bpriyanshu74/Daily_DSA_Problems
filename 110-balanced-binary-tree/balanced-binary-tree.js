@@ -14,8 +14,13 @@ var isBalanced = function(root) {
 
     function findh(node){
         if(node == null) return 0
+        let lh = findh(node.left)
+        let rh = findh(node.right)
 
-        return 1 + Math.max(findh(node.left), findh(node.right))
+        if(lh==-1 || rh == -1) return -1
+        if(Math.abs(lh-rh) > 1) return -1
+
+        return 1 + Math.max(lh,rh)
     }
 
     if(root == null) return true
@@ -23,13 +28,10 @@ var isBalanced = function(root) {
     let lh = findh(root.left)
     let rh = findh(root.right)
 
-    if(Math.abs(rh-lh) > 1) return false
-
-    let left = isBalanced(root.left)
-    let right = isBalanced(root.right)
-
-    if(!left || !right) return false
+    if((lh == -1 || rh == -1) || (Math.abs(lh-rh) > 1)) return false
 
     return true
+
+
     
 };
