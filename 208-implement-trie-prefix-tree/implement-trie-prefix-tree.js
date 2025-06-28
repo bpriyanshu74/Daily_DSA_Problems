@@ -1,16 +1,10 @@
-var TrieNode = function() {
-    
-        this.children = {}
-        this.flag = false
-    
+var TrieNode = function(){
+    this.children = {}
+    this.flag = false
 }
 
-
 var Trie = function() {
-    
-        this.root = new TrieNode()
-    
-    
+    this.root = new TrieNode()
 };
 
 /** 
@@ -19,10 +13,9 @@ var Trie = function() {
  */
 Trie.prototype.insert = function(word) {
     let node = this.root
-
     for(let char of word){
         if(!(char in node.children)){
-            node.children[char] = new TrieNode
+            node.children[char] = new TrieNode()
         }
         node = node.children[char]
     }
@@ -34,11 +27,12 @@ Trie.prototype.insert = function(word) {
  * @return {boolean}
  */
 Trie.prototype.search = function(word) {
-    let node = this._traverse(word)
-
-    return node!==null && node.flag
-    
-    
+    let node = this.root
+    for(let char of word){
+        if(!(char in node.children)) return false
+        node = node.children[char]
+    }
+    return node.flag
 };
 
 /** 
@@ -46,23 +40,14 @@ Trie.prototype.search = function(word) {
  * @return {boolean}
  */
 Trie.prototype.startsWith = function(prefix) {
-    let node = this._traverse(prefix)
-
-    return node !== null
-    
-};
-
-Trie.prototype._traverse = function(string){
     let node = this.root
-
-    for(let char of string){
-        if(!(char in node.children)) return null
-
+    for(let char of prefix){
+        if(!(char in node.children)) return false
         node = node.children[char]
     }
-
-    return node
-}
+    return true
+    
+};
 
 /** 
  * Your Trie object will be instantiated and called as such:
