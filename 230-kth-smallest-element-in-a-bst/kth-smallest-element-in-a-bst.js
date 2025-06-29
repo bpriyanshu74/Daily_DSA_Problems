@@ -12,23 +12,23 @@
  * @return {number}
  */
 var kthSmallest = function(root, k) {
-    let nums = []
+    let counter = 0, result = null
 
-    function traversal(root){
-        if(root == null) return
-       
-        traversal(root.left)
-         nums.push(root.val)
-        traversal(root.right)
+    function traversal(node){
+        if(node == null || result != null) return
+
+        traversal(node.left)
+
+        counter++
+        if(counter == k){
+            result = node.val
+            return
+        }
+
+        traversal(node.right)
     }
+
     traversal(root)
-
-    
-
-    return nums[k-1]
-
-    
-
-
+    return result
     
 };
