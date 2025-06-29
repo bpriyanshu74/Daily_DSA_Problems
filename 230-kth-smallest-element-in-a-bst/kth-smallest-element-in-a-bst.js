@@ -16,13 +16,14 @@ var kthSmallest = function(root, k) {
 
     function traversal(root){
         if(root == null) return
-        nums.push(root.val)
+       
         traversal(root.left)
+         nums.push(root.val)
         traversal(root.right)
     }
     traversal(root)
 
-    nums.sort((a,b) => a-b)
+    
 
     return nums[k-1]
 
