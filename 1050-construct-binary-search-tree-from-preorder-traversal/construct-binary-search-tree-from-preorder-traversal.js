@@ -11,18 +11,20 @@
  * @return {TreeNode}
  */
 var bstFromPreorder = function(preorder) {
-    function build(bound){
+    if(preorder.length == 0) return null
+    let index = 0
+
+    function construct(bound){
         if(index == preorder.length || preorder[index] > bound) return null
 
-        let rootval = preorder[index++]
-        let root = new TreeNode(rootval)
-
-        root.left = build(rootval)
-        root.right = build(bound)
+        let root = new TreeNode(preorder[index++])
+        root.left = construct(root.val)
+        root.right = construct(bound)
 
         return root
     }
-    let index = 0
-    return build(Infinity)
+    
+    return construct(Infinity)
+
     
 };
