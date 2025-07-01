@@ -11,35 +11,27 @@
  * @return {void} Do not return anything, modify root in-place instead.
  */
 var recoverTree = function(root) {
-    if(root == null) return null
+    let first = null, second = null, prev = null;
 
-    let inorder = []
+    function inorder(node) {
+        if (!node) return;
 
-    function collectInorder(node){
-        if(!node) return
+        inorder(node.left);
 
-        collectInorder(node.left)
-        inorder.push(node.val)
-        collectInorder(node.right)
-    }
-
-    collectInorder(root)
-    inorder.sort((a,b) => a-b)
-    let index = {val: 0}
-
-    function updateInorder(node, index){
-        if(!node) return
-
-        updateInorder(node.left, index)
-        if(node.val != inorder[index.val]){
-            node.val = inorder[index.val]
+        if (prev && prev.val > node.val) {
+            if (!first) first = prev;
+            second = node;
         }
-        index.val++
-        updateInorder(node.right, index)
 
+        prev = node;
+
+        inorder(node.right);
     }
-    updateInorder(root, index)
 
-    return root
+    inorder(root);
+
+    // swap the values of the two wrong nodes
+    [first.val, second.val] = [second.val, first.val];
     
 };
+    
