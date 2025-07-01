@@ -12,16 +12,9 @@
  * @return {TreeNode}
  */
 var deleteNode = function(root, key) {
-
     if(!root) return null
 
-    if(key < root.val){
-        root.left = deleteNode(root.left, key)
-    }
-    else if(key > root.val){
-        root.right = deleteNode(root.right, key)
-    }
-    else{
+    if(root.val == key){
         if(!root.left) return root.right
         if(!root.right) return root.left
 
@@ -32,12 +25,17 @@ var deleteNode = function(root, key) {
         while(rightmost.right){
             rightmost = rightmost.right
         }
-
         rightmost.right = rightside
+
         return newroot
+    }
+    else if(root.val < key){
+        root.right =  deleteNode(root.right, key)
+    }
+    else{
+        root.left =  deleteNode(root.left, key)
     }
 
     return root
-
     
 };
