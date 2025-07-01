@@ -11,29 +11,49 @@
  * @param {number} k
  * @return {boolean}
  */
+var BstIterator = function(root,reverse){
+    this.stack = []
+    this.reverse = reverse
+    this.pushAll(root)
+}
 
+BstIterator.prototype.pushAll = function(node){
+    while(node){
+        this.stack.push(node)
+        if(this.reverse){
+            node = node.right
+        }else{
+            node = node.left
+        }
+    }
+}
+
+BstIterator.prototype.next = function(){
+    let topnode = this.stack.pop()
+
+    if(this.reverse){
+        this.pushAll(topnode.left)
+    }
+    else{
+        this.pushAll(topnode.right)
+    }
+
+    return topnode.val
+}
 var findTarget = function(root, k) {
-    let arr = []
-    function dfs(node){
-        if(!node) return
-        dfs(node.left)
-        arr.push(node.val)
-        dfs(node.right)
-    }
-    dfs(root)
+    if(!root) return false
+    let l = new BstIterator(root,false)
+    let r = new BstIterator(root, true)
 
-    let l = 0, r = arr.length-1
-    while(l < r){
-        if(arr[l] + arr[r] == k){
-            return true
-        } 
-        else if(arr[l] + arr[r] < k){
-            l++
-        }
-        else{
-            r--
-        }
+    let i = l.next()
+    let j = r.next()
+
+    while(i < j){
+        if(i+j == k) return true
+        else if(i+j < k) i = l.next()
+        else j = r.next()
     }
+
     return false
     
 };
