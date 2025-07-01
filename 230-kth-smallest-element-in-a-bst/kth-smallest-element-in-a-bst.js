@@ -14,21 +14,18 @@
 var kthSmallest = function(root, k) {
     let counter = 0, result = null
 
-    function traversal(node){
-        if(node == null || result != null) return
+    function dfs(node){
+        if(!node) return
 
-        traversal(node.left)
-
-        counter++
-        if(counter == k){
-            result = node.val
-            return
+        dfs(node.left)
+        if(counter == k-1){
+            result = node
         }
-
-        traversal(node.right)
+        counter++
+        dfs(node.right)
     }
 
-    traversal(root)
-    return result
+    dfs(root)
+    return result.val
     
 };
