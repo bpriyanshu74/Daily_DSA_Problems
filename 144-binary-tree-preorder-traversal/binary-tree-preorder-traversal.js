@@ -11,26 +11,17 @@
  * @return {number[]}
  */
 var preorderTraversal = function(root) {
-    //iteratively
+    let pre = []
 
-    let stack = [], ans = []
+    function dfs(node){
+        if(!node) return
 
-    if(root == null) return ans
-
-    stack.push(root)
-
-    while(stack.length){
-        let size = stack.length
-
-        for(let i=0; i<size; i++){
-            let node = stack.pop()
-            ans.push(node.val)
-
-            if(node.right) stack.push(node.right)
-            if(node.left) stack.push(node.left)
-        }
+        pre.push(node.val)
+        dfs(node.left)
+        dfs(node.right)
     }
 
-    return ans
+    dfs(root)
+    return pre
     
 };
