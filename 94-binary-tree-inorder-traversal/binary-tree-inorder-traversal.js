@@ -11,23 +11,33 @@
  * @return {number[]}
  */
 var inorderTraversal = function(root) {
-    let st = [], inorder = [], node = new TreeNode()
+    // morris traversal inorder
 
-    node = root
+    let inorder = []
+    let cur = root
 
-
-    while(true){
-        if(node != null){
-            st.push(node)
-            node = node.left
+    while(cur){
+        if(cur.left == null){
+            inorder.push(cur.val)
+            cur = cur.right
         }
         else{
-            if(!st.length) break
-            node = st[st.length-1]
-            st.pop()
-            inorder.push(node.val)
-            node = node.right
+            let prev = cur.left
+            while(prev.right && prev.right != cur){
+                prev = prev.right
+            }
+            if(prev.right != cur){
+                prev.right = cur
+                cur = cur.left
+            }
+            else{
+                prev.right = null
+                inorder.push(cur.val)
+                cur = cur.right
+            }
         }
     }
+
     return inorder
+    
 };
