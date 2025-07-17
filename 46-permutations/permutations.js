@@ -3,30 +3,28 @@
  * @return {number[][]}
  */
 var permute = function(nums) {
-    let ans = [], ds = [], visited = new Array(nums.length).fill(false)
+    let ans = [], ds = [], freq = new Array(nums.length).fill(0)
 
-    function helper(arr, ans, ds, visited){
-    
-        if(ds.length == arr.length){
+    function dfs(ans,ds, freq){
+        if(ds.length == nums.length){
             ans.push([...ds])
             return
         }
-    
 
-        for(let i=0; i<arr.length; i++){
-            if(!visited[i]){
-                visited[i] = true
-                ds.push(arr[i])
-                helper(arr, ans, ds, visited)
-                visited[i] = false
+        for(let i=0; i< nums.length; i++){
+            if(!freq[i]){
+                freq[i] = 1
+                ds.push(nums[i])
+                dfs(ans,ds, freq)
+
                 ds.pop()
-                
+                freq[i] = 0
             }
-            
-            
         }
+        return ans
+
     }
-    helper(nums,ans,ds,visited)
-    return ans
+
+    return dfs(ans, ds, freq)
     
 };
