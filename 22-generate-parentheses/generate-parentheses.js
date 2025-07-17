@@ -3,24 +3,23 @@
  * @return {string[]}
  */
 var generateParenthesis = function(n) {
-    cur = "", result = []
-
-    function helper(cur,open,close){
-        if(cur.length == 2*n){
-            result.push(cur)
+    let ans = [], ds = ''
+    function dfs(ds, open, close){
+        if(ds.length == 2*n){
+            ans.push(ds)
             return
         }
-        
+
         if(open > 0){
-            helper(cur + "(", open-1, close)
+            dfs(ds+'(', open-1,close)
         }
         if(close > open){
-            helper(cur + ")", open, close-1)
+            dfs(ds+')', open, close-1)
         }
     }
 
-    helper(cur,n,n)
-    return result
+    dfs(ds, n, n)
 
+    return ans
     
 };
