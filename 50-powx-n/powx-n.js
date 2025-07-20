@@ -4,17 +4,16 @@
  * @return {number}
  */
 var myPow = function(x, n) {
-    if(n == 0) return 1
+    let m = Math.abs(n), res = 1
 
-    if(n < 0){
-        x = 1/x
-        n = -n
+    while(m >= 1){
+        if(m%2 != 0){
+            res *= x
+        }
+        x = x*x
+        m = Math.floor(m/2)
     }
-    if(n%2 == 0){
-        return myPow(x*x, n/2)
-    }
-    else{
-        return x*myPow(x, n-1)
-    }
+
+    return n < 0 ? 1/res : res
     
 };
