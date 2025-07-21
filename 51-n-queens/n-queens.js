@@ -3,53 +3,42 @@
  * @return {string[][]}
  */
 var solveNQueens = function(n) {
+    let board = new Array(n).fill().map(() => new Array(n).fill('.'))
+    let rows = n, cols = n
+    let res = []
 
-    let board = new Array(n).fill(null).map(() => new Array(n).fill("."))
-    let result = []
-
-    function nqueens(board,row){
-        if(row == n){
-            saveBoard(board)
-            return
+    function isSafe(row,col){
+        // checking vertical column
+        for(let i=0; i<row; i++){
+            if(board[i][col] == 'Q') return false
         }
 
-        for(let col=0; col<n; col++){
-            if(isSafe(board, row, col)){
-                board[row][col] = "Q"
-                nqueens(board,row+1)
-                board[row][col] = "."
-            }
+        // checking left diagonal
+        for(let i=row-1, j=col-1; i>= 0 && j >= 0; i--, j--){
+            if(board[i][j] == 'Q') return false
         }
-    }
-    function isSafe(board,row,col){
-        // check vertically
-        for(let r=row; r>=0; r--){
-            if(board[r][col] == "Q") return false
-        }
-        // check positive diagonal
-        for(let r=row,c=col; r >=0 && c >=0 ; r--,c--){
-            if(board[r][c] == "Q") return false
-        }
-        // check negative diagonal
-        for(let r=row,c=col; r >=0 && c < n ; r--,c++){
-            if(board[r][c] == "Q") return false
+        //checking right diagonal
+        for(let i=row-1, j=col+1; i >= 0 && j < cols; i--, j++){
+            if(board[i][j] == 'Q') return false
         }
         return true
     }
 
-    function saveBoard(board){
-        let cur_combination = []
-        for(let i=0; i<n; i++){
-            let tempstring = ""
-            for(let j=0; j< n; j++){
-                tempstring += board[i][j]
-            }
-            cur_combination.push(tempstring)
+    function dfs(row){
+        if(row == n){
+            let copy = board.map((r) => r.join(''))
+            res.push(copy)
+            return
         }
-        result.push([...cur_combination])
+        for(let col = 0; col < n; col++){
+            if(isSafe(row, col)){
+                board[row][col] = 'Q'
+                dfs(row+1)
+                board[row][col] = '.'
+            }
+        }
     }
-
-    nqueens(board,0)
-    return result
+    dfs(0)
+    return res
     
 };
