@@ -3,37 +3,34 @@
  * @return {string[][]}
  */
 var partition = function(s) {
-    let cur = [], ans = []
-    helper(s,cur,ans)
-    return ans
-    function helper(s, cur,ans){
-        if(s.length == 0){
-            ans.push([...cur])
-            return
-        }
-
-        for(let i=1; i<=s.length; i++){
-            let prefix = s.substring(0,i)
-            let remaining = s.substring(i)
-            if(isPalindrome(prefix)){
-                cur.push(prefix)
-                helper(remaining, cur, ans)
-                cur.pop()
-            }
-        }
-    }
-
-    function isPalindrome(s){
-        let l=0, r=s.length-1
-        while(l <= r){
-            if(s[l] != s[r]){
-                return false
-            }else{
-                l++
-                r--
-            }
+    function checkpal(str){
+        if(str.length == 0 || str.length == 1) return true
+        let l = 0, r = str.length-1
+        while(l < r){
+            if(str[l] != str[r]) return false
+            l++
+            r--
         }
         return true
     }
+    let res = [], part = []
+
+    function dfs(index){
+        if(index == s.length){
+            res.push([...part])
+        }
+        for(let i=index; i<s.length; i++){
+            let substring = s.slice(index, i+1)
+            if(checkpal(substring)){
+                part.push(substring)
+                dfs(i+1)
+                part.pop()
+            }
+            
+        }
+    }
+
+    dfs(0)
+    return res
     
 };
