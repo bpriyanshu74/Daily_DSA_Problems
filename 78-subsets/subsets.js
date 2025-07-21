@@ -4,18 +4,15 @@
  */
 var subsets = function(nums) {
     let res = []
-
-    function dfs(ds, index){
-        if(index == nums.length){
-            res.push([...ds])
-            return
+    function dfs(path, index){
+        res.push([...path])
+        for(let i=index; i<nums.length; i++){
+            path.push(nums[i])
+            dfs(path, i+1)
+            path.pop()
         }
-        ds.push(nums[index])
-        dfs(ds, index+1)
-
-        ds.pop()
-        dfs(ds, index+1)
-    }    
-    dfs([], 0)
+    }
+    dfs([],0)
     return res
+    
 };
