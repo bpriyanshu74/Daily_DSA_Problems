@@ -4,26 +4,23 @@
  * @return {number[][]}
  */
 var combinationSum = function(candidates, target) {
-    let result = [], cur_candidates = [], k = target, index=0
-    // candidates.sort((a,b) => a-b)
-
-    function helper(arr,k, index){
-        if(k==0){
-            result.push([...cur_candidates])
+    let res = []
+    function dfs(path, cursum, index){
+        if(index === candidates.length){
+            if(cursum == target){
+                res.push([...path])
+                return
+            }
             return
         }
+        if(cursum > target) return
+        path.push(candidates[index])
+        dfs(path, cursum + candidates[index], index)
 
-        for(let i=index; i<arr.length; i++){
-            // if(i > index && arr[i] == arr[i-1]) continue
-            if(arr[i] <= k){
-                cur_candidates.push(arr[i])
-                helper(arr,k-arr[i],i)
-                cur_candidates.pop()
-            }
-           
-        }
+        path.pop()
+        dfs(path, cursum, index+1)
     }
-    helper(candidates, k, index)
-    return result
+    dfs([],0, 0)
+    return res
     
 };
