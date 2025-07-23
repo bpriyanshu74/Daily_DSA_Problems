@@ -3,43 +3,31 @@
  * @return {void} Do not return anything, modify nums in-place instead.
  */
 var nextPermutation = function(nums) {
-    function reverse(arr,i,j)
-    {
-        while(i<j)
-        {
-            [arr[i], arr[j]] = [arr[j], arr[i]]
-            i++
-            j--
-        }
-        return arr
+
+    function swap(x,y){
+        [nums[x], nums[y]] = [nums[y], nums[x]]
     }
-    let breakpoint = -1;
-    let n = nums.length;
-    for (let i = n - 1; i > 0; i--) 
-    {
-        if (nums[i] > nums[i - 1]) 
-        {
-            breakpoint = i - 1;
-            break
-        }
+    let i = nums.length-2
+
+    // finding the first small number from the last
+
+    while(i >= 0 && nums[i]>= nums[i+1]) i--
+
+    // checking whether we found or not
+
+    if(i >= 0){
+        // finding the first big number to swap
+        let j = nums.length-1
+        while(nums[j] <= nums[i]) j--
+        swap(i,j)
     }
 
-    if (breakpoint == -1) 
-    {
-        return reverse(nums, 0, nums.length-1)
-    } 
-    else 
-    {
-        // finding the next greater than breakpoint
-        for (let i = n-1; i > breakpoint; i--) 
-        {
-            if (nums[i] > nums[breakpoint]) 
-            {
-                [nums[i], nums[breakpoint]] = [nums[breakpoint], nums[i]]
-                break
-            }
-        }
-        return reverse(nums, breakpoint+1, nums.length-1)
+    // reversing the suffix
+    let left = i+1, right = nums.length-1
+    while(left < right){
+        swap(left, right)
+        left++
+        right--
     }
     
 };
