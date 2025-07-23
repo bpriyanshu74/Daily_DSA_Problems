@@ -7,17 +7,14 @@ var sortColors = function(nums) {
     for(let num of nums){
         freq[num]++
     }
+    let index = 0
+    for(let color = 0; color < 3; color++){
+        while(freq[color]-- > 0){
+            nums[index++] = color
 
-    let index = 0, cur = 0
-
-    while(true){
-        if(index == nums.length) break
-        while( cur < 3 && freq[cur] == 0){
-                cur++
-            }
-        freq[cur]--
-        nums[index] = cur
-        index++
+        }
     }
+
+
     
 };
