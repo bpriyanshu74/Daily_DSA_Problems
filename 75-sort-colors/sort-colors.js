@@ -3,18 +3,25 @@
  * @return {void} Do not return anything, modify nums in-place instead.
  */
 var sortColors = function(nums) {
-    let freq = new Array(3).fill(0)
-    for(let num of nums){
-        freq[num]++
-    }
-    let index = 0
-    for(let color = 0; color < 3; color++){
-        while(freq[color]-- > 0){
-            nums[index++] = color
+    let low = 0, mid = 0, high = nums.length-1
 
+    function swap(x,y){
+        [nums[x], nums[y]] = [nums[y], nums[x]]
+    }
+
+    while(mid <= high){
+        if(nums[mid] == 0){
+            swap(low,mid)
+            low++
+            mid++
+        }
+        else if(nums[mid] == 1){
+            mid++
+        }
+        else if(nums[mid] == 2){
+            swap(mid, high)
+            high--
         }
     }
-
-
     
 };
