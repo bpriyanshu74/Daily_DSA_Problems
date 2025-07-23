@@ -9,7 +9,6 @@ var maxSubArray = function(nums) {
         r++
         maxsum = Math.max(sum, maxsum)
         if(sum < 0){
-            l = r
             sum = 0
         }
     }
