@@ -3,23 +3,21 @@
  * @return {void} Do not return anything, modify nums in-place instead.
  */
 var sortColors = function(nums) {
-    // dutch national flag approach
+    let freq = new Array(3).fill(0)
+    for(let num of nums){
+        freq[num]++
+    }
 
-    let low=0, mid=0, high= nums.length-1
+    let index = 0, cur = 0
 
-    while(mid <= high){
-        if(nums[mid] == 0){
-            [nums[low], nums[mid]] = [nums[mid], nums[low]]
-            mid++
-            low++
-        }
-        else if(nums[mid] == 1){
-            mid++
-        }
-        else{
-            [nums[mid], nums[high]] = [nums[high], nums[mid]]
-            high--
-        }
+    while(true){
+        if(index == nums.length) break
+        while( cur < 3 && freq[cur] == 0){
+                cur++
+            }
+        freq[cur]--
+        nums[index] = cur
+        index++
     }
     
 };
