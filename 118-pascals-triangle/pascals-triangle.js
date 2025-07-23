@@ -3,27 +3,26 @@
  * @return {number[][]}
  */
 var generate = function(numRows) {
-    
+    let res = [], temp = []
 
-    let sample = [[1], [1,1]], k = 2
-    if(numRows == 2) return sample
-    if(numRows == 1) return [sample[0]] 
-
-    while(k < numRows){
-        let med = []
-        for(let i=0; i<sample[k-1].length; i++)
-        {   
-            for(let j=i+1; j<sample[k-1].length; j++)
-            {
-                med.push(sample[k-1][i] + sample[k-1][j])
-                break
-            }  
+    for(let i=1 ; i<= numRows; i++){
+        if(i == 1) res.push([1])
+        else if(i == 2) res.push([1,1])
+        else{
+            let lastentry = res[res.length-1]
+            let prev = 0
+            for(let j=0; j<lastentry.length; j++){
+                let cur = lastentry[j]
+                let sum = prev + cur
+                temp.push(sum)
+                prev = cur 
+            }
+            temp.push(1)
+            res.push([...temp])
+            temp = []
         }
-        sample.push([1,...med,1])
-        
-        k++
-    }
 
-    return sample
+    }
+    return res
     
 };
