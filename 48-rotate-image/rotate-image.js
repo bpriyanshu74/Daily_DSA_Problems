@@ -4,21 +4,17 @@
  */
 var rotate = function(matrix) {
     let n = matrix.length
-    let newMatrix = new Array(n).fill().map(() => new Array())
-    let indexi = 0
-    for(let i=0; i<n; i++){
-        for(let j=n-1; j >= 0; j--){
-            let ele = matrix[j][i]
-            if(newMatrix[indexi].length == n) indexi++
-
-            newMatrix[indexi].push(ele)
-            
-        }
+    // vertical reversal
+    let left = 0, right = n-1
+    while(left < right){
+        [matrix[left], matrix[right]] = [matrix[right], matrix[left]]
+        left++
+        right--
     }
 
-    for(let i=0; i<n; i++){
-        for(let j=0; j<n; j++){
-            matrix[i][j] = newMatrix[i][j]
+    for(let row = 0; row < n; row++){
+        for(let col = row+1; col < n; col++){
+            [matrix[row][col], matrix[col][row]] = [matrix[col][row], matrix[row][col]]
         }
     }
 
