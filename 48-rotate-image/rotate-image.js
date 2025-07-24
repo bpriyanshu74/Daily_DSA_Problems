@@ -3,24 +3,24 @@
  * @return {void} Do not return anything, modify matrix in-place instead.
  */
 var rotate = function(matrix) {
-    // transpose of the matrix
-    let rows = matrix.length
-    let cols = matrix[0].length
+    let n = matrix.length
+    let newMatrix = new Array(n).fill().map(() => new Array())
+    let indexi = 0
+    for(let i=0; i<n; i++){
+        for(let j=n-1; j >= 0; j--){
+            let ele = matrix[j][i]
+            if(newMatrix[indexi].length == n) indexi++
 
-    for(let i=0; i< rows; i++){
-        for(let j=i+1; j< cols; j++){
-            [matrix[i][j],matrix[j][i]] = [matrix[j][i], matrix[i][j]]
+            newMatrix[indexi].push(ele)
+            
         }
     }
-    // now reversing the rows
-    for(let ele of matrix){
-        let right = matrix[0].length-1
-        let left = 0
-        while(left <= right){
-            [ele[left],ele[right]] = [ele[right], ele[left]]
-            left++
-            right--
+
+    for(let i=0; i<n; i++){
+        for(let j=0; j<n; j++){
+            matrix[i][j] = newMatrix[i][j]
         }
     }
-    return matrix
+
+    
 };
