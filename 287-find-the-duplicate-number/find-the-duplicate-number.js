@@ -3,11 +3,24 @@
  * @return {number}
  */
 var findDuplicate = function(nums) {
-    let arr = new Array(nums.length).fill(false)
+    let slow = nums[0], fast = nums[0]
 
-    for(let num of nums){
-        if(arr[num] == true) return num
-        arr[num] = true
+    // detecting cycle
+
+    do{
+        slow = nums[slow]
+        fast = nums[nums[fast]]
+    }while(slow != fast)
+
+    // detecting entry point for duplicate
+
+    slow = nums[0]
+
+    while(slow != fast){
+        slow = nums[slow]
+        fast = nums[fast]
     }
+
+    return slow
     
 };
