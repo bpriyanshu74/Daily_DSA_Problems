@@ -3,11 +3,11 @@
  * @return {number}
  */
 var findDuplicate = function(nums) {
-    let freq = new Set()
+    let arr = new Array(nums.length).fill(false)
 
     for(let num of nums){
-        if(freq.has(num)) return num
-        freq.add(num)
+        if(arr[num] == true) return num
+        arr[num] = true
     }
     
 };
