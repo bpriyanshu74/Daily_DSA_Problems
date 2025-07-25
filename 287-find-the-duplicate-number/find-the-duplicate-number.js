@@ -3,19 +3,11 @@
  * @return {number}
  */
 var findDuplicate = function(nums) {
-    let slow = nums[0], fast = nums[0]
+    let freq = new Set()
 
-    do{
-        slow = nums[slow]
-        fast = nums[nums[fast]]
-    }while(slow != fast)
-    fast = nums[0]
-    while(slow != fast){
-        slow = nums[slow]
-        fast = nums[fast]
+    for(let num of nums){
+        if(freq.has(num)) return num
+        freq.add(num)
     }
-
-    return slow
-    
     
 };
