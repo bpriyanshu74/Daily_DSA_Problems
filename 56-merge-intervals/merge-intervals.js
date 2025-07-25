@@ -3,30 +3,24 @@
  * @return {number[][]}
  */
 var merge = function(intervals) {
+    if(intervals.length <= 1) return intervals
     intervals.sort((a,b) => a[0]-b[0])
+    let res = []
 
-    let ans = [], ans_pointer = -1, left = 0, n = intervals.length
+    let temp = intervals[0]
 
-    while(left < n){
-        if(ans_pointer == -1){
-            ans.push(intervals[left])
-            ans_pointer++
-        }
-
-        let current = intervals[left]
-        let last_added = ans[ans.length-1]
-
-        if(current[0] <= last_added[1]){
-            if(current[1] > last_added[1]){
-                last_added[1] = current[1]
-            }
+    for(let i=1; i<intervals.length; i++){
+        if(intervals[i][0] > temp[1]){
+            res.push(temp)
+            temp = intervals[i]
         }
         else{
-            ans.push(current)
+            temp[0] = Math.min(temp[0], intervals[i][0])
+            temp[1] = Math.max(temp[1], intervals[i][1])
         }
-        left++
     }
+    res.push(temp)
 
-    return ans
+    return res
     
 };
