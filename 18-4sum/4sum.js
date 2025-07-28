@@ -6,21 +6,37 @@
 var fourSum = function(nums, target) {
     // brute force
     if(nums.length < 4) return []
+    let res = []
 
-    let res = new Set()
-    for(let i=0; i<nums.length-2; i++){
-        for(let j=i+1; j<nums.length-1; j++){
-            let hashset = new Set()
-            for(let k=j+1; k<nums.length; k++){
-                let sum = nums[i]+nums[j]+nums[k]
-                let need = target - sum
-                if(hashset.has(need)){
-                    let quad = [nums[i], nums[j], nums[k], need].sort((a,b) => a-b)
-                    res.add(quad.toString())
+    nums.sort((a,b) => a-b)
+    for(let i=0; i<nums.length-3; i++){
+        if(i > 0 && nums[i] == nums[i-1]) continue
+        for(let j=i+1; j<nums.length-2; j++){
+            if (j > i + 1 && nums[j] === nums[j - 1]) continue;
+            let newtarget = target - (nums[i] + nums[j])
+
+            let l = j+1, r = nums.length-1
+
+            while(l < r){
+                let sum = nums[l] + nums[r]
+                if(sum == newtarget){
+                    res.push([nums[i], nums[j], nums[l], nums[r]])
+                    while(l < r && nums[l] == nums[l+1]) l++
+                    while(l < r && nums[r] == nums[r-1]) r--
+
+                    l++
+                    r--
                 }
-                hashset.add(nums[k])    
+                else if(sum < newtarget){
+                    l++
+                }
+                else{
+                    r--
+                }
             }
         }
     }
-    return Array.from(res).map(str => str.split(',').map(Number));
+
+    return res
+
 };
