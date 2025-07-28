@@ -3,9 +3,9 @@
  * @return {number}
  */
 var longestConsecutive = function(nums) {
-    let numset = new Set(nums), numarr = Array.from(numset), maxcount = 0
+    let numset = new Set(nums), maxcount = 0
 
-    for(let num of numarr){
+    for(let num of numset){
         let cur = num, count = 1
         if(numset.has(cur-1)) continue
 
