@@ -3,16 +3,21 @@
  * @return {number}
  */
 var lengthOfLongestSubstring = function(s) {
-    let hashmap = new Map(), l = 0, maxl = 0
-
-    for(let r = 0; r<s.length; r++){
-        if(hashmap.has(s[r])){
-            l = Math.max(l, hashmap.get(s[r])+1)
+    let maxl = 0
+    for(let i=0; i<s.length; i++){
+        let unique = new Set()
+        for(let j=i; j<s.length; j++){
+            
+            if(unique.has(s[j])){
+                break
+            }else{
+                unique.add(s[j])
+                maxl = Math.max(maxl, j-i+1)
+            }
         }
-        maxl = Math.max(maxl, r-l+1)
-        hashmap.set(s[r],r)
+        
     }
-    return maxl
 
+    return maxl
     
 };
