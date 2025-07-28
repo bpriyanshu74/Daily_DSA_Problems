@@ -4,38 +4,23 @@
  * @return {number[][]}
  */
 var fourSum = function(nums, target) {
-   
-    // solution is using i,j and then two pointers for rest of the array.
+    // brute force
+    if(nums.length < 4) return []
 
-    //1. sort the array
-    nums.sort((a,b) => a-b)
-
-    let quads = [], n = nums.length
-
-    for(let i=0; i<nums.length-3; i++){
-        if(i > 0 && nums[i] == nums[i-1]) continue
-        for(let j=i+1; j<nums.length-2; j++){
-            if(j > i+1 && nums[j] == nums[j-1]) continue
-            let target2 = target - nums[i] - nums[j]
-
-            let l = j+1, r = n-1
-
-            while(l<r){
-                let twosum = nums[l] + nums[r]
-                if(twosum == target2){
-                    let temp = [nums[i], nums[j], nums[l], nums[r]]
-                    quads.push(temp)
-                    while(l < r && nums[l] == temp[2]) l++
-                    while(l < r && nums[r] == temp[3]) r--
+    let res = new Set()
+    for(let i=0; i<nums.length-2; i++){
+        for(let j=i+1; j<nums.length-1; j++){
+            let hashset = new Set()
+            for(let k=j+1; k<nums.length; k++){
+                let sum = nums[i]+nums[j]+nums[k]
+                let need = target - sum
+                if(hashset.has(need)){
+                    let quad = [nums[i], nums[j], nums[k], need].sort((a,b) => a-b)
+                    res.add(quad.toString())
                 }
-                else if(twosum < target2){
-                    l++
-                }
-                else{
-                    r--
-                }
+                hashset.add(nums[k])    
             }
         }
     }
-    return quads
+    return Array.from(res).map(str => str.split(',').map(Number));
 };
