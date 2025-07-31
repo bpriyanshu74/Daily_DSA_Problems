@@ -12,40 +12,38 @@
  * @return {ListNode}
  */
 var getIntersectionNode = function(headA, headB) {
-    let len1 = 0, len2 = 0
-
-    let tempa = headA, tempb = headB
-
-    while(tempa){
+    if(!headA || !headB) return null
+    let s1 = headA, s2 = headB, len1 = 1, len2 = 1
+    while(s1){
+        s1 = s1.next
         len1++
-        tempa = tempa.next
+
     }
-    while(tempb){
+    while(s2){
+        s2 = s2.next
         len2++
-        tempb = tempb.next
     }
-
-    let temp1 = headA, temp2 = headB, diff = Math.abs(len1-len2)
     if(len1 > len2){
-        while(diff > 0){
-            temp1 = temp1.next
-            diff--
+        let steps = len1 - len2
+        while(steps > 0){
+            headA = headA.next
+            steps--
         }
     }
-    else{
-        while(diff > 0){
-            temp2 = temp2.next
-            diff--
+    if(len2 > len1){
+        let steps = len2 - len1
+        while(steps > 0){
+            headB = headB.next
+            steps--
         }
     }
 
-
-    while(temp1 && temp2){
-        if(temp1 == temp2) return temp1
-        temp1 = temp1.next
-        temp2 = temp2.next
+    while(headA && headB){
+        if(headA == headB) return headA
+        headA = headA.next
+        headB = headB.next
     }
 
     return null
-    
+
 };
