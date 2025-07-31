@@ -11,32 +11,21 @@
  * @return {ListNode}
  */
 var reverseKGroup = function(head, k) {
-    let arr = [], temp = head
-
+    if(!head || !head.next) return head
+    let temp = head
     while(temp){
-        arr.push(temp.val)
-        temp = temp.next
-    }
-
-    let segments = Math.floor(arr.length/k), l = 0, r = k-1
-
-    while(segments > 0){
-        let templ = l, tempr = r
-        while(templ < tempr){
-            [arr[templ], arr[tempr]] = [arr[tempr], arr[templ]]
-            templ++
-            tempr--
+        let i = 0, temp1 = temp, stack = []
+        while(i < k && temp1){
+            stack.push(temp1.val)
+            i++
+            temp1 = temp1.next
         }
-        segments--
-        if(l+k < arr.length) l+=k
-        if(r+k < arr.length) r+=k
+        if(stack.length != k) return head
+        while(stack.length > 0){
+            temp.val = stack.pop()
+            temp = temp.next
+        }
     }
-    let temp1 = head
-    for(let i=0; i<arr.length; i++){
-        temp1.val = arr[i]
-        temp1 = temp1.next
-    }
-
     return head
     
 };
