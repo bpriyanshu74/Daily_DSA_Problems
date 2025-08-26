@@ -3,13 +3,13 @@
  * @return {number}
  */
 var orangesRotting = function(grid) {
-    let m = grid.length, n = grid[0].length, q = []
-    let maxtime = 0, fresh = 0, directions = [[1,0], [0,1], [-1,0], [0,-1]]
-    // puttin all the rotten oranges in the queue
-    for(let i=0; i<m; i++){
-        for(let j=0; j<n; j++){
+    let fresh = 0, maxtime = 0, q = []
+    let dir = [[1,0], [0,1], [-1,0], [0,-1]]
+
+    for(let i=0; i<grid.length; i++){
+        for(let j=0; j<grid[0].length; j++){
             if(grid[i][j] == 2){
-                q.push([[i,j], maxtime])
+                q.push([i,j,maxtime])
             }
             if(grid[i][j] == 1){
                 fresh++
@@ -18,20 +18,18 @@ var orangesRotting = function(grid) {
     }
 
     while(q.length){
-        let [cur, time] = q.shift()
-        let [i,j] = cur
-        maxtime = Math.max(maxtime,time)
-        for(let [di, dj] of directions){
-            let dx = i + di, dy = j + dj
-            if(dx<m && dx >= 0 && dy <n && dy >= 0 && grid[dx][dy] == 1){
-                q.push([[dx,dy], time+1])
-                grid[dx][dy] = 2
+        let [x,y,time] = q.shift()
+        maxtime = Math.max(maxtime, time)
+        for(let [dx,dy] of dir){
+            let nx = dx+x, ny = dy+y
+            if(nx >= 0 && nx < grid.length && ny >= 0 && ny < grid[0].length && grid[nx][ny] == 1){
+                grid[nx][ny] = 2
                 fresh--
+                q.push([nx,ny, time+1])
             }
         }
     }
 
     return fresh ? -1 : maxtime
-
     
 };
