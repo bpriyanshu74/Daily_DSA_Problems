@@ -3,13 +3,22 @@
  * @return {number}
  */
 var maxProfit = function(prices) {
-    let minprice = Infinity, maxprofit = 0
+    let n = prices.length
+    let sell = new Array(n).fill(0)
 
-    for(let i=0; i<prices.length; i++){
-        minprice = Math.min(minprice, prices[i])
-        maxprofit = Math.max(maxprofit, prices[i]-minprice)
+    let maxm = prices[n-1]
+
+    for(let i=n-1; i>=0; i--){
+        maxm = Math.max(maxm, prices[i])
+        sell[i] = maxm
     }
 
-    return maxprofit
+    let ans = 0
+
+    for(let i=0; i<n; i++){
+        ans = Math.max(ans, sell[i]-prices[i])
+    }
+
+    return ans
     
 };
