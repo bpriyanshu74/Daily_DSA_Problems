@@ -11,14 +11,10 @@ var rearrangeArray = function(nums) {
     for(let i=0; i<n; i++){
         if(nums[i] >= 0){
             temp[x] = nums[i]
-            if(x+2 <= n-1){
-                x+=2
-            }
+            x += 2
         }else{
             temp[y] = nums[i]
-            if(y+2 <= n-1){
-                y+=2
-            }
+            y += 2
         }
     }
 
