@@ -5,16 +5,32 @@
  */
 var rotate = function(nums, k) {
     let n = nums.length
-    k = k % n 
+    k = k % n
 
-    let a = nums.slice(0, n-k), b = nums.slice(n-k)
+    let p=0, q = n-1
 
-    let new_arr = [...b, ...a]
+    while(p<q){
+        [nums[p],nums[q]] = [nums[q], nums[p]]
+        p++
+        q--
+    }
 
-    for(let i=0; i<nums.length; i++){
-        nums[i] = new_arr[i]
+    let i=0, j = k-1
+    while(i < j){
+        [nums[i], nums[j]] = [nums[j], nums[i]]
+        i++
+        j--
+    }
+
+    i = k, j = n-1
+
+    while(i < j){
+        [nums[i], nums[j]] = [nums[j], nums[i]]
+        i++
+        j--
     }
 
     return nums
-    
+
+
 };
