@@ -3,10 +3,16 @@
  * @return {number}
  */
 var missingNumber = function(nums) {
-    nums.sort(function(a,b){return a-b})
-    for(i=0;i<=nums.length;i++){
-        if(nums[i] != i){
-            return i
+    let n = nums.length, k=0
+    nums.sort((a,b) => a-b)
+
+    for(let num of nums){
+        if(num == k){
+            k++
+        }
+        else{
+            return k
         }
     }
+    return n
 };
