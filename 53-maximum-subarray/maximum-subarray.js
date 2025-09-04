@@ -8,12 +8,7 @@ var maxSubArray = function(nums) {
     let i=1, cursum = nums[0]
 
     while(i < nums.length){
-        if(cursum < 0){
-            cursum = nums[i]
-        }
-        else{
-            cursum += nums[i]
-        }
+        cursum = Math.max(nums[i], cursum+nums[i])
         maxsum = Math.max(cursum, maxsum)
         i++
     }
