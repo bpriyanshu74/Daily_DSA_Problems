@@ -3,16 +3,18 @@
  * @return {number}
  */
 var missingNumber = function(nums) {
-    let n = nums.length, k=0
-    nums.sort((a,b) => a-b)
+    let n = nums.length
+
+    let inittial_sum = 0, org_sum = 0
+
+    for(let i=0; i<= n; i++){
+        inittial_sum += i
+    }
 
     for(let num of nums){
-        if(num == k){
-            k++
-        }
-        else{
-            return k
-        }
+        org_sum += num
     }
-    return n
+
+    return inittial_sum - org_sum
+    
 };
