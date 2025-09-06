@@ -3,31 +3,28 @@
  * @return {void} Do not return anything, modify nums in-place instead.
  */
 var nextPermutation = function(nums) {
+    // finding the pivot
+    let n = nums.length, i = n-2
 
-    function swap(x,y){
-        [nums[x], nums[y]] = [nums[y], nums[x]]
+    while(i >= 0 && nums[i] >= nums[i+1]){
+        i--
     }
-    let i = nums.length-2
-
-    // finding the first small number from the last
-
-    while(i >= 0 && nums[i]>= nums[i+1]) i--
-
-    // checking whether we found or not
 
     if(i >= 0){
-        // finding the first big number to swap
-        let j = nums.length-1
-        while(nums[j] <= nums[i]) j--
-        swap(i,j)
+        let j = n-1
+        while(nums[j] <= nums[i]){
+            j--
+        }
+        [nums[i], nums[j]] = [nums[j], nums[i]]
+    }
+    // reversing the entire suffix
+    let l = i+1, r = n-1
+    while(l < r){
+        [nums[l], nums[r]] = [nums[r], nums[l]]
+        l++
+        r--
     }
 
-    // reversing the suffix
-    let left = i+1, right = nums.length-1
-    while(left < right){
-        swap(left, right)
-        left++
-        right--
-    }
+    return nums
     
 };
