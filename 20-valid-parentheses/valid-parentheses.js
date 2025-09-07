@@ -3,17 +3,17 @@
  * @return {boolean}
  */
 var isValid = function(s) {
-    let pairs = {'(':')', '[':']', '{':'}'}
-    let stack = []
+    let pairs = {'(':')', '[':']', '{':'}'}, stack = []
+
     for(let ch of s){
-        if(ch == '(' || ch == '[' || ch == '{'){
-            stack.push(ch)
+        if(ch in pairs){
+            stack.push(pairs[ch])
         }
         else{
-            let top = stack.pop()
-            if(ch != pairs[top]) return false
+            if(stack.length == 0 || ch != stack.pop()) return false
         }
     }
+
     return stack.length == 0
     
 };
