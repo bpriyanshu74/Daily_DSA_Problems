@@ -18,12 +18,6 @@ var nextGreaterElement = function(nums1, nums2) {
         hashmap.set(stack.pop(), -1)
     }
 
-    let ans = new Array(nums1.length).fill(-1)
-
-    for(let i=0; i< nums1.length; i++){
-        ans[i] = hashmap.get(nums1[i])
-    }
-
-    return ans
+    return nums1.map(num => hashmap.get(num))
     
 };
