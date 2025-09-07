@@ -4,36 +4,25 @@
  */
 var trap = function(height) {
     let n = height.length
-    let leftbound = new Array(n)
-    let rightbound = new Array(n)
-
-    leftbound[0] = height[0]
-    rightbound[n-1] = height[n-1]
-
-    let lmaxm = height[0]
-
-    for(let i=1; i<n; i++){
-        if(height[i] > lmaxm){
-            lmaxm = height[i]
-        }
-        leftbound[i] = lmaxm
-    }
-
-    let rmaxm = height[n-1]
-
-    for(let i=n-2; i>= 0; i--){
-        if(height[i] > rmaxm){
-            rmaxm = height[i]
-        }
-        rightbound[i] = rmaxm
-    }
-
-    let trappedwater = 0
+    let lb = new Array(n).fill(0), lmax = height[0]
+    let rb = new Array(n).fill(0), rmax = height[n-1]
 
     for(let i=0; i<n; i++){
-        trappedwater += Math.min(leftbound[i], rightbound[i]) - height[i]
+        lmax = Math.max(lmax, height[i])
+        lb[i] = lmax
     }
 
-    return trappedwater
+    for(let i = n-1; i>= 0; i--){
+        rmax = Math.max(rmax, height[i])
+        rb[i] = rmax
+    }
+
+    let trapped = 0
+
+    for(let i=0; i<n; i++){
+        trapped += Math.min(lb[i], rb[i]) - height[i]
+    }
+
+    return trapped
     
 };
