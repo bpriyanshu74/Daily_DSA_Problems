@@ -3,17 +3,15 @@
  * @return {boolean}
  */
 var isValid = function(s) {
-    var stack = []
-    var hashmap = {"(": ")", "[": "]", "{":"}"}
-
-    for(var ele of s){
-        if(ele in hashmap){
-            stack.push(hashmap[ele])
+    let pairs = {'(':')', '[':']', '{':'}'}
+    let stack = []
+    for(let ch of s){
+        if(ch == '(' || ch == '[' || ch == '{'){
+            stack.push(ch)
         }
         else{
-            if(stack.length == 0 || ele !== stack.pop()){
-                return false
-            }
+            let top = stack.pop()
+            if(ch != pairs[top]) return false
         }
     }
     return stack.length == 0
