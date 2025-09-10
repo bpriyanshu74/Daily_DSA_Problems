@@ -3,25 +3,26 @@
  * @return {number}
  */
 var trap = function(height) {
-    let n = height.length
-    let lb = new Array(n).fill(0), lmax = -Infinity
-    let rb = new Array(n).fill(0), rmax = -Infinity
+    // lets try doing it using stack
+    let stack = [], n = height.length, water = 0
 
-    // filling the left boundary
-    for(let i=0; i<n; i++){
-        lmax = Math.max(height[i], lmax)
-        lb[i] = lmax
-    }
+    for(let i=0; i<height.length; i++){
+        while(stack.length && height[i] > height[stack[stack.length-1]]){
+            let rb_index = stack.pop()
 
-    for(let i=n-1; i>=0; i--){
-        rmax = Math.max(height[i], rmax)
-        rb[i] = rmax
-    }
+            if(stack.length == 0) break
 
-    let water = 0
-    for(let i=0; i<n; i++){
-        water += Math.min(lb[i], rb[i]) - height[i]
+            let lb_index = stack[stack.length-1]
+
+            let distance = i - lb_index - 1
+
+            let h = Math.min(height[lb_index], height[i]) - height[rb_index]
+            water += distance * h
+
+        }
+        stack.push(i)
     }
 
     return water
+    
 };
