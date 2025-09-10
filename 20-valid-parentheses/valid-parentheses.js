@@ -6,14 +6,11 @@ var isValid = function(s) {
     let pairs = {'(':')', '[':']', '{':'}'}, stack = []
 
     for(let ch of s){
-        if(ch in pairs){
+        if(ch == '(' || ch == '[' || ch == '{'){
             stack.push(pairs[ch])
-        }
-        else{
-            if(stack.length == 0 || ch != stack.pop()) return false
+        }else{
+            if(ch != stack.pop()) return false
         }
     }
-
-    return stack.length == 0
-    
+    return stack.length ? false : true
 };
