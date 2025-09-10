@@ -3,37 +3,36 @@
  * @return {number}
  */
 var nextGreaterElement = function(n) {
-    let temp = n.toString().split('').map(digit => parseInt(digit, 10));
+    let digits = n.toString().split('').map(digit => Number(digit))
+    let pivot = -1
+    let m = digits.length
 
-    // Find the first decreasing element from the end
-    let i = temp.length - 2;
-    while (i >= 0 && temp[i] >= temp[i + 1]) {
-        i--;
+    for(let i=m-2; i>=0; i--){
+        if(digits[i] < digits[i+1]){
+            pivot = i
+            break
+        }
     }
 
-    // If no such element is found, return -1 as no greater permutation is possible
-    if (i === -1) return -1;
+    if(pivot == -1) return -1
 
-    // Find the smallest element greater than temp[i] to the right of i
-    let j = temp.length - 1;
-    while (temp[j] <= temp[i]) {
-        j--;
+    for(let i = m-1; i> pivot; i--){
+        if(digits[i] > digits[pivot]){
+            [digits[i], digits[pivot]] = [digits[pivot], digits[i]]
+            break
+        }
     }
 
-    // Swap the elements at i and j
-    [temp[i], temp[j]] = [temp[j], temp[i]];
+    let left = pivot+1, right = m-1
 
-    // Reverse the array after index i
-    let firstPart = temp.slice(0, i + 1);
-    let secondPart = temp.slice(i + 1).reverse();
+    while(left < right){
+        [digits[left], digits[right]] = [digits[right], digits[left]]
+        left++
+        right--
+    }
 
-    let newArray = [...firstPart, ...secondPart];
+    let ans = digits.join('')
 
-    // Convert the array back to a number
-    let res = Number(newArray.join(''));
-
-    // Check if the result is within the 32-bit signed integer range
-    if (res > 2**31 - 1) return -1;
-
-    return res;
+    return ans > 2**31-1 ? -1 : Number(ans)
+    
 };
