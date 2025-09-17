@@ -13,11 +13,10 @@ var deleteDuplicates = function(head) {
     let temp = head
 
     while(temp && temp.next){
-        if(temp.val == temp.next.val){
+        while(temp.next && temp.val == temp.next.val){
             temp.next = temp.next.next
-        }else{
-            temp = temp.next
         }
+        temp = temp.next
     }
 
     return head
