@@ -17,11 +17,11 @@ var mergeKLists = function(lists) {
         let dummy = new ListNode(-1), temp = dummy
         while(a && b){
             if(a.val <= b.val){
-                temp.next = new ListNode(a.val) 
+                temp.next = a 
                 a = a.next
             }
             else{
-                temp.next = new ListNode(b.val)
+                temp.next = b
                 b = b.next
             }
             temp = temp.next
