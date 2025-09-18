@@ -12,27 +12,23 @@
  * @return {ListNode}
  */
 var reverseBetween = function(head, left, right) {
-    let arr = []
+    if(!head || left == right) return head
 
-    let temp = head
-    while(temp){
-        arr.push(temp.val)
-        temp = temp.next
+    let dummy = new ListNode(-1), prev = dummy
+    dummy.next = head
+
+    for(let i=1; i<left; i++){
+        prev = prev.next
     }
-    let l = left-1, r = right-1
+    let cur = prev.next
 
-    while(l < r){
-        [arr[l], arr[r]] = [arr[r], arr[l]]
-        l++
-        r--
-    }
-
-    temp = head
-    for(let itr of arr){
-        temp.val = itr
-        temp = temp.next
+    for(let i=0; i<right-left; i++){
+        let node = cur.next // node to be moved
+        cur.next = node.next // detach the node
+        node.next = prev.next // update the next of prev
+        prev.next = node
     }
 
-    return head
+    return dummy.next
     
 };
