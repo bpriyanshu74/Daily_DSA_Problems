@@ -10,18 +10,21 @@
  * @return {boolean}
  */
 var isPalindrome = function(head) {
-    let arr = [], temp = head
+    if(!head.next) return true
+    let stack = []
+
+    let temp = head
     while(temp){
-        arr.push(temp.val)
+        stack.push(temp.val)
         temp = temp.next
     }
 
-    let l=0, r = arr.length-1
-    while(l < r){
-        if(arr[l] != arr[r]) return false
-        l++
-        r--
+    temp = head
+    while(temp){
+        if(temp.val != stack.pop()) return false
+        temp = temp.next
     }
+
     return true
     
 };
