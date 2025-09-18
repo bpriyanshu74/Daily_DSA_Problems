@@ -11,37 +11,33 @@
  * @return {ListNode}
  */
 var rotateRight = function(head, k) {
-    // edge case
-    if( head == null || head.next == null) return head
+    if( !head) return head
 
-    // counting number of nodes
-    let n = 0
-    let temp = head
+    let len = 0, temp = head
     while(temp){
-        n++
+        len++
         temp = temp.next
     }
-    // effective k
-    if(k > n) k = k%n
-    if(k==0 || k==n) return head
 
-    // reaching the break point for final output
-    let slow = head, fast = head
-    while(k > 0){
-        fast = fast.next
-        k--
+    k = k % len
+    if(k == 0) return head
+
+    temp = head
+
+    for(let i=1; i<len-k; i++){
+        temp = temp.next
     }
+    let new_head = temp.next
+    temp.next = null
 
-    while(fast.next){
-        slow = slow.next
-        fast = fast.next
+    let temp1 = new_head
+    while(temp1.next){
+        temp1 = temp1.next
     }
+    temp1.next = head
 
-    let res = slow.next
-    slow.next = null
-    fast.next = head
+    return new_head
 
-    return res
-
+    
     
 };
