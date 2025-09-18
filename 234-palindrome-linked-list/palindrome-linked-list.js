@@ -10,17 +10,28 @@
  * @return {boolean}
  */
 var isPalindrome = function(head) {
-    let left = head
+    let slow = head, fast = head
 
-    function dfs(right){
-        if(right == null) return true
-        if(!dfs(right.next)) return false
-        if(left.val != right.val) return false
-
-        left = left.next
-        return true
-
+    while(fast && fast.next){
+        slow = slow.next
+        fast = fast.next.next
     }
-    return dfs(head)
+
+    let cur = slow, prev = null
+
+    while(cur){
+        let nxt = cur.next
+        cur.next = prev
+        prev = cur
+        cur = nxt
+    }
+
+    let left = head, right = prev
+    while(right){
+        if(left.val != right.val) return false
+        left = left.next
+        right = right.next
+    }
+    return true
     
 };
