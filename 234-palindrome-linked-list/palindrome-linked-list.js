@@ -10,21 +10,17 @@
  * @return {boolean}
  */
 var isPalindrome = function(head) {
-    if(!head.next) return true
-    let stack = []
+    let left = head
 
-    let temp = head
-    while(temp){
-        stack.push(temp.val)
-        temp = temp.next
+    function dfs(right){
+        if(right == null) return true
+        if(!dfs(right.next)) return false
+        if(left.val != right.val) return false
+
+        left = left.next
+        return true
+
     }
-
-    temp = head
-    while(temp){
-        if(temp.val != stack.pop()) return false
-        temp = temp.next
-    }
-
-    return true
+    return dfs(head)
     
 };
