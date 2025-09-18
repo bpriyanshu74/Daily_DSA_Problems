@@ -12,29 +12,32 @@
  * @return {ListNode}
  */
 var getIntersectionNode = function(headA, headB) {
-    if(!headA || !headB) return null
-    let s1 = headA, s2 = headB, len1 = 1, len2 = 1
-    while(s1){
-        s1 = s1.next
-        len1++
+    // we'll move both the lls together until one of them reaches its end
 
+    let lla = headA, llb = headB, c1 = 0, c2 = 0
+
+    while(lla){
+        c1++
+        lla = lla.next
     }
-    while(s2){
-        s2 = s2.next
-        len2++
+
+    while(llb){
+        c2++
+        llb = llb.next
     }
-    if(len1 > len2){
-        let steps = len1 - len2
-        while(steps > 0){
+
+    if(c1 > c2){
+        let diff = c1 - c2
+        while(diff > 0){
             headA = headA.next
-            steps--
+            diff--
         }
     }
-    if(len2 > len1){
-        let steps = len2 - len1
-        while(steps > 0){
+    else if(c2 > c1){
+        let diff = c2 - c1
+        while(diff > 0){
             headB = headB.next
-            steps--
+            diff--
         }
     }
 
@@ -43,7 +46,6 @@ var getIntersectionNode = function(headA, headB) {
         headA = headA.next
         headB = headB.next
     }
-
     return null
-
+    
 };
