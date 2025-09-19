@@ -18,15 +18,16 @@ var detectCycle = function(head) {
     while(fast && fast.next){
         slow = slow.next
         fast = fast.next.next
-        if(slow == fast) break
+        if(slow == fast){
+            let pointer = head
+            while(pointer != slow){
+                slow = slow.next
+                pointer = pointer.next
+            }
+            return pointer
+        }
     }
-    slow = head
-
-    while(fast){
-        if(slow == fast) return slow
-        slow = slow.next
-        fast = fast.next
-    }    
+       
 
     return null
 };
