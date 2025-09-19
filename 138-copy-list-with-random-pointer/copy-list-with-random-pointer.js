@@ -12,31 +12,35 @@
  * @return {_Node}
  */
 var copyRandomList = function(head) {
-    if(!head) return null
 
+    if(!head) return null
     let temp = head
-    // creating copy of each node and inserting it
+
+    // copying and inserting the node right after the org node
+
     while(temp){
         let copy_node = new ListNode(temp.val)
-        copy_node.next = temp.next || null
+        copy_node.next = temp.next
         temp.next = copy_node
         temp = temp.next.next || null
     }
-    // storing the random pointer
+
+    // assigning the random pointers
+
     temp = head
     while(temp){
-        let copy_node = temp.next
-        copy_node.random = temp.random ? temp.random.next : null
-
+        let copy = temp.next
+        copy.random = temp.random ? temp.random.next : null
         temp = temp.next.next || null
     }
 
-    // seperating out the copy and original list
-    let dummy = new ListNode(-1), res = dummy
-    temp = head
+    // seperating the copy and org lists
 
+    let dummy = new ListNode(-1)
+    res = dummy
+    temp = head
     while(temp){
-        res.next = temp.next 
+        res.next = temp.next
         temp.next = temp.next.next
 
         temp = temp.next
@@ -44,8 +48,4 @@ var copyRandomList = function(head) {
     }
 
     return dummy.next
-
-    return dummy.next
-
-    
 };
