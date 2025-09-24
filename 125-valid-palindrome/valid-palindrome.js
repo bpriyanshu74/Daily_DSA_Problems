@@ -3,20 +3,20 @@
  * @return {boolean}
  */
 var isPalindrome = function(s) {
-    let temp = '', nums = ['0','1','2','3','4','5','6','7','8','9']
-    for(let i=0; i<s.length; i++){
-        if((s[i].charCodeAt(0) >= 65 && s[i].charCodeAt(0) <= 90) || (s[i].charCodeAt(0) >= 97 && s[i].charCodeAt(0) <= 122) || nums.includes(s[i])){
-            temp += s[i].toLowerCase()
-        }
+    function isAlphaNum(ch){
+        return /^[a-z0-9]$/i.test(ch)
     }
 
-    let l=0, r = temp.length-1
-    while(l <= r){
-        if(temp[l] != temp[r]) return false
+    let l = 0, r = s.length-1
+
+    while(l < r){
+        while(l < r && !isAlphaNum(s[l])) l++
+        while(l < r && !isAlphaNum(s[r])) r--
+
+        if(s[l].toLowerCase() != s[r].toLowerCase()) return false
         l++
         r--
     }
-
     return true
     
 };
