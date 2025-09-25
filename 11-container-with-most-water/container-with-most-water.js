@@ -3,22 +3,18 @@
  * @return {number}
  */
 var maxArea = function(height) {
-    // brute force
-    let maxm_water = -1
+    let l=0, r = height.length-1, maxarea = 0
 
-    let l=0; r = height.length-1
+    while(l < r){
+        let width = r-l
+        let length = Math.min(height[l], height[r])
+        maxarea = Math.max(maxarea, length*width)
 
-    while(l<r){
-        let water = Math.min(height[l], height[r]) * (r-l)
-        maxm_water = Math.max(maxm_water, water)
-
-        if(height[l] < height[r]){
+        if(height[l] <= height[r]){
             l++
-        }
-        else{
+        }else{
             r--
         }
     }
-    return maxm_water
-    
+    return maxarea
 };
