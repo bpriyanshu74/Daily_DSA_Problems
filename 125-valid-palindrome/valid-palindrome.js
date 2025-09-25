@@ -4,7 +4,11 @@
  */
 var isPalindrome = function(s) {
     function isAlphaNum(ch){
-        return /^[a-z0-9]$/i.test(ch)
+        return (
+            (ch >= 'a' && ch <= 'z') ||
+            (ch >= 'A' && ch <= 'Z') ||
+            (ch >= '0' && ch <= '9')
+        );
     }
 
     let l = 0, r = s.length-1
