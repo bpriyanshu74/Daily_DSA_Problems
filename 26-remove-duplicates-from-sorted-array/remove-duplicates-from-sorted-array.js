@@ -3,16 +3,12 @@
  * @return {number}
  */
 var removeDuplicates = function(nums) {
-    let k=0, j=0, set = new Set()
-    for(let i=0;i <nums.length; i++){
-        if(!set.has(nums[i])){
-            set.add(nums[i])
-            nums[j] = nums[i]
-            j++
-            k++
+    let k = 0
+    for(let i=1; i<nums.length; i++){
+        if(nums[k] != nums[i]){
+            nums[++k] = nums[i]
         }
     }
-
-    return k
+    return k+1
     
 };
