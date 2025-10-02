@@ -4,43 +4,28 @@
  * @return {number[]}
  */
 var searchRange = function(nums, target) {
-    function first(arr,target){
-        let l = 0, r = arr.length-1, first = -1
-        while(l <= r){
-            let mid = l + Math.floor((r-l)/2)
-            if(arr[mid] >= target){
-                first = mid
-                r = mid -1
-            }
-            else{
-                l = mid + 1
-            }
-            // else{
-            //     r = mid - 1
-            // }
-        }
-        return arr[first] == target ? first : -1
-    }
-    function last(arr,target){
-        let l=0, r = arr.length-1, last = -1
-        while(l <= r){
-            let mid = l + Math.floor((r-l)/2)
-            if(arr[mid] <= target){
-                last = mid
-                l = mid + 1
-            }
-            else{
-                r = mid - 1
-            }
-        }
+    let pos = [-1, -1]
+    let l = 0, r = nums.length-1
 
-        return arr[last] !== -1 ? last : arr.length - 1
+    while(l <= r){
+        if(pos[0] == -1){
+            if(nums[l] == target){
+                pos[0] = l
+            }else{
+                l++
+            }
+        }else if(pos[1] == -1){
+            if(nums[r] == target){
+                pos[1] = r
+            }else{
+                r--
+            }
+        }else{
+            break
+        }
     }
 
-    let f = first(nums, target)
-    if(f == -1) return [-1,-1]
-    else{
-        return [f, last(nums, target)]
-    }
-    
+    return pos
+
+
 };
