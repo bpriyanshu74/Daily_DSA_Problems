@@ -14,7 +14,7 @@ var searchRange = function(nums, target) {
             else l = mid + 1
         }
 
-        if(nums[r] == target) pos[0] = r
+        if(nums[l] == target) pos[0] = l
     }
 
     function upperbound(){
