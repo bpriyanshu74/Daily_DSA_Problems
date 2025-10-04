@@ -4,16 +4,17 @@
  * @return {number[]}
  */
 var searchRange = function(nums, target) {
+    let pos = [-1, -1]
     function lowerbound(){
-        let l = 0, r = nums.length
-
+        let l=0, r = nums.length
         while(l < r){
             let mid = l + Math.floor((r-l)/2)
-            if(nums[mid] < target) l = mid + 1
-            else r = mid
+
+            if(nums[mid] >= target) r = mid
+            else l = mid + 1
         }
-        if(nums[l] == target) return l
-        return -1
+
+        if(nums[r] == target) pos[0] = r
     }
 
     function upperbound(){
@@ -22,14 +23,16 @@ var searchRange = function(nums, target) {
         while(l < r){
             let mid = l + Math.floor((r-l)/2)
 
-            if(nums[mid] <= target) l = mid + 1
+            if(nums[mid] <= target) l = mid+1
             else r = mid
         }
-        if(nums[l-1] == target) return l-1
-        return -1
+
+        if(nums[l-1] == target) pos[1] = l-1
     }
 
-    return [lowerbound(), upperbound()]
+    lowerbound()
+    upperbound()
 
+    return pos
 
 };
