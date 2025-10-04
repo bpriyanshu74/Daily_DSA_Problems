@@ -3,18 +3,20 @@
  * @return {number}
  */
 var findPeakElement = function(nums) {
-    if(nums.length <= 1) return 0
-    // brute force
-    for(let i=0; i<nums.length; i++){
-        if(i==0){
-            if(nums[i] > nums[i+1]) return i
-            continue
-        }
-        if(i == nums.length-1){
-            if(nums[i] > nums[i-1]) return i
-            continue
-        }
+    // optimising using binary search
+    let newnums = [-Infinity, ...nums, -Infinity]
 
-        if(nums[i] > nums[i+1] && nums[i] > nums[i-1]) return i
+    let l = 0, r = nums.length
+
+    while(l < r){
+        let mid = l + Math.floor((r-l)/2)
+
+        if(newnums[mid] < newnums[mid+1]){
+            l = mid + 1
+        }
+        else{
+            r = mid
+        }
     }
+    return l-1
 };
