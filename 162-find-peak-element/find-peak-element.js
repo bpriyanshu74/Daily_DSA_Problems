@@ -4,11 +4,17 @@
  */
 var findPeakElement = function(nums) {
     if(nums.length <= 1) return 0
-    let newnums = [-Infinity,...nums, -Infinity]
-    for(let i=1; i<newnums.length-1; i++){
-        if(newnums[i] > newnums[i-1] && newnums[i] > newnums[i+1]) return i-1
+    // brute force
+    for(let i=0; i<nums.length; i++){
+        if(i==0){
+            if(nums[i] > nums[i+1]) return i
+            continue
+        }
+        if(i == nums.length-1){
+            if(nums[i] > nums[i-1]) return i
+            continue
+        }
+
+        if(nums[i] > nums[i+1] && nums[i] > nums[i-1]) return i
     }
-
-
-    
 };
