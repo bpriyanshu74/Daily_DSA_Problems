@@ -3,19 +3,20 @@
  * @return {number}
  */
 var findMin = function(nums) {
-    let l =0, r = nums.length-1, minm = Infinity
+    let l=0, r = nums.length-1, ans = Infinity
+
     while(l <= r){
         let mid = l + Math.floor((r-l)/2)
-        // checking which half is sorted
-        if(nums[mid] >= nums[l]){
-            minm = Math.min(nums[l], minm)
+
+        if(nums[mid] <= nums[r]){
+            ans = Math.min(ans, nums[mid])
+            r = mid - 1
+        }else{
             l = mid + 1
         }
-        else{
-            minm = Math.min(nums[mid], minm)
-            r = mid - 1
-        }
     }
-    return minm
-    
+
+    ans = Math.min(ans, nums[l])
+
+    return ans
 };
