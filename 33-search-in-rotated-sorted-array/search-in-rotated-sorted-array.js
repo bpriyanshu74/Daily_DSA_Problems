@@ -4,11 +4,37 @@
  * @return {number}
  */
 var search = function(nums, target) {
-    // linear search
+    let l=0, r = nums.length-1
 
-    for(let i=0; i<nums.length; i++){
-        if(nums[i] == target) return i
+    while(l < r){
+        let mid = l + Math.floor((r-l)/2)
+        if(nums[mid] > nums[r]){
+            l = mid + 1
+        }else{
+            r = mid
+        }
     }
-    return -1
+    let breakpoint = l
+    l = 0, r = nums.length-1
     
+    if(target >= nums[breakpoint] && target <= nums[r]){
+        l = breakpoint
+    }else{
+        r = breakpoint - 1
+    }
+
+    while( l <= r ){
+        let mid = l + Math.floor((r-l)/2)
+
+        if(nums[mid] == target){
+            return mid
+        }
+        else if(nums[mid] < target){
+            l = mid + 1
+        }else{
+            r = mid - 1
+        }
+    }
+
+    return -1
 };
