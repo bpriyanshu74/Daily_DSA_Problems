@@ -4,23 +4,36 @@
  * @return {number}
  */
 var findMedianSortedArrays = function(nums1, nums2) {
-    let n1 = nums1.length, n2 = nums2.length, total = n1 + n2
-    let mid1 = Math.floor(total-1 / 2)
-    let mid2 = Math.floor(total/2)
+    if(nums1.length > nums2.length) return findMedianSortedArrays(nums2, nums1)
 
-    let cur = 0, prev = 0, count = 0, i=0, j = 0
+    let m = nums1.length, n = nums2.length, totalleft = Math.floor((m+n+1)/2)
 
-    while(count <= mid2){
-        prev = cur
+    let l = 0, r = m
 
-        if(i < n1 && (j >= n2 || nums1[i] <= nums2[j])){
-            cur = nums1[i++]
-            count++
+    while(l <= r){
+        let i = l + Math.floor((r-l)/2)
+        let j = totalleft - i
+
+        let l1 = (i > 0) ? nums1[i-1]: -Infinity
+        let r1 = (i < m) ? nums1[i]: Infinity
+
+        let l2 = (j > 0) ? nums2[j-1]: -Infinity
+        let r2 = (j < n) ? nums2[j]: Infinity
+
+        if(l1 <= r2 && l2 <= r1){
+            // valid combination found
+            if((m+n) % 2 == 0){
+                return (Math.max(l1, l2) + Math.min(r1, r2))/2
+            }else{
+                return Math.max(l1, l2)
+            }
+        }
+        else if(l1 > r2){
+            r = i-1
         }else{
-            cur = nums2[j++]
-            count++
+            l = i+1
         }
     }
+    return 0
 
-    return total%2 == 0 ? (prev + cur)/2 : cur
 };
