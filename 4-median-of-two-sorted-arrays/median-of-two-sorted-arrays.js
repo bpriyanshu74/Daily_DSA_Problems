@@ -4,35 +4,23 @@
  * @return {number}
  */
 var findMedianSortedArrays = function(nums1, nums2) {
-    let temp = [], n1 = nums1.length, n2 = nums2.length
+    let n1 = nums1.length, n2 = nums2.length, total = n1 + n2
+    let mid1 = Math.floor(total-1 / 2)
+    let mid2 = Math.floor(total/2)
 
-    if(nums1.length < 1) temp = nums2
-    else if(nums2.length < 1) temp = nums1
-    else{
-        let i=0, j =0
-        while(i < n1 && j < n2){
-            if(nums1[i] <= nums2[j]){
-                temp.push(nums1[i])
-                i++
-            }else{
-                temp.push(nums2[j])
-                j++
-            }
-        }
-        while(i < n1){
-            temp.push(nums1[i])
-            i++
-        }
-        while(j < n2){
-            temp.push(nums2[j])
-            j++
+    let cur = 0, prev = 0, count = 0, i=0, j = 0
+
+    while(count <= mid2){
+        prev = cur
+
+        if(i < n1 && (j >= n2 || nums1[i] <= nums2[j])){
+            cur = nums1[i++]
+            count++
+        }else{
+            cur = nums2[j++]
+            count++
         }
     }
-    let total = temp.length
 
-    if(total % 2 == 0){
-        return (temp[total/2] + temp[(total/2) - 1])/2
-    }else{
-        return temp[Math.floor(total / 2)];
-    }
+    return total%2 == 0 ? (prev + cur)/2 : cur
 };
