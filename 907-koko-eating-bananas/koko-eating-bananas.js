@@ -4,23 +4,24 @@
  * @return {number}
  */
 var minEatingSpeed = function(piles, h) {
-    function possible_i(n, piles){
-        let hours = 0
-        for(let i=0; i <piles.length; i++){
-            hours += Math.ceil(piles[i]/n)
+
+    function check(maxcap){
+        let time = 0
+        for(let quant of piles){
+            time += Math.ceil(quant/maxcap)
         }
-        return hours
+        return time <= h
     }
-    let l=1, r= Math.max(...piles), ans = Infinity
+    let l = 1, r = Math.max(...piles), ans = 0
+
     while(l <= r){
-        let mid = l + Math.floor((r-l)/2)
-        let hours_req = possible_i(mid, piles)
-        if(hours_req <= h){
-            ans = Math.min(ans, mid)
-            r = mid - 1
-        }
-        else{
-            l = mid + 1
+        let capacity = l + Math.floor((r-l)/2)
+
+        if(check(capacity)){
+            ans = capacity
+            r = capacity - 1
+        }else{
+            l = capacity + 1
         }
     }
     return ans
