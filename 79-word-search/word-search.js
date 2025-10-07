@@ -5,31 +5,27 @@
  */
 var exist = function(board, word) {
 
-    function dfs(i,j, index){
-
+    function dfs(x,y,index){
         if(index == word.length) return true
-        if(i < 0 || i >= m || j < 0 || j >= n || board[i][j] != word[index]){
-            return false
+        if(x < 0 || x >= board.length || y < 0 || y >= board[0].length || board[x][y] != word[index]){
+            return
         }
-        let temp = board[i][j]
-        board[i][j] = '#'
-        let found = dfs(i+1, j, index+1)||
-                    dfs(i, j+1, index+1)||
-                    dfs(i-1, j, index+1)||
-                    dfs(i, j-1, index+1)
-        
-        board[i][j] = temp
+
+        let temp = board[x][y]
+        board[x][y] = '#'
+
+        let found = (dfs(x+1,y,index+1) || 
+                        dfs(x-1, y, index+1) ||
+                        dfs(x, y+1, index+1) ||
+                        dfs(x, y-1, index+1))
+        board[x][y] = temp
         return found
     }
 
-    let m = board.length, n = board[0].length
-    for(let i=0; i<m ; i++){
-        for(let j=0; j<n; j++){
-            
+    for(let i=0; i<board.length; i++){
+        for(let j=0; j<board[0].length; j++){
             if(dfs(i,j,0)) return true
-            
         }
     }
     return false
-    
 };
