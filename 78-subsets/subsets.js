@@ -3,14 +3,16 @@
  * @return {number[][]}
  */
 var subsets = function(nums) {
-    let res = [[]]
+    let res = []
 
-    for(let num of nums){
-        let newsubset = []
-        for(let subset of res){
-            newsubset.push([...subset, num])
+    function dfs(ds, index){
+        res.push([...ds])
+        for(let i=index; i<nums.length; i++){
+            ds.push(nums[i])
+            dfs(ds, i+1)
+            ds.pop()
         }
-        res.push(...newsubset)
     }
+    dfs([], 0)
     return res
 };
