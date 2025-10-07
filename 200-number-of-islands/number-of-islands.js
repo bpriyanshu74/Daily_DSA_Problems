@@ -4,14 +4,14 @@
  */
 var numIslands = function(grid) {
     let m = grid.length, n = grid[0].length, count = 0
-    let visited = new Array(m).fill().map(() => new Array(n).fill(false))
+    // let visited = new Array(m).fill().map(() => new Array(n).fill(false))
 
     function dfs(x,y){
         if(x < 0 || x >= m || y < 0 || y >= n) return
-        if(grid[x][y] != '1' || visited[x][y]) return
+        if(grid[x][y] != '1') return
 
        
-            visited[x][y] = true
+            grid[x][y] = 0
             dfs(x+1, y) 
             dfs(x-1, y) 
             dfs(x, y-1)
@@ -21,7 +21,7 @@ var numIslands = function(grid) {
 
     for(let i=0; i<m; i++){
         for(let j=0; j<n; j++){
-            if(grid[i][j] == '1' && !visited[i][j]){
+            if(grid[i][j] == '1'){
                 count++
                 dfs(i,j)
             }
