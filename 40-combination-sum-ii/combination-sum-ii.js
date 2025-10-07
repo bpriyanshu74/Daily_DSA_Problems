@@ -4,27 +4,25 @@
  * @return {number[][]}
  */
 var combinationSum2 = function(candidates, target) {
-    let result = [], cur_combination = []
-    candidates.sort((a,b) => a-b)
 
-    function find_combination(target,index){
-        if(target == 0){
-            result.push([...cur_combination])
+    function dfs(path, sum, index){
+        if(sum == 0){
+            res.push([...path])
             return
         }
 
-        for(let i=index; i<candidates.length; i++){
-            if(candidates[i] > target) break
-            if(i > index && candidates[i] == candidates[i-1]) continue
-            if(candidates[i] <= target){
-                cur_combination.push(candidates[i])
-                find_combination(target-candidates[i], i+1)
-                cur_combination.pop()
+        for(let i=index; i<nums.length; i++){
+            if( i > index && nums[i] == nums[i-1]){
+                continue
             }
+            if (nums[i] > sum) break;
+            path.push(nums[i])
+            dfs(path, sum-nums[i], i+1)
+            path.pop()
         }
     }
-
-    find_combination(target,0)
-    return result
-    
+    let res = [], nums = [...candidates]
+    nums.sort((a,b) => a-b)
+    dfs([], target, 0)
+    return res
 };
