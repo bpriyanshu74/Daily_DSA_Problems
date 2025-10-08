@@ -4,30 +4,28 @@
  */
 var solveSudoku = function(board) {
 
-    function isSafe(board, row, col, number){
-        // checking row
+    function valid_check(board, r, c, ch){
         for(let i=0; i<9; i++){
-            if(board[row][i] == number) return false
-            if(board[i][col] == number) return false
-            let boxRow = 3 * Math.floor(row/3) + Math.floor(i/3)
-            let boxCol = 3 * Math.floor(col/3) + (i%3)
-            if(board[boxRow][boxCol] == number) return false
+            if(board[r][i] == ch) return false
+            if(board[i][c] == ch) return false
 
+            let boxrow = 3*Math.floor(r/3) + Math.floor(i/3)
+            let boxcol = 3*Math.floor(c/3) + (i%3)
+            if(board[boxrow][boxcol] == ch) return false
         }
         return true
-        
     }
 
     function dfs(){
-        for(let i=0; i<9; i++){
-            for(let j=0; j<9; j++){
-                if(board[i][j] == '.'){
-                    for(let k = 1; k<= 9; k++){
-                        let ch = k.toString()
-                        if(isSafe(board,i,j, ch)){
-                            board[i][j] = ch
+        for(let r = 0; r < 9; r++){
+            for(let c = 0; c < 9; c++){
+                if(board[r][c] == '.'){
+                    for(let k=1; k <= 9; k++){
+                        ch = k.toString()
+                        if(valid_check(board, r, c, ch)){
+                            board[r][c] = ch
                             if(dfs()) return true
-                            board[i][j] = '.'
+                            board[r][c] = '.'
                         }
                     }
                     return false
@@ -37,6 +35,5 @@ var solveSudoku = function(board) {
         return true
     }
     dfs()
- 
     
 };
