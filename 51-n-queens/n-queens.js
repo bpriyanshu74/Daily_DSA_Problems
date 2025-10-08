@@ -3,35 +3,33 @@
  * @return {string[][]}
  */
 var solveNQueens = function(n) {
-    let board = new Array(n).fill().map(() => new Array(n).fill('.'))
-    let rows = n, cols = n
-    let res = []
+    let res = [], board = new Array(n).fill().map(() => new Array(n).fill('.'))
 
-    function isSafe(row,col){
-        // checking vertical column
-        for(let i=0; i<row; i++){
-            if(board[i][col] == 'Q') return false
-        }
-
-        // checking left diagonal
-        for(let i=row-1, j=col-1; i>= 0 && j >= 0; i--, j--){
-            if(board[i][j] == 'Q') return false
-        }
-        //checking right diagonal
-        for(let i=row-1, j=col+1; i >= 0 && j < cols; i--, j++){
-            if(board[i][j] == 'Q') return false
-        }
-        return true
+    function safe(board, r , c){
+        for (let i = 0; i < n; i++) {
+        if (board[i][c] == 'Q') return false;
     }
 
+    // upper left diagonal
+    for (let i = r - 1, j = c - 1; i >= 0 && j >= 0; i--, j--) {
+        if (board[i][j] == 'Q') return false;
+    }
+
+    // upper right diagonal
+    for (let i = r - 1, j = c + 1; i >= 0 && j < n; i--, j++) {
+        if (board[i][j] == 'Q') return false;
+    }
+
+    return true;
+    }
+    
     function dfs(row){
         if(row == n){
-            let copy = board.map((r) => r.join(''))
-            res.push(copy)
+            res.push(board.map(r => r.join('')));
             return
         }
         for(let col = 0; col < n; col++){
-            if(isSafe(row, col)){
+            if(safe(board, row, col)){
                 board[row][col] = 'Q'
                 dfs(row+1)
                 board[row][col] = '.'
@@ -40,5 +38,4 @@ var solveNQueens = function(n) {
     }
     dfs(0)
     return res
-    
 };
