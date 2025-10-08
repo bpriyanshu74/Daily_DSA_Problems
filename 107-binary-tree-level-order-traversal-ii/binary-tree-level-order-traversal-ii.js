@@ -11,27 +11,18 @@
  * @return {number[][]}
  */
 var levelOrderBottom = function(root) {
-    if(!root) return []
+    
+    function dfs(node, level){
+        if(!node) return
+        if(res.length == level) res.unshift([])
 
-    let q = [root], res = []
+        res[res.length-level-1].push(node.val)
 
-    while(q.length){
-        let level = []
-        for(let i = q.length; i> 0; i--){
-            let node = q.shift()
-            level.push(node.val)
-            if(node.left) q.push(node.left)
-            if(node.right) q.push(node.right)
-        }
-        res.push(level)
+        dfs(node.left, level+1)
+        dfs(node.right, level+1)
     }
 
-    let l = 0, r = res.length-1
-
-    while(l < r){
-        [res[l], res[r]] = [res[r], res[l]]
-        l++
-        r--
-    }
+    let res = []
+    dfs(root, 0)
     return res
 };
