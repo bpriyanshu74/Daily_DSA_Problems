@@ -15,7 +15,7 @@ var maxDepth = function(root) {
     function dfs(root){
         if(!root) return 0
 
-        return Math.max( 1+dfs(root.left), 1+dfs(root.right))
+        return 1 + Math.max( dfs(root.left), dfs(root.right))
     }
     return dfs(root)
 
