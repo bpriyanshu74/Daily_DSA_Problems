@@ -11,16 +11,14 @@
  * @return {boolean}
  */
 var isValidBST = function(root) {
-    if(!root) return true
-
-    function validate(node, lower, upper){
+    
+    function dfs(node, min, max){
         if(!node) return true
+        if(node.val <= min || node.val >= max) return false
 
-        if(node.val <= lower || node.val >= upper) return false
-
-        return validate(node.left, lower, node.val) && validate(node.right, node.val, upper)
+        return dfs(node.left, min, node.val) && dfs(node.right, node.val, max)
     }
 
-    return validate(root, -Infinity, Infinity)
-    
+    return dfs(root, -Infinity, Infinity)
+
 };
