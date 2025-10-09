@@ -13,16 +13,14 @@
  */
 var searchBST = function(root, val) {
 
-    function dfs(node, target){
-        if(!node) return null
-        if(node.val == target) return node
+    if(root == null) return null
 
-        if(target > node.val){
-            return dfs(node.right, target)
-        }else{
-            return dfs(node.left, target)
-        }
+    if(root.val == val) return root
+
+    if(root.val < val){
+        return searchBST(root.right, val)
+    }else{
+        return searchBST(root.left, val)
     }
-
-    return dfs(root,val)
+    
 };
