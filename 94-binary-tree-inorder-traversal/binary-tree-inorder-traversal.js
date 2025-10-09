@@ -11,33 +11,15 @@
  * @return {number[]}
  */
 var inorderTraversal = function(root) {
-    // morris traversal inorder
-
     let inorder = []
-    let cur = root
 
-    while(cur){
-        if(cur.left == null){
-            inorder.push(cur.val)
-            cur = cur.right
-        }
-        else{
-            let prev = cur.left
-            while(prev.right && prev.right != cur){
-                prev = prev.right
-            }
-            if(prev.right != cur){
-                prev.right = cur
-                cur = cur.left
-            }
-            else{
-                prev.right = null
-                inorder.push(cur.val)
-                cur = cur.right
-            }
-        }
+    function dfs(node){
+        if(!node) return
+        dfs(node.left)
+        inorder.push(node.val)
+        dfs(node.right)
     }
 
+    dfs(root)
     return inorder
-    
 };
