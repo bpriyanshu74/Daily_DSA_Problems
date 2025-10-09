@@ -17,14 +17,15 @@ var rightSideView = function(root) {
     let q = [root]
 
     while(q.length){
-        let level = []
-        for(let i= q.length; i>0; i--){
-            let node = q.shift()
-            level.push(node.val)
-            if(node.left) q.push(node.left)
-            if(node.right) q.push(node.right)
+        const size = q.length;
+        for (let i = 0; i < size; i++) {
+            const node = q.shift();
+            if (node.left) q.push(node.left);
+            if (node.right) q.push(node.right);
+
+            // When you reach the last node of the current level
+            if (i === size - 1) res.push(node.val);
         }
-        res.push(level[level.length-1])
     }
     return res
 };
