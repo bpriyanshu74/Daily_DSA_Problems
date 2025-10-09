@@ -11,25 +11,18 @@
  * @return {number}
  */
 var maxPathSum = function(root) {
-    if(root == null) return 0
-    let maxm = -100000000
-    dfs(root)
-    return maxm
+    function dfs(node){
+        if(!node) return 0
 
-    function dfs(root){
-        if(root == null) return 0
+        let lsum = Math.max(0, dfs(node.left))
+        let rsum = Math.max(0, dfs(node.right))
 
-        let left = dfs(root.left)
-        let right = dfs(root.right)
+        maxsum = Math.max(maxsum, node.val+lsum+rsum)
 
-        if(left < 0) left = 0
-        if(right < 0) right = 0
-
-        maxm = Math.max(maxm, left+right+root.val)
-
-        return root.val + Math.max(left,right)
-
+        return node.val + Math.max(lsum, rsum)
     }
 
-    
+    let maxsum = -Infinity
+    dfs(root)
+    return maxsum
 };
