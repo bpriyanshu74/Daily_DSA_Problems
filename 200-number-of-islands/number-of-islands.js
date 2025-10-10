@@ -3,22 +3,21 @@
  * @return {number}
  */
 var numIslands = function(grid) {
-    let m = grid.length, n = grid[0].length, count = 0
-    // let visited = new Array(m).fill().map(() => new Array(n).fill(false))
 
     function dfs(x,y){
-        if(x < 0 || x >= m || y < 0 || y >= n) return
-        if(grid[x][y] != '1') return
+        if(x<0 || x >= m || y < 0 || y >= n || grid[x][y] != '1') return 
 
-       
-            grid[x][y] = 0
-            dfs(x+1, y) 
-            dfs(x-1, y) 
-            dfs(x, y-1)
-            dfs(x, y+1)
-        
+        grid[x][y] = '0'
+        // marking 0 in all the direction
+
+        dfs(x+1,y)
+        dfs(x-1,y)
+        dfs(x,y-1)
+        dfs(x,y+1)
     }
 
+
+    let count = 0, m = grid.length, n = grid[0].length
     for(let i=0; i<m; i++){
         for(let j=0; j<n; j++){
             if(grid[i][j] == '1'){
@@ -28,4 +27,5 @@ var numIslands = function(grid) {
         }
     }
     return count
+    
 };
