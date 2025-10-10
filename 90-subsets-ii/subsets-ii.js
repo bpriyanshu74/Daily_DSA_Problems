@@ -4,16 +4,17 @@
  */
 var subsetsWithDup = function(nums) {
     let res = []
-    nums.sort((a,b) => a-b)
-    function dfs(ds, index){
-        res.push([...ds])
+
+    function dfs(index, path){
+        res.push([...path])
         for(let i=index; i<nums.length; i++){
             if(i > index && nums[i] == nums[i-1]) continue
-            ds.push(nums[i])
-            dfs(ds, i+1)
-            ds.pop()
+            path.push(nums[i])
+            dfs(i+1, path)
+            path.pop()
         }
     }
-    dfs([], 0)
+    nums.sort((a,b) => a-b)
+    dfs(0, [])
     return res
 };
