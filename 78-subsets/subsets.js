@@ -5,14 +5,16 @@
 var subsets = function(nums) {
     let res = []
 
-    function dfs(ds, index){
-        res.push([...ds])
+    function dfs(index, path){
+        res.push([...path])
         for(let i=index; i<nums.length; i++){
-            ds.push(nums[i])
-            dfs(ds, i+1)
-            ds.pop()
+            path.push(nums[i])
+            dfs(i+1, path)
+            path.pop()
         }
     }
-    dfs([], 0)
+
+    dfs(0, [])
     return res
+    
 };
