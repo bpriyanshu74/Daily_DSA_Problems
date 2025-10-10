@@ -7,17 +7,21 @@ var lengthOfLongestSubstring = function(s) {
 
     let maxlen = 1
 
-    for(let i=0; i<s.length; i++){
-        let hashset = new Set()
+    let hashmap = {}, l = 0
 
-        for(let j=i; j<s.length; j++){
-            if(hashset.has(s[j])){
-                break
+    for(let r=0; r<s.length; r++){
+        if(hashmap[s[r]] != undefined){
+            let last_index = hashmap[s[r]]
+            if(l > last_index){
+                hashmap[s[r]] = r
             }else{
-                hashset.add(s[j])
+                l = last_index+1
+                hashmap[s[r]] = r
             }
+        }else{
+            hashmap[s[r]] = r
         }
-        maxlen = Math.max(maxlen, hashset.size)
+        maxlen = Math.max(maxlen, r-l+1)
     }
     return maxlen
 };
