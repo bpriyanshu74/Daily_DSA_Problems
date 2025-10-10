@@ -21,7 +21,7 @@ var searchRange = function(nums, target) {
         if (nums[mid] <= target) l = mid + 1;
         else r = mid;
         }
-        return l - 1;
+        return l-1;
     }
 
     let res = [-1, -1]
