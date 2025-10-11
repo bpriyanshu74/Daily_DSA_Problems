@@ -7,9 +7,8 @@ var exist = function(board, word) {
 
     function dfs(x,y,index){
         if(index == word.length) return true
-        if(x < 0 || x >= board.length || y < 0 || y >= board[0].length || board[x][y] != word[index]){
-            return
-        }
+
+        if(x < 0 || x >= board.length || y < 0 || y >= board[0].length || board[x][y] != word[index]) return 
 
         let temp = board[x][y]
         board[x][y] = '#'
@@ -22,10 +21,14 @@ var exist = function(board, word) {
         return found
     }
 
+
+
     for(let i=0; i<board.length; i++){
         for(let j=0; j<board[0].length; j++){
-            if(dfs(i,j,0)) return true
+            if(board[i][j] == word[0]){
+                if(dfs(i,j,0)) return true
+            }
         }
-    }
+    }    
     return false
 };
