@@ -14,28 +14,22 @@
 var deleteNode = function(root, key) {
     if(!root) return null
 
-    if(root.val == key){
+    if(key < root.val){
+        root.left = deleteNode(root.left, key)
+    }else if(key > root.val){
+        root.right = deleteNode(root.right, key)
+    }else{
         if(!root.left) return root.right
         if(!root.right) return root.left
 
-        let rightside = root.right
-        let newroot = root.left
-        let rightmost = newroot
-
-        while(rightmost.right){
-            rightmost = rightmost.right
+        let successor = root.right
+        while(successor.left){
+            successor = successor.left
         }
-        rightmost.right = rightside
+        root.val = successor.val
 
-        return newroot
-    }
-    else if(root.val < key){
-        root.right =  deleteNode(root.right, key)
-    }
-    else{
-        root.left =  deleteNode(root.left, key)
+        root.right = deleteNode(root.right, successor.val)
     }
 
     return root
-    
 };
