@@ -12,29 +12,26 @@
  * @return {TreeNode}
  */
 var buildTree = function(preorder, inorder) {
-    let map = new Map()
+    let preindex = 0
+    let inorder_map = new Map()
 
     for(let i=0; i<inorder.length; i++){
-        map.set(inorder[i], i)
+        inorder_map.set(inorder[i], i)
     }
 
-    let root = helper(inorder, 0, inorder.length-1, preorder, 0, preorder.length-1, map)
+    function build(start, end){
+        if(start > end) return null
 
-    return root
+        let rootval = preorder[preindex++]
+        let pivot = inorder_map.get(rootval)
 
-    function helper(ino, instart, inend, pre, prestart, preend, map){
-        if(instart > inend || prestart > preend) return null
+        let root = new TreeNode(rootval)
 
-        let root = new TreeNode(pre[prestart])
-        let rootindex = map.get(root.val)
-
-        let numsleft = rootindex - instart
-
-        root.left = helper(ino, instart, rootindex-1, pre, prestart+1, prestart+numsleft, map)
-        root.right = helper(ino, rootindex+1, inend, pre, prestart+numsleft+1, preend, map)
-
+        root.left =  build(start, pivot-1)
+        root.right = build(pivot+1, end)
 
         return root
     }
-    
+
+    return build(0, inorder.length-1)
 };
