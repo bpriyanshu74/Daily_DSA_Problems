@@ -27,11 +27,11 @@ var serialize = function(root) {
  * @return {TreeNode}
  */
 var deserialize = function(data) {
-    let values = data.split(',')
+    let values = data.split(','), index = 0
 
     function build(){
-        if(!values.length) return null
-        let val = values.shift()
+        if(index >= values.length) return null
+        let val = values[index++]
 
         if(val == 'null') return null
 
