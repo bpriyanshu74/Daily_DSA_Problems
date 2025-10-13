@@ -13,24 +13,11 @@
  * @return {string}
  */
 var serialize = function(root) {
-    if(root == null) return '#'
-    let result = [], q = [root]
-
-    while(q.length){
-        let node = q.shift()
-
-        if(node){
-            result.push(String(node.val))
-            q.push(node.left)
-            q.push(node.right)
-        }
-        else{
-            result.push('#')
-        }
+    function dfs(node){
+        if(!node) return ['null']
+        return [node.val, ...dfs(node.left), ...dfs(node.right)]
     }
-
-    return result.join(',')
-    
+    return dfs(root).join(',')
 };
 
 /**
@@ -40,30 +27,22 @@ var serialize = function(root) {
  * @return {TreeNode}
  */
 var deserialize = function(data) {
-    if(data == "#") return null
     let values = data.split(',')
 
-    let root = new TreeNode(parseInt(values[0]))
-    let i=1, q = [root]
+    function build(){
+        if(!values.length) return null
+        let val = values.shift()
 
-    while(q.length && i < values.length){
-        let node = q.shift()
+        if(val == 'null') return null
 
-        if(values[i] != '#'){
-            node.left = new TreeNode(parseInt(values[i]))
-            q.push(node.left)
-        }
-        i++
+        let node = new TreeNode(Number(val))
+        node.left = build()
+        node.right = build()
 
-        if( i < values.length && values[i] != "#"){
-            node.right = new TreeNode(parseInt(values[i]))
-            q.push(node.right)
-        }
-        i++
+        return node
     }
 
-    return root
-    
+    return build()
 };
 
 /**
