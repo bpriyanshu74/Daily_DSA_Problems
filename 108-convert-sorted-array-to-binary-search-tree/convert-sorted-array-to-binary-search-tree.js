@@ -13,18 +13,18 @@
 var sortedArrayToBST = function(nums) {
     if(nums.length == 0) return null
 
-    let l = 0, r = nums.length-1
+    function dfs(l, r){
+        if(l > r) return null
+        let mid = l + Math.floor((r-l)/2)
 
-    let mid = Math.floor((r+l)/2)
+        let root = new TreeNode(nums[mid])
 
-    let root = new TreeNode(nums[mid])
+        root.left = dfs(l, mid-1)
+        root.right = dfs(mid+1, r)
 
-    let lefthalf = nums.slice(l, mid)
-    let righthalf = nums.slice(mid+1)
+        return root
+    }
 
-    root.left = sortedArrayToBST(lefthalf)
-    root.right = sortedArrayToBST(righthalf)
-
-    return root
+    return dfs(0, nums.length-1)
     
 };
