@@ -18,27 +18,28 @@
  * @return {TreeNode}
  */
 var sortedListToBST = function(head) {
-    let nums = []
+    if(!head) return null
 
-    let temp = head
-    while(temp){
-        nums.push(temp.val)
-        temp = temp.next
+    let cur = head, count = 0
+
+    while(cur){
+        count++
+        cur = cur.next
     }
-
-    function dfs(l,r){
+    cur = head
+    
+    function buildTree(l, r){
         if(l > r) return null
+        let mid = l + Math.floor((r-l)/2), node = new TreeNode()
 
-        let mid = l + Math.floor((r-l)/2)
+        node.left = buildTree(l, mid-1)
+        node.val = cur.val
+        cur = cur.next
+        node.right = buildTree(mid+1, r)
 
-        let root = new TreeNode(nums[mid])
-
-        root.left = dfs(l, mid-1)
-        root.right = dfs(mid+1, r)
-
-        return root
+        return node
     }
 
-    if(nums.length == 0) return null
-    return dfs(0, nums.length-1)
+    return buildTree(1, count)
+    
 };
