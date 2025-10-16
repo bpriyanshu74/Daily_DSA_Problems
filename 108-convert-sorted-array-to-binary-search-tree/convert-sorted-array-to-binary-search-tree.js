@@ -11,17 +11,16 @@
  * @return {TreeNode}
  */
 var sortedArrayToBST = function(nums) {
-
-    if(nums.length < 1) return null
+    if(nums.length == 0) return null
 
     let l = 0, r = nums.length-1
 
-    let middle = Math.floor((l+r)/2)
+    let mid = Math.floor((r+l)/2)
 
-    let root = new TreeNode(nums[middle])
+    let root = new TreeNode(nums[mid])
 
-    let lefthalf = nums.slice(l,middle)
-    let righthalf = nums.slice(middle+1)
+    let lefthalf = nums.slice(l, mid)
+    let righthalf = nums.slice(mid+1)
 
     root.left = sortedArrayToBST(lefthalf)
     root.right = sortedArrayToBST(righthalf)
