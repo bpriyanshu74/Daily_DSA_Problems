@@ -20,26 +20,27 @@
 var sortedListToBST = function(head) {
     if(!head) return null
 
-    let cur = head, count = 0
-
-    while(cur){
+    let temp = head, count = 0
+    while(temp){
         count++
-        cur = cur.next
+        temp = temp.next
     }
-    cur = head
-    
-    function buildTree(l, r){
-        if(l > r) return null
-        let mid = l + Math.floor((r-l)/2), node = new TreeNode()
+    temp = head
 
-        node.left = buildTree(l, mid-1)
-        node.val = cur.val
-        cur = cur.next
+    function buildTree(l,r){
+        if(l > r) return null
+        let mid = l+ Math.floor((r-l)/2)
+        let node = new TreeNode()
+
+        node.left = buildTree(l,mid-1)
+        node.val = temp.val
+        temp = temp.next
         node.right = buildTree(mid+1, r)
 
         return node
     }
 
+    // we build the tree in in order fashion
     return buildTree(1, count)
-    
+
 };
