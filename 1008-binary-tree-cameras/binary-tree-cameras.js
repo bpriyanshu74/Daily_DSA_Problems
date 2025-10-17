@@ -12,14 +12,13 @@
  */
 var minCameraCover = function(root) {
     // 0: not covered
-    // 1: has camera
+    // 1: camera placed
     // 2: covered
 
-    let cameras = 0
-
     function dfs(node){
-        if(!node) return 2
-
+        if(!node){
+            return 2
+        }
         let left = dfs(node.left)
         let right = dfs(node.right)
 
@@ -32,8 +31,8 @@ var minCameraCover = function(root) {
         }
         return 0
     }
-
+    
+    let cameras = 0
     if(dfs(root) == 0) cameras++
     return cameras
-    
 };
