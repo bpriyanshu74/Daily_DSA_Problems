@@ -4,28 +4,27 @@
  */
 var numIslands = function(grid) {
 
-    function dfs(x,y){
-        if(x<0 || x >= m || y < 0 || y >= n || grid[x][y] != '1') return 
+    function dfs(pos){
+        let [x,y] = pos
+        grid[x][y] = 0
+        for(let [dx,dy] of dir){
+            let nx = x + dx, ny = y + dy
+            if(nx >= 0 && nx < n && ny >= 0 && ny < m && grid[nx][ny] == 1){
+                dfs([nx,ny])
+            }
+        }
 
-        grid[x][y] = '0'
-        // marking 0 in all the direction
-
-        dfs(x+1,y)
-        dfs(x-1,y)
-        dfs(x,y-1)
-        dfs(x,y+1)
     }
 
-
-    let count = 0, m = grid.length, n = grid[0].length
-    for(let i=0; i<m; i++){
-        for(let j=0; j<n; j++){
-            if(grid[i][j] == '1'){
+    let count = 0, n = grid.length, m = grid[0].length
+    let dir = [[1,0], [0,1], [-1,0], [0,-1]]
+    for(let i=0; i<n; i++){
+        for(let j=0; j<m; j++){
+            if(grid[i][j] == 1){
                 count++
-                dfs(i,j)
+                dfs([i,j])
             }
         }
     }
     return count
-    
 };
