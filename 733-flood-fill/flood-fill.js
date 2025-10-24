@@ -14,7 +14,6 @@ var floodFill = function(image, sr, sc, color) {
     let dir = [[1,0],[0,1], [-1,0], [0,-1]]
 
     while(q.length){
-        for(let i=0; i<q.length; i++){
             let [x,y] = q.shift()
             image[sr][sc] = color
             for(let [dx,dy] of dir){
@@ -24,7 +23,6 @@ var floodFill = function(image, sr, sc, color) {
                     q.push([nx,ny])
                 }
             }
-        }
     }
     return image
     
