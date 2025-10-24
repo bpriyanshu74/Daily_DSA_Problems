@@ -3,30 +3,29 @@
  * @return {number[][]}
  */
 var updateMatrix = function(mat) {
-    let m = mat.length, n = mat[0].length
-    let res = new Array(m).fill().map(() => new Array(n).fill(Infinity))
+    let rows = mat.length, cols = mat[0].length
+    let res = new Array(rows).fill().map(() => new Array(cols).fill(Infinity))
+
     let dir = [[1,0], [0,1], [-1,0], [0,-1]]
+
     let q = []
 
-    for(let i=0; i<m; i++){
-        for(let j=0; j<n; j++){
+    for(let i=0; i<rows; i++){
+        for(let j=0; j<cols; j++){
             if(mat[i][j] == 0){
                 res[i][j] = 0
                 q.push([i,j])
             }
         }
     }
-
     while(q.length){
         let [x,y] = q.shift()
-
         for(let [dx,dy] of dir){
-            let nx = x+dx, ny = y+dy
-
-            if(nx >= 0 && nx < m && ny >= 0 && ny < n){
+            let nx = x+dx, ny = y + dy
+            if(nx >= 0 && nx < rows && ny >= 0 && ny < cols){
                 if(res[nx][ny] > res[x][y] + 1){
-                    res[nx][ny]  = res[x][y] + 1
-                    q.push([nx,ny])
+                    res[nx][ny] = res[x][y] + 1
+                    q.push([nx, ny])
                 }
             }
         }
