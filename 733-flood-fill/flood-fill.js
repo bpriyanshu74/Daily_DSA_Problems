@@ -6,23 +6,26 @@
  * @return {number[][]}
  */
 var floodFill = function(image, sr, sc, color) {
+    if(color == image[sr][sc]) return image
 
-    function dfs(i,j){
-        image[i][j] = color
-        for(let [di, dj] of dir){
-            let ni = i + di, nj = j + dj
-            if(ni >= 0 && ni < image.length 
-                && nj >= 0 && nj < image[0].length && image[ni][nj] == org_color)
-                {
-                    dfs(ni,nj)
+    let q = [[sr,sc]], org_color = image[sr][sc]
+    
+
+    let dir = [[1,0],[0,1], [-1,0], [0,-1]]
+
+    while(q.length){
+        for(let i=0; i<q.length; i++){
+            let [x,y] = q.shift()
+            image[sr][sc] = color
+            for(let [dx,dy] of dir){
+                let nx = x+dx, ny = y+dy
+                if(nx >= 0 && nx < image.length && ny >= 0 && ny < image[0].length && image[nx][ny] == org_color){
+                    image[nx][ny] = color
+                    q.push([nx,ny])
                 }
+            }
         }
     }
-    if(color == image[sr][sc]) return image
-    let dir = [[1,0], [0,1], [-1,0], [0,-1]]
-    let org_color = image[sr][sc]
-
-    dfs(sr,sc)
-
     return image
+    
 };
