@@ -4,29 +4,37 @@
  * @return {number[]}
  */
 var findOrder = function(numCourses, prerequisites) {
-    let v = numCourses, edges = prerequisites
 
-    let indegree = new Array(v).fill(0)
-    let adj = new Array(v).fill().map(() => [])
-
-    for(let [u,v] of edges){
-        adj[v].push(u)
-        indegree[u]++
-    }
-    let res = [], q = []
-    for(let i=0; i<v; i++){
-        if(indegree[i] == 0)q.push(i)
-    }
-
-    while(q.length){
-        let node = q.shift()
+    function dfs(node){
+        if(hasCycle) return 
+        v[node] = 1
+        for(let nbr of graph[node]){
+            if(v[nbr] == 0){
+                dfs(nbr)
+            }else if(v[nbr] == 1){
+                hasCycle = true
+                return
+            }
+        }
+        v[node] = 2
         res.push(node)
-        for(let nbr of adj[node]){
-            indegree[nbr]--
-            if(indegree[nbr] == 0)q.push(nbr)
+    }
+
+    let n = numCourses, e = [...prerequisites]
+
+    let res = [], v = new Array(n).fill(0), hasCycle = false
+    let graph = new Array(n).fill().map(() => [])
+
+    for(let [u,v] of e){
+        graph[v].push(u)
+    }
+
+    for(let i=0; i<n; i++){
+        if(!v[i]){
+            dfs(i)
         }
     }
+    if(hasCycle) return []
 
-    return res.length == v ? res : []
-    
+    return res.reverse()
 };
