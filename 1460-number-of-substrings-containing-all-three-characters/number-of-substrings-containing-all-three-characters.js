@@ -3,17 +3,28 @@
  * @return {number}
  */
 var numberOfSubstrings = function(s) {
-    // optimization using two pointer with sliding window
-    // hasmap will contain all the three character and the last index they were seen, once all the character are != -1 them we'll pick the min index of the three and add it to the count with + 1. 
-    let count = 0, a=-1, b=-1, c=-1
-    for(let i = 0; i<s.length; i++){
-             if (s[i] === "a") a = i;
-        else if (s[i] === "b") b = i;
-        else c = i;
+    // lets start with brute force
+    // let count = 0
+    // for(let i=0; i<s.length; i++){
+    //     let set = new Set()
+    //     for(let j=i; j<s.length; j++){
+    //         set.add(s[j])
+    //         if(set.size == 3) count++
+    //     }
+    // }
+    // return count
 
-        if (a !== -1 && b !== -1 && c !== -1) count += Math.min(a, b, c) + 1;
-        
+    // now to optimise this we can use sliding window
+    let count = 0, l = 0, freq = new Map(), n = s.length
+
+    for(let r=0; r<s.length; r++){
+        freq.set(s[r], (freq.get(s[r]) || 0) + 1)
+        while(freq.size == 3){
+            count += n - r
+            freq.set(s[l], freq.get(s[l]) - 1)
+            if(freq.get(s[l]) == 0) freq.delete(s[l])
+            l++
+        }
     }
     return count
-    
 };
