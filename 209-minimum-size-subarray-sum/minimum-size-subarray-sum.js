@@ -4,7 +4,9 @@
  * @return {number}
  */
 var minSubArrayLen = function(target, nums) {
-    let l=0, minlen = Infinity, sum = 0
+    let minlen = Infinity
+
+    let l = 0, sum = 0
 
     for(let r=0; r<nums.length; r++){
         sum += nums[r]
@@ -14,5 +16,6 @@ var minSubArrayLen = function(target, nums) {
             l++
         }
     }
+
     return minlen == Infinity ? 0 : minlen
 };
