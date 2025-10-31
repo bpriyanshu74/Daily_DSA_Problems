@@ -3,12 +3,15 @@
  * @return {number}
  */
 var maxArea = function(height) {
-    let l=0, r = height.length-1, maxarea = 0
+    let maxwater = -Infinity
+
+    let l = 0, r = height.length-1
 
     while(l < r){
-        let width = r-l
         let length = Math.min(height[l], height[r])
-        maxarea = Math.max(maxarea, length*width)
+        let width = r-l
+
+        maxwater = Math.max(maxwater, length*width)
 
         if(height[l] <= height[r]){
             l++
@@ -16,5 +19,6 @@ var maxArea = function(height) {
             r--
         }
     }
-    return maxarea
+
+    return maxwater
 };
