@@ -4,25 +4,22 @@
  * @return {number}
  */
 var subarraysWithKDistinct = function(nums, k) {
+    return atMost(nums, k) - atMost(nums, k-1)
 
-    function atMost(arr,k){
-        let l=0, r=0, total=0, hashset = new Map()
-        while(r < arr.length){
-            hashset.set(arr[r], (hashset.get(arr[r])||0) + 1)
+    function atMost(nums, k){
+        let count = 0, freq = new Map(), l = 0
 
-            while(hashset.size > k){
-                hashset.set(arr[l], hashset.get(arr[l])-1)
-                if(hashset.get(arr[l]) == 0){
-                    hashset.delete(arr[l])
-                }
+        for(let r=0; r<nums.length; r++){
+            freq.set(nums[r], (freq.get(nums[r]) || 0) + 1)
+
+            while(freq.size > k){
+                freq.set(nums[l], freq.get(nums[l]) - 1)
+                if(freq.get(nums[l]) == 0) freq.delete(nums[l])
                 l++
             }
-            total += r-l+1
-            r++
+            count += r-l+1
         }
-        return total
+        return count
     }
-
-    return atMost(nums,k) - atMost(nums,k-1)
     
 };
