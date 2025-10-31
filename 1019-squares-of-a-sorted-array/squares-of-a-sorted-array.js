@@ -5,12 +5,20 @@
 var sortedSquares = function(nums) {
     let sq = new Array(nums.length).fill(0)
 
-    for(let i=0; i<nums.length; i++){
-        sq[i] = nums[i] * nums[i]
+    let l=0, r = nums.length-1, k = nums.length-1
+
+    while(l <= r){
+        let leftsq = nums[l] * nums[l]
+        let rightsq = nums[r] * nums[r]
+
+        if(leftsq < rightsq){
+            sq[k] = rightsq
+            r--
+        }else{
+            sq[k] = leftsq
+            l++
+        }
+        k--
     }
-
-    sq.sort((a,b) => a-b)
     return sq
-
-    
 };
