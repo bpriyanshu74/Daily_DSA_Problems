@@ -4,24 +4,22 @@
  * @return {number}
  */
 var numberOfSubarrays = function(nums, k) {
-    // trying k and k-1 logic
+    // we'll use 0,1 balancing in this -> marking even as 0 odd as 1
 
-    function atMost(arr,k){
-        let l=0, r=0, count = 0, odd_count = 0
-        while(r < arr.length){
-            if(arr[r]%2!= 0){
-                odd_count++
-            }
-            while(odd_count > k){
-                if(arr[l] % 2 != 0){
-                    odd_count--
-                }
-                l++
-            }
-            count += r-l+1
-            r++
+    // [1,1,0,1,1]
+
+    let count = 0, prefix = 0, freq = {0:1}
+
+    for(let i=0; i<nums.length; i++){
+        prefix += nums[i] % 2 == 0 ? 0 : 1
+
+        if(prefix-k in freq){
+            count += freq[prefix-k]
         }
-        return count
+        freq[prefix] = (freq[prefix] || 0) + 1
     }
-    return atMost(nums, k) - atMost(nums, k-1)
+
+    return count
+
+
 };
