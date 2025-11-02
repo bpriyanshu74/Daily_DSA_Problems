@@ -3,17 +3,16 @@
  * @return {number}
  */
 var findMaxLength = function(nums) {
-    let map = new Map(), sum = 0, maxl = 0
-    map.set(0, -1)
+    let freq = {0:-1}, maxl = 0, prefix = 0
 
     for(let i=0; i<nums.length; i++){
-        sum += nums[i] == 0 ? -1 : 1
-        if(map.has(sum)){
-            maxl = Math.max(maxl, i - map.get(sum))
+        prefix += nums[i] == 0 ? -1 : 1
+        if(prefix in freq){
+            maxl = Math.max(maxl, i - freq[prefix])
         }else{
-            map.set(sum, i)
+            freq[prefix] = i
         }
-        
     }
     return maxl
+    
 };
