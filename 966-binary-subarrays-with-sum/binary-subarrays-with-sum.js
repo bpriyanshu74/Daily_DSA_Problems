@@ -4,23 +4,18 @@
  * @return {number}
  */
 var numSubarraysWithSum = function(nums, goal) {
-    // for exact k, we'll need to find for k and k-1 and later subtract k and k-1
+    let count = 0, freq = new Map(), prefix = 0
+    freq.set(0, 1)
 
-    function atMost(arr, k){
-        let l=0, r=0, res = 0, sum=0
-        while(r < arr.length){
-            sum += arr[r]
+    for(let i=0; i<nums.length; i++){
+        prefix += nums[i]
 
-            while(sum > k && l <= r){
-                sum -= arr[l]
-                l++
-            }
-            res += r-l+1
-            r++
+        if(freq.has(prefix - goal)){
+            count += freq.get(prefix-goal)
         }
-        return res
+
+        freq.set(prefix, (freq.get(prefix) || 0) + 1)
     }
 
-    return atMost(nums,goal) - atMost(nums,goal-1)
-    
+    return count
 };
