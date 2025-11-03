@@ -3,22 +3,16 @@
  * @return {number}
  */
 var pivotIndex = function(nums) {
-    let prefix = new Array(nums.length).fill(0), psum = 0
-    let suffix = new Array(nums.length).fill(0), ssum = 0
-
+    let total = 0
+    for(let num of nums){
+        total += num
+    }
+    let left = 0
     for(let i=0; i<nums.length; i++){
-        psum += nums[i]
-        prefix[i] = psum
-    }
-    for(let i=nums.length-1; i>=0; i--){
-        ssum += nums[i]
-        suffix[i] = ssum
-    }
+        let right = total-left-nums[i]
 
-    for(let i=0; i<nums.length; i++){
-        if(prefix[i] == suffix[i]) return i
+        if(right == left) return i
+        left += nums[i]
     }
-
     return -1
-    
 };
