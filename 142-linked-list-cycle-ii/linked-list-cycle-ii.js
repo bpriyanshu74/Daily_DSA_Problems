@@ -11,7 +11,7 @@
  * @return {ListNode}
  */
 var detectCycle = function(head) {
-    if(!head || !head.next) return null
+    if(!head) return null
 
     let slow = head, fast = head
 
@@ -27,7 +27,6 @@ var detectCycle = function(head) {
             return pointer
         }
     }
-       
-
     return null
+    
 };
