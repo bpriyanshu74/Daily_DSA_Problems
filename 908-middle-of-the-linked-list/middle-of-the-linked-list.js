@@ -10,7 +10,6 @@
  * @return {ListNode}
  */
 var middleNode = function(head) {
-    if(!head || !head.next) return head
     let slow = head, fast = head
 
     while(fast && fast.next){
@@ -19,6 +18,5 @@ var middleNode = function(head) {
     }
 
     return slow
-
     
 };
