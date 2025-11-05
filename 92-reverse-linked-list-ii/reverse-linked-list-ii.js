@@ -20,6 +20,7 @@ var reverseBetween = function(head, left, right) {
     for(let i=1; i<left; i++){
         prev = prev.next
     }
+
     let cur = prev.next
 
     for(let i=0; i<right-left; i++){
