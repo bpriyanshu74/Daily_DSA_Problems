@@ -23,12 +23,11 @@ var reverseBetween = function(head, left, right) {
     let cur = prev.next
 
     for(let i=0; i<right-left; i++){
-        let node = cur.next // node to be moved
-        cur.next = node.next // detach the node
-        node.next = prev.next // update the next of prev
+        let node = cur.next
+        cur.next = node.next
+        node.next = prev.next
         prev.next = node
     }
 
     return dummy.next
-    
 };
