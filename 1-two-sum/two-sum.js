@@ -4,16 +4,15 @@
  * @return {number[]}
  */
 var twoSum = function(nums, target) {
-    let hashmap = new Map()
+    let map = {}
 
     for(let i=0; i<nums.length; i++){
         let diff = target - nums[i]
-
-        if(hashmap.has(diff)){
-            return [i, hashmap.get(diff)]
+        if(diff in map){
+            return [i, map[diff]]
         }
-
-        hashmap.set(nums[i], i)
+        map[nums[i]] = i
     }
+
     
 };
