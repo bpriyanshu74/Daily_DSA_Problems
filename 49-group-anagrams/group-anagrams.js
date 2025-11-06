@@ -3,19 +3,21 @@
  * @return {string[][]}
  */
 var groupAnagrams = function(strs) {
-    let anagramMap = new Map();
-    for(let ele of strs){
-        let eleKey = ele.split("").sort().join("");
-        if (anagramMap.has(eleKey)){
-            anagramMap.get(eleKey).push(ele)
+
+    let map = {}
+
+    for(let str of strs){
+        let freq = new Array(26).fill(0)
+        for(let ch of str){
+            let index = ch.charCodeAt(0) - 97
+            freq[index]++
         }
-        else{
-            anagramMap.set(eleKey,[ele])
-        }
-    
+        let key = freq.join('#')
+        if(!map[key]) map[key] = []
+
+        map[key].push(str)
     }
 
-    // console.log(anagramMap)
-    return Array.from(anagramMap.values())
+    return Object.values(map)
     
 };
