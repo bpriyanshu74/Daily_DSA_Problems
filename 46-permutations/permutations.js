@@ -3,26 +3,30 @@
  * @return {number[][]}
  */
 var permute = function(nums) {
+    let ans = [], visited = new Array(nums.length).fill(0)
 
-    function dfs(arr, path){
-        if(path.length == arr.length){
-            res.push([...path])
+    function dfs(path){
+        if(path.length == nums.length){
+            ans.push([...path])
             return
         }
 
-        for(let i=0; i<arr.length; i++){
+        for(let i=0; i<nums.length; i++){
             if(!visited[i]){
-                path.push(arr[i])
+                path.push(nums[i])
                 visited[i] = 1
-                dfs(arr,path)
+
+                dfs(path)
+
                 path.pop()
                 visited[i] = 0
             }
         }
+        
+
+
     }
 
-    let res = [], visited = new Array(nums.length).fill(0)
-    dfs(nums,[])
-    return res
-    
+    dfs([])
+    return ans
 };
