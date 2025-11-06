@@ -3,10 +3,11 @@
  * @return {number[][]}
  */
 var subsets = function(nums) {
-    let res = []
+    let ans = []
 
     function dfs(index, path){
-        res.push([...path])
+        ans.push([...path])
+        
         for(let i=index; i<nums.length; i++){
             path.push(nums[i])
             dfs(i+1, path)
@@ -15,6 +16,5 @@ var subsets = function(nums) {
     }
 
     dfs(0, [])
-    return res
-    
+    return ans
 };
