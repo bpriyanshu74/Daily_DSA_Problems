@@ -4,22 +4,22 @@
  * @return {number[][]}
  */
 var combinationSum = function(candidates, target) {
-    let res = []
-    function dfs(path, sum, index){
+    let ans = []
+
+    function dfs(path,index,sum){
         if(sum == 0){
-            res.push([...path])
+            ans.push([...path])
             return
         }
-        if(sum < 0) return 
+        if(sum < 0) return
 
         for(let i=index; i<candidates.length; i++){
             path.push(candidates[i])
-            dfs(path, sum - candidates[i], i)
+            dfs(path,i,sum-candidates[i])
             path.pop()
         }
     }
 
-    dfs([], target, 0)
-
-    return res
+    dfs([], 0, target)
+    return ans
 };
