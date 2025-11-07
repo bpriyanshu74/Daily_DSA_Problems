@@ -3,30 +3,24 @@
  * @return {string[]}
  */
 var letterCombinations = function(digits) {
-    if(digits.length < 1) return []
-    let map = ['', '', 'abc', 'def', 'ghi', 'jkl', 'mno', 'pqrs', 'tuv', 'wxyz'], res = []
+    let map = ['', '', 'abc', 'def', 'ghi', 'jkl', 'mno', 'pqrs', 'tuv', 'wxyz'], ans = []
 
     function dfs(index, path){
         if(index == digits.length){
-            res.push(path.join(''))
+            ans.push(path.join(''))
             return
         }
+
         let digit = digits[index]
         let values = map[Number(digit)]
 
-        
-
-        for(let char of values){
-            path.push(char)
+        for(let ch of values){
+            path.push(ch)
             dfs(index+1, path)
             path.pop()
         }
     }
-        
 
     dfs(0, [])
-
-    return res
-
-    
+    return ans
 };
