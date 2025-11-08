@@ -8,9 +8,10 @@ var removeDuplicates = function(s) {
     for(let ch of s){
         if(stack.length && ch == stack[stack.length-1]){
             stack.pop()
-            continue
+        }else{
+            stack.push(ch)
         }
-        stack.push(ch)
+        
     }
 
     return stack.join('')
