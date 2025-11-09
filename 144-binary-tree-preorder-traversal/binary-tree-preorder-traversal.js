@@ -11,17 +11,16 @@
  * @return {number[]}
  */
 var preorderTraversal = function(root) {
-    let pre = []
+    if(!root) return []
 
     function dfs(node){
-        if(!node) return
-
-        pre.push(node.val)
+        if(!node) return 
+        ans.push(node.val)
         dfs(node.left)
         dfs(node.right)
     }
 
+    let ans = []
     dfs(root)
-    return pre
-    
+    return ans
 };
