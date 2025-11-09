@@ -32,10 +32,10 @@ var deserialize = function(data) {
     function build(){
         if(index >= values.length) return null
         let val = values[index++]
-
         if(val == 'null') return null
 
         let node = new TreeNode(Number(val))
+
         node.left = build()
         node.right = build()
 
