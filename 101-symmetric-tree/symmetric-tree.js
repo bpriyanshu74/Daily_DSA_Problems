@@ -19,8 +19,6 @@ var isSymmetric = function(root) {
         }
         if(left.val != right.val) return false
 
-        return helper(left.right, right.left) && helper(left.left, right.right)
+        return helper(left.left, right.right) && helper(left.right, right.left)
     }
-
-
 };
