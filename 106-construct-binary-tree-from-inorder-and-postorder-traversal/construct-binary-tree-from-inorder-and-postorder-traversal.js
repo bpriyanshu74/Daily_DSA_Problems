@@ -12,27 +12,28 @@
  * @return {TreeNode}
  */
 var buildTree = function(inorder, postorder) {
-    let postindex = postorder.length-1
-
-    let inorder_map = new Map()
+    let map = {}
 
     for(let i=0; i<inorder.length; i++){
-        inorder_map.set(inorder[i], i)
+        map[inorder[i]] = i
     }
 
-    function build(start, end){
-        if(start > end) return null
+    let postindex = postorder.length-1
+
+    function build(i,j){
+        if(i > j) return null
 
         let rootval = postorder[postindex--]
+
         let root = new TreeNode(rootval)
 
-        let partition = inorder_map.get(rootval)
+        let mid = map[rootval]
 
-        root.right = build(partition+1, end)
-        root.left = build(start, partition-1)
-        
+        root.right = build(mid+1, j)
+        root.left = build(i,mid-1)
 
-        return root 
+        return root
     }
+
     return build(0, inorder.length-1)
 };
