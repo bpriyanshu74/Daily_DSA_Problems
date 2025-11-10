@@ -3,32 +3,21 @@
  * @return {number}
  */
 var candy = function(ratings) {
-    let n = ratings.length, count = 1, i=1, sum = 1
+    let n = ratings.length
 
-    while(i < n){
-        if(ratings[i-1] == ratings[i]){
-            i++
-            sum = sum + 1 
-            continue
-        }
-        let peak = 1
-        while(i < n && ratings[i-1] < ratings[i]){
-            i++
-            peak++
-            sum += peak
-            
-        }
-        let down = 1
-        while(i < n && ratings[i-1] > ratings[i]){
-            i++
-            sum += down
-            down++
-        }
+    let candies = new Array(n).fill(1)
 
-        if(down > peak) sum += down-peak
+    for(let i=1; i<n; i++){
+        if(ratings[i] > ratings[i-1]){
+            candies[i] = candies[i-1] + 1
+        }
     }
 
-    return sum
+    for(let i=n-2; i>= 0; i--){
+        if(ratings[i] > ratings[i+1]){
+            candies[i] = Math.max(candies[i+1]+1, candies[i])
+        }
+    }
 
-    
+    return candies.reduce((a,b) => a+b, 0)
 };
