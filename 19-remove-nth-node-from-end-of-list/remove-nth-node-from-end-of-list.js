@@ -13,17 +13,20 @@
 var removeNthFromEnd = function(head, n) {
     let slow = head, fast = head
 
-    while(n > 0){
+    for(let i=0; i<n; i++){
         fast = fast.next
-        n--
     }
-    if(!fast) return head.next
+    //checking in case we need to remove the head
+    if(!fast){
+        return slow.next
+    }
 
-    while(fast.next){
+    while(fast && fast.next){
         slow = slow.next
         fast = fast.next
     }
-    slow.next = slow.next.next
+
+    slow.next = !fast ? null : slow.next.next
 
     return head
 };
