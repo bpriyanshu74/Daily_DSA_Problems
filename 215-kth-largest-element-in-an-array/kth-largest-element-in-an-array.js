@@ -4,82 +4,81 @@
  * @return {number}
  */
 var findKthLargest = function(nums, k) {
-
-    // defining the maxheap class
-
     class Maxheap{
         constructor(){
-            this.maxheap = []
+            this.heap = []
         }
 
         insert(val){
-            this.maxheap.push(val)
+            this.heap.push(val)
             this.heapifyUp()
         }
 
         extractMax(){
-            if(this.maxheap.length == 0) return null
-            if(this.maxheap.length == 1) return this.maxheap.pop()
+            if(this.heap.length == 0) return null
+            if(this.heap.length == 1) return this.heap.pop()
+            let max = this.heap[0]
 
-            let max = this.maxheap[0]
-            this.maxheap[0] = this.maxheap.pop()
+            this.heap[0] = this.heap.pop()
+
             this.heapifyDown()
+
             return max
         }
         getMax(){
-            return this.maxheap[0]
+            return this.heap[0]
         }
-        swap(i,j){
-            [this.maxheap[i], this.maxheap[j]] = [this.maxheap[j], this.maxheap[i]]
-        }
+
         heapifyUp(){
-            let index = this.maxheap.length-1
+            let index = this.heap.length-1
 
             while(index > 0){
                 let parent = Math.floor((index-1)/2)
-                if(this.maxheap[index] > this.maxheap[parent]){
+
+                if(this.heap[index] > this.heap[parent]){
                     this.swap(index, parent)
                     index = parent
+                }else{
+                    break
                 }
-                else break
             }
         }
 
         heapifyDown(){
-            let length = this.maxheap.length, index = 0
+            let index = 0, n = this.heap.length
 
             while(true){
-                let left = (2*index) + 1, right = (2*index) + 2, largest = index
-                if(left < length && this.maxheap[left] > this.maxheap[largest]){
+                let left = (2*index)+1, right = (2*index)+2, largest = index
+
+                if(left < n && this.heap[left] > this.heap[largest]){
                     largest = left
                 }
-
-                if(right < this.maxheap.length && this.maxheap[right] > this.maxheap[largest]){
+                if(right < n && this.heap[right] > this.heap[largest]){
                     largest = right
                 }
 
-                if(largest != index){
-                    this.swap(largest, index)
+                if(index != largest){
+                    this.swap(index, largest)
                     index = largest
                 }else{
                     break
                 }
             }
         }
-        
+        swap(i,j){
+            [this.heap[i], this.heap[j]] = [this.heap[j], this.heap[i]]
+        }
     }
-    
-    // the main function
     let maxheap = new Maxheap()
-
     for(let num of nums){
         maxheap.insert(num)
     }
 
-    while(k > 1){
+    for(let i=0; i<k-1; i++){
         maxheap.extractMax()
-        k--
     }
 
     return maxheap.getMax()
+
+
 };
