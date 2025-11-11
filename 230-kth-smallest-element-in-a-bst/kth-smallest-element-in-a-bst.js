@@ -12,20 +12,22 @@
  * @return {number}
  */
 var kthSmallest = function(root, k) {
-    let counter = 0, result = null
+    let count = 0, ans = null
 
-    function dfs(node){
-        if(!node) return
+    function inorder(node){
+        if(!node || ans != null) return
 
-        dfs(node.left)
-        if(counter == k-1){
-            result = node
+        inorder(node.left)
+        count++
+
+        if(count == k){
+            ans = node.val
+            return
         }
-        counter++
-        dfs(node.right)
+
+        inorder(node.right)
     }
 
-    dfs(root)
-    return result.val
-    
+    inorder(root)
+    return ans    
 };
