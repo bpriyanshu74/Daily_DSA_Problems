@@ -4,17 +4,18 @@
  * @return {number}
  */
 var subarraySum = function(nums, k) {
-    // using prefix sum
-
-    let map = {}, sum = 0, count = 0
-    map[0] = 1
+    let map = new Map(), prefix = 0, count = 0
+    map.set(0, 1)
 
     for(let i=0; i<nums.length; i++){
-        sum += nums[i]
-        if(map[sum-k]){
-            count += map[sum-k]
+        prefix += nums[i]
+
+        if(map.has(prefix-k)){
+            count += map.get(prefix-k)
         }
-        map[sum] = (map[sum] || 0) + 1
+
+        map.set(prefix, (map.get(prefix) || 0) + 1)
     }
+
     return count
 };
