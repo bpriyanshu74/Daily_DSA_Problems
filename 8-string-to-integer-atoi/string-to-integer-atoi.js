@@ -3,34 +3,26 @@
  * @return {number}
  */
 var myAtoi = function(s) {
-    if(!s) return 0
-    let i=0, n = s.length, sign = 1, intMin = -(2**31), intMax = (2**31) - 1
-    // skipping white spaces
-    while(i < n && s[i] == " "){
-        i++
-    }
-    // checking whether the string has ended ?
-    if(i == n) return 0
+    s = s.trim()
+    if(s.length == 0) return 0
 
-    // sign checking
-    if(s[i] == '+') i++
-    else if(s[i] == '-'){
-        sign = -1
+    let i = 0, sign = 1, result = 0
+
+    if(s[i] == '-' || s[i] == '+'){
+        if(s[i] == '-') sign = -1
         i++
     }
 
-    // reading digit and convert
+    while(i < s.length && s[i] >= '0' && s[i] <= '9'){
+        let digit = s[i].charCodeAt(0) - '0'.charCodeAt(0)
 
-    let res = 0
-    while( i< n && s[i] >= '0' && s[i] <= '9'){
-        let digit = parseInt(s[i])
+        if(result > Math.floor((2**31-1-digit)/10)){
+            return sign == 1 ? (2**31) -1 : -(2**31)
+        }
 
-        res = res*10 + digit
-
-        if(sign* res <= intMin) return intMin
-        if(sign*res >= intMax) return intMax
+        result = result * 10 + digit
         i++
     }
 
-    return res*sign
+    return result * sign
 };
