@@ -3,11 +3,18 @@
  * @return {number}
  */
 var findDuplicate = function(nums) {
-    let visited = new Array(nums.length+1).fill(0)
+    let slow = nums[0], fast = nums[0]
 
-    for(let num of nums){
-        if(visited[num] == 1) return num
-        visited[num] = 1
-    } 
-    
+    do{
+        slow = nums[slow]
+        fast = nums[nums[fast]]
+    }while(slow != fast)
+
+    slow = nums[0]
+    while(slow != fast){
+        slow = nums[slow]
+        fast = nums[fast]
+    }
+
+    return slow
 };
