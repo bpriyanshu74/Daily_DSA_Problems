@@ -9,9 +9,9 @@ var searchInsert = function(nums, target) {
     while(l < r){
         let mid = l + Math.floor((r-l)/2)
 
-        if(target == nums[mid]) return mid
-        else if(target < nums[mid]) r=mid
-        else l = mid + 1
+        if(nums[mid] == target) return mid
+        else if(nums[mid] < target) l = mid + 1
+        else r = mid
     }
     return l
 };
