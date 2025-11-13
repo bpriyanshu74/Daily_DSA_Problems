@@ -3,39 +3,46 @@
  * @return {string[][]}
  */
 var solveNQueens = function(n) {
-    let res = [], board = new Array(n).fill().map(() => new Array(n).fill('.'))
+    let board = Array.from({length: n}, () => Array(n).fill('.'))
+    let ans = []
 
-    function safe(board, r , c){
-        for (let i = 0; i < n; i++) {
-        if (board[i][c] == 'Q') return false;
-    }
-
-    // upper left diagonal
-    for (let i = r - 1, j = c - 1; i >= 0 && j >= 0; i--, j--) {
-        if (board[i][j] == 'Q') return false;
-    }
-
-    // upper right diagonal
-    for (let i = r - 1, j = c + 1; i >= 0 && j < n; i--, j++) {
-        if (board[i][j] == 'Q') return false;
-    }
-
-    return true;
-    }
-    
-    function dfs(row){
+    function dfs(board, row){
         if(row == n){
-            res.push(board.map(r => r.join('')));
+            ans.push(board.map((r) => r.join('')))
             return
         }
-        for(let col = 0; col < n; col++){
-            if(safe(board, row, col)){
-                board[row][col] = 'Q'
-                dfs(row+1)
-                board[row][col] = '.'
+
+        for(let i=0; i<n; i++){
+            if(isSafe(row,i)){
+                board[row][i] = 'Q'
+                dfs(board, row+1)
+                board[row][i] = '.'
             }
         }
     }
-    dfs(0)
-    return res
+
+    function isSafe(x,y){
+        // checking the same column
+
+        for(let i=x-1; i>= 0; i--){
+            if(board[i][y] == 'Q') return false
+        }
+
+        //checking positive diagonal
+
+        for(let i=x-1, j=y-1; i>=0 && j >= 0; i--,j--){
+            if(board[i][j] == 'Q') return false
+        }
+
+        //checking negative diagonal
+
+        for(let i=x-1, j = y+1; i>= 0 && j < n; i--,j++){
+            if(board[i][j] == 'Q') return false
+        }
+        return true
+    }
+
+    dfs(board, 0)
+    return ans
+    
 };
