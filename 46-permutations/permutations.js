@@ -15,16 +15,12 @@ var permute = function(nums) {
             if(!visited[i]){
                 path.push(nums[i])
                 visited[i] = 1
-
                 dfs(path)
 
-                path.pop()
                 visited[i] = 0
+                path.pop()
             }
         }
-        
-
-
     }
 
     dfs([])
