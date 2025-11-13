@@ -10,14 +10,15 @@ var myPow = function(x, n) {
     }
 
     function power(x,n){
-        if(n==0) return 1
-        if(n % 2 == 0){
+        if(n == 0) return 1
+
+        if(n%2==0){
             return power(x*x, n/2)
-        }
-        else{
+        }else{
             return x*power(x,n-1)
         }
     }
+
     return power(x,n)
     
 };
