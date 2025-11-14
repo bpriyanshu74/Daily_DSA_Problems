@@ -4,21 +4,28 @@
  * @return {number[][]}
  */
 var combine = function(n, k) {
-    let ans = []
+    let combs = [], visited = new Array(n+1).fill(0)
 
-    function dfs(path, index){
+    function dfs(path, start){
         if(path.length == k){
-            ans.push([...path])
+            combs.push([...path])
             return
         }
 
-        for(let i=index; i<=n; i++){
-            path.push(i)
-            dfs(path, i+1)
-            path.pop()
+        for(let i=start; i<=n; i++){
+            if(!visited[i]){
+                path.push(i)
+                visited[i] = 1
+
+                dfs(path,i+1)
+
+                visited[i] = 0
+                path.pop()
+            }
         }
     }
 
     dfs([], 1)
-    return ans
+    return combs
+    
 };
