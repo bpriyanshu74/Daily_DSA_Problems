@@ -10,12 +10,14 @@ var sortColors = function(nums) {
             [nums[mid], nums[low]] = [nums[low], nums[mid]]
             mid++
             low++
+        }else if(nums[mid] == 1){
+            mid++
         }else if(nums[mid] == 2){
             [nums[mid], nums[high]] = [nums[high], nums[mid]]
             high--
-        }else{
-            mid++
         }
     }
+
     return nums
+    
 };
