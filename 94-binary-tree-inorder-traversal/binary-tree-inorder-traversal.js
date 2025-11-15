@@ -13,14 +13,19 @@
 var inorderTraversal = function(root) {
     if(!root) return []
 
-    function dfs(node){
-        if(!node) return 
-        dfs(node.left)
-        ans.push(node.val)
-        dfs(node.right)
+    let res = []
+
+    function inorder(node){
+        if(!node) return
+
+        inorder(node.left)
+
+        res.push(node.val)
+
+        inorder(node.right)
     }
 
-    let ans = []
-    dfs(root)
-    return ans
+    inorder(root)
+
+    return res
 };
