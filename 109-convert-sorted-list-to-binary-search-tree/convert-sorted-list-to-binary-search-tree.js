@@ -18,29 +18,24 @@
  * @return {TreeNode}
  */
 var sortedListToBST = function(head) {
+    
     if(!head) return null
+    if(!head.next) return new TreeNode(head.val)
 
-    let temp = head, count = 0
-    while(temp){
-        count++
-        temp = temp.next
+    let slow = head, fast = head, prev = null
+
+    while(fast && fast.next){
+        prev = slow
+        slow = slow.next
+        fast = fast.next.next
     }
-    temp = head
+    
 
-    function buildTree(l,r){
-        if(l > r) return null
-        let mid = l+ Math.floor((r-l)/2)
-        let node = new TreeNode()
+    let root = new TreeNode(slow.val)
+    prev.next = null
 
-        node.left = buildTree(l,mid-1)
-        node.val = temp.val
-        temp = temp.next
-        node.right = buildTree(mid+1, r)
+    root.left = sortedListToBST(head)
+    root.right = sortedListToBST(slow.next)
 
-        return node
-    }
-
-    // we build the tree in in order fashion
-    return buildTree(1, count)
-
+    return root
 };
