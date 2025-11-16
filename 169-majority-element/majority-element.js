@@ -3,14 +3,12 @@
  * @return {number}
  */
 var majorityElement = function(nums) {
-    let candidate = null, count = 0
+    let map = {}
+    for(let num of nums){
+        map[num] = (map[num] || 0) + 1
 
-    for(let i=0; i<nums.length; i++){
-        if(count == 0) candidate = nums[i]
-
-        count += candidate == nums[i] ? 1 : -1
+        if(map[num] > Math.floor(nums.length/2)){
+            return num
+        }
     }
-
-    return candidate
-    
 };
