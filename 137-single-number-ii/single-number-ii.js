@@ -3,13 +3,12 @@
  * @return {number}
  */
 var singleNumber = function(nums) {
-    let map = {}
+    let ones = 0, twos = 0
 
     for(let num of nums){
-        map[num] = (map[num] || 0) + 1
+        ones = (ones^num) & ~twos
+        twos = (twos^num) & ~ones
     }
 
-    for(let [num,freq] of Object.entries(map)){
-        if(freq == 1) return Number(num)
-    }
+    return ones
 };
