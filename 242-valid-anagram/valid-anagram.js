@@ -4,19 +4,19 @@
  * @return {boolean}
  */
 var isAnagram = function(s, t) {
-    if(t.length > s.length) return false
-
-    let map = new Map()
+    if(s.length != t.length) return false
+    let smap = new Map()
 
     for(let ch of s){
-        map.set(ch, (map.get(ch) || 0) + 1)
+        smap.set(ch, (smap.get(ch) || 0) + 1)
     }
 
     for(let ch of t){
-        if(!map.has(ch)) return false
-
-        map.set(ch, map.get(ch)-1)
-        if(map.get(ch) == 0) map.delete(ch)
+        if(!smap.has(ch)) return false
+        smap.set(ch, smap.get(ch)-1)
+        if(smap.get(ch) <= 0) smap.delete(ch)
     }
-    return map.size == 0
+
+    return true
+    
 };
