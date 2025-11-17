@@ -11,31 +11,17 @@
  * @return {number}
  */
 var countNodes = function(root) {
+    if(!root) return 0
 
-    if(root == null) return 0
+    let q = [root], count = 0
 
-    let lh = findh(root,'l')
-    let rh = findh(root, 'r')
+    while(q.length){
+        count++
+        let node = q.shift()
 
-    if(lh == rh) return (1<<lh)-1
-    return 1 + countNodes(root.left) + countNodes(root.right)
-
-    function findh(node, dir){
-        if(dir == 'l'){
-            let h = 0
-            while(node){
-                h++
-                node = node.left
-            }
-            return h
-        }
-        if(dir == 'r'){
-            let h = 0
-            while(node){
-                h++
-                node = node.right
-            }
-            return h
-        }
+        if(node.left) q.push(node.left)
+        if(node.right) q.push(node.right)
     }
+
+    return count
 };
