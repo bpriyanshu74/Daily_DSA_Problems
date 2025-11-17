@@ -20,5 +20,4 @@ var invertTree = function(root) {
     root.right = left
 
     return root
-    
 };
