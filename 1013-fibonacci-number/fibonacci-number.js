@@ -3,14 +3,14 @@
  * @return {number}
  */
 var fib = function(n) {
-    let dp = new Array(n+1).fill(-1)
+    if(n <= 1) return n
 
-    dp[0] = 0
-    dp[1] = 1
-    for(let i=2; i<=n; i++){
-        dp[i] = dp[i-2] + dp[i-1]
+    let prev2 = 0, prev1 = 1
+
+    for(let i=2; i<= n; i++){
+        let temp = prev1
+        prev1 += prev2
+        prev2 = temp
     }
-
-    return dp[n]
-   
+    return prev1
 };
