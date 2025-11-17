@@ -3,26 +3,26 @@
  * @return {number}
  */
 var numIslands = function(grid) {
+    let count = 0, m = grid.length, n = grid[0].length
 
-    function dfs(pos){
-        let [x,y] = pos
-        grid[x][y] = 0
+    function dfs(x,y){
         for(let [dx,dy] of dir){
-            let nx = x + dx, ny = y + dy
-            if(nx >= 0 && nx < n && ny >= 0 && ny < m && grid[nx][ny] == 1){
-                dfs([nx,ny])
+            let nx = x+dx, ny = y+dy
+            if(nx >= 0 && nx < m && ny >= 0 && ny < n && grid[nx][ny] == '1'){
+                grid[nx][ny] = '0'
+                dfs(nx,ny)
             }
         }
-
     }
 
-    let count = 0, n = grid.length, m = grid[0].length
     let dir = [[1,0], [0,1], [-1,0], [0,-1]]
-    for(let i=0; i<n; i++){
-        for(let j=0; j<m; j++){
-            if(grid[i][j] == 1){
+
+    for(let i=0; i<grid.length; i++){
+        for(let j=0; j<grid[0].length; j++){
+            if(grid[i][j] == '1'){
                 count++
-                dfs([i,j])
+                grid[i][j] = '0'
+                dfs(i,j)
             }
         }
     }
