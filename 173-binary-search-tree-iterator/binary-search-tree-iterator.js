@@ -30,10 +30,7 @@ BSTIterator.prototype.next = function() {
     if(topnode.right){
         this._leftmost(topnode.right)
     }
-
     return topnode.val
-
-    
 };
 
 /**
