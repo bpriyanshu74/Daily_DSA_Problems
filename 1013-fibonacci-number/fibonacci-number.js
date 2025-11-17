@@ -5,15 +5,12 @@
 var fib = function(n) {
     let dp = new Array(n+1).fill(-1)
 
-    function dfs(x){
-        if(x <= 1) return x
-        
-        if(dp[x] != -1) return dp[x]
-
-        dp[x] = dfs(x-1) + dfs(x-2)
-
-        return dp[x]
+    dp[0] = 0
+    dp[1] = 1
+    for(let i=2; i<=n; i++){
+        dp[i] = dp[i-2] + dp[i-1]
     }
-    return dfs(n)
+
+    return dp[n]
    
 };
