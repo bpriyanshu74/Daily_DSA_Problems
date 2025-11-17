@@ -12,12 +12,13 @@
  * @return {number}
  */
 var kthSmallest = function(root, k) {
+
     let count = 0, ans = null
 
     function inorder(node){
         if(!node || ans != null) return
-
         inorder(node.left)
+        
         count++
 
         if(count == k){
@@ -29,5 +30,6 @@ var kthSmallest = function(root, k) {
     }
 
     inorder(root)
-    return ans    
+    return ans
+    
 };
