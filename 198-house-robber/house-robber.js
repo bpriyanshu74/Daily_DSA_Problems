@@ -5,17 +5,32 @@
 var rob = function(nums) {
     let n = nums.length
 
-    let dp = new Array(n).fill(0)
-    dp[0] = nums[0]
+    let prev2 = 0
+    let prev = nums[0]
 
     for(let i=1; i<n; i++){
-        let take = nums[i] + (i > 1 ? dp[i-2] : 0)
-        let nontake = dp[i-1]
+        let take = nums[i] + prev2
+        let nontake = prev
 
-        dp[i] = Math.max(take,nontake)
+        let curi = Math.max(take, nontake)
+
+        prev2 = prev
+        prev = curi
     }
 
-    return dp[n-1]
+    return prev
+
+    // let dp = new Array(n).fill(0)
+    // dp[0] = nums[0]
+
+    // for(let i=1; i<n; i++){
+    //     let take = nums[i] + (i > 1 ? dp[i-2] : 0)
+    //     let nontake = dp[i-1]
+
+    //     dp[i] = Math.max(take,nontake)
+    // }
+
+    // return dp[n-1]
 
     // memoization
     // function dfs(index){
