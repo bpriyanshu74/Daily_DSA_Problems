@@ -5,23 +5,25 @@
  */
 var change = function(amount, coins) {
     let n = coins.length
-    let dp = Array.from({length: n}, () => new Array(amount+1).fill(-1))
+    let dp = Array.from({length: n}, () => new Array(amount+1).fill(0))
 
-    function f(index, amount){
-        if(index == 0){
-            if(amount % coins[index] == 0) return 1
-            return 0
-        }
-        if(dp[index][amount] != -1) return dp[index][amount]
-
-        let nottake = f(index-1, amount)
-        let take = 0
-        if(coins[index] <= amount){
-            take = f(index, amount - coins[index])
-        }
-
-        return dp[index][amount] = take + nottake
+    for(let i = 0; i<=amount; i++){
+        dp[0][i] = i % coins[0] == 0 ? 1 : 0
     }
 
-    return f(n-1, amount)
+    for(let i=1; i<n; i++){
+        for(let j=0; j<=amount; j++){
+            let nottake = dp[i-1][j]
+
+            let take = 0
+            if(coins[i] <= j){
+                take = dp[i][j-coins[i]]
+            }
+
+            dp[i][j] = take + nottake
+        }
+    }
+    return dp[n-1][amount]
+
+    
 };
