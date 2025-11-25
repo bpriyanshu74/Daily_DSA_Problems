@@ -3,28 +3,24 @@
  * @return {number}
  */
 var rob = function(nums) {
+    if(nums.length == 1) return nums[0]
+    
 
-    if(nums.length === 1) return nums[0];
+    function helper(arr, index, dp){
+        if(index == 0) return arr[index]
+        if(index < 0) return 0
 
-    function calculate(start, end, dp){
-        if(start == end) return nums[start]
-        if(start < end) return 0
+        if(dp[index] != -1) return dp[index]
 
-        if(dp[start] != -1) return dp[start]
+        let nottake = helper(arr, index-1, dp)
+        let take = arr[index] + helper(arr, index-2, dp)
 
-        let pick = nums[start] + calculate(start-2, end, dp)
-        let notpick = calculate(start-1, end, dp)
-
-        dp[start] = Math.max(pick, notpick)
-
-        return dp[start]
+        return dp[index] = Math.max(nottake, take)
     }
-    let n = nums.length
-    let dp1 = new Array(n).fill(-1)
-    let dp2 = new Array(n).fill(-1)
 
-    let temp1 = calculate(n-1, 1, dp1)
-    let temp2 = calculate(n-2, 0, dp2)
+    let first = nums.slice(0, nums.length-1), dp1 = new Array(first.length).fill(-1)
+    let second = nums.slice(1, nums.length), dp2 = new Array(second.length).fill(-1)
 
-    return Math.max(temp1, temp2)  
+    return Math.max(helper(first, first.length-1, dp1), helper(second, second.length-1, dp2))
+    
 };
