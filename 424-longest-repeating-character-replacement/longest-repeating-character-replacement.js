@@ -4,23 +4,21 @@
  * @return {number}
  */
 var characterReplacement = function(s, k) {
-    let maxcount = 0, l = 0
-    let freq = new Array(26).fill(0), maxfreq = -1
+    let hashmap = new Map(), maxfreq = 0, maxl = 0
 
-    for(let r = 0; r < s.length; r++){
-        let index = s[r].charCodeAt(0) - 65
-        freq[index]++
-        maxfreq = Math.max(maxfreq, freq[index])
+    let l =0
 
-        let need = (r-l+1) - maxfreq
+    for(let r=0; r<s.length; r++){
+        let ch = s[r]
+        hashmap.set(ch, (hashmap.get(ch) || 0) + 1)
+        maxfreq = Math.max(maxfreq, hashmap.get(ch))
 
-        if(need > k){
-            let lindex = s[l].charCodeAt(0) - 65
-            freq[lindex]--
+        while(r-l+1 - maxfreq > k){
+            hashmap.set(s[l], hashmap.get(s[l]) - 1)
             l++
-        }else{
-            maxcount = Math.max(maxcount, r-l+1)
         }
+
+        maxl = Math.max(maxl, r-l+1)
     }
-    return maxcount
+    return maxl
 };
