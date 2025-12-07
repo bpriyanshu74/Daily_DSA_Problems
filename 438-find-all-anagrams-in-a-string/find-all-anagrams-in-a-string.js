@@ -4,39 +4,33 @@
  * @return {number[]}
  */
 var findAnagrams = function(s, p) {
-    let n = s.length, m = p.length, res = []
-    if(m > n) return res
-    let freq = new Array(26).fill(0)
-    let windowcount = new Array(26).fill(0)
+    let key = new Array(26).fill(0), ans = []
+    for(let ch of p){
+        let index = ch.charCodeAt(0) - 'a'.charCodeAt(0)
 
-    for(let i=0; i<m; i++){
-        freq[p[i].charCodeAt(0)-97]++
+        key[index]++
     }
 
-    for(let i=0; i<m; i++){
-        windowcount[s[i].charCodeAt(0)-97]++
+    let key_str = key.join('#')
+
+    let k = p.length, l = 0
+
+    let temp_key = new Array(26).fill(0)
+
+    for(let r=0; r<s.length; r++){
+        let index = s[r].charCodeAt(0) - 'a'.charCodeAt(0)
+        temp_key[index]++
+        if(r < k-1) continue
+
+        let temp_key_str = temp_key.join('#')
+
+        if(temp_key_str == key_str) ans.push(l)
+
+        let lindex = s[l].charCodeAt(0) - 'a'.charCodeAt(0)
+        temp_key[lindex]--
+        l++
     }
 
-    function matches(){
-        for(let i=0; i<26; i++){
-            if(freq[i] != windowcount[i]) return false
-        }
-        return true
-    }
+    return ans
 
-    if(matches()) res.push(0)
-
-    for(let i=m; i<n; i++){
-        windowcount[s[i-m].charCodeAt(0)-97]--
-        windowcount[s[i].charCodeAt(0)-97]++
-
-        if(matches()) res.push(i-m+1)
-    }
-
-    return res
-
-
-
-    
-    
 };
