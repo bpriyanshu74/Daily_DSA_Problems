@@ -4,44 +4,30 @@
  * @return {number[][]}
  */
 var fourSum = function(nums, target) {
+    if(nums.length < 4) return []
+    let quads = new Set()
     nums.sort((a,b) => a-b)
-    return ksum(nums, target, 4, 0)
 
-    function ksum(nums, target, k , start){
-        let res = []
-        if(k == 2){
-            let l = start, r = nums.length-1
+    for(let i=0; i<nums.length-3; i++){
+        if(i > 0 && nums[i] == nums[i-1]) continue
 
-            while(l < r){
-                let sum = nums[l] + nums[r]
-                if(sum == target){
-                    res.push([nums[l], nums[r]])
-                    while(l < r && nums[l] == nums[l+1]) l++
-                    while(l < r && nums[r] == nums[r-1]) r--
-                    l++
-                    r--
-                }else if(sum < target){
-                    l++
-                }else{
-                    r--
+        for(let j=i+1; j<nums.length-2; j++){
+            if(j > i+1 && nums[j] == nums[j-1]) continue
+            
+            for(let k=j+1; k<nums.length-1; k++){
+                if(k > j+1 && nums[k] == nums[k-1]) continue
+
+                for(let p=k+1; p<nums.length; p++){
+                    if(p > k+1 && nums[p] == nums[p-1]) continue
+
+                    let sum = nums[i] + nums[j] + nums[k] + nums[p]
+                    if(sum == target){
+                        let quad_key = [nums[i], nums[j], nums[k], nums[p]].toString()
+                        quads.add(quad_key)
+                    }
                 }
             }
-            return res
         }
-
-        for(let i=start; i<=nums.length-k; i++){
-            // skipping duplicates
-            if(i > start && nums[i] == nums[i-1]) continue
-            //pruning
-            if(nums[i] + (k-1)*nums[nums.length-1] < target) continue
-            if(nums[i] + (k-1)*nums[nums[i+1]] > target) break
-
-            let subresponse = ksum(nums, target-nums[i], k-1, i+1)
-
-            for(let arr of subresponse){
-                res.push([nums[i], ...arr])
-            }
-        }
-        return res
     }
+    return Array.from(quads).map(q => q.split(',').map(Number))
 };
