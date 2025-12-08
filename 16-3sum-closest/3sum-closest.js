@@ -4,36 +4,33 @@
  * @return {number}
  */
 var threeSumClosest = function(nums, target) {
-    let closest = Infinity, absdiff = Infinity
+    let ans = Infinity, mindiff = Infinity
     nums.sort((a,b) => a-b)
 
     for(let i=0; i<nums.length-2; i++){
         if(i > 0 && nums[i] == nums[i-1]) continue
 
-        let l=i+1, r = nums.length-1
+        let p1 = i+1, p2 = nums.length-1
 
-        while(l < r){
-            let sum = nums[i] + nums[l] + nums[r]
-            if(sum == target){
-                return sum
-            }
+        while(p1 < p2){
+            let sum = nums[i] + nums[p1] + nums[p2]
+            let diff = Math.abs(target - sum)
 
-            let temp = Math.max(target, sum) - Math.min(target, sum)
-            if(temp < absdiff){
-                closest = sum
-                absdiff = temp
+            if(sum == target) return sum
+
+            if(diff < mindiff){
+                mindiff = diff
+                ans = sum
             }
 
             if(sum < target){
-                while(l<r && nums[l] == nums[l+1]) l++
-                l++
+                p1++
+                while(p1 < p2 && nums[p1] == nums[p1-1]) p1++
             }else{
-                while(l<r && nums[r] == nums[r-1]) r--
-                r-- 
-            }    
+                p2--
+                while(p1 < p2 && nums[p2] == nums[p2+1]) p2--
+            }
         }
     }
-
-    return closest
-    
+    return ans
 };
