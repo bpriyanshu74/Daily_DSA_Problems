@@ -3,31 +3,30 @@
  * @return {number[][]}
  */
 var threeSum = function(nums) {
-    let triplets = []
+    let ans = []
     nums.sort((a,b) => a-b)
 
     for(let i=0; i<nums.length-2; i++){
         if(i > 0 && nums[i] == nums[i-1]) continue
 
-        let p1 = i+1, p2 = nums.length-1
+        let j = i+1, k = nums.length-1
 
-        while(p1 < p2){
-            let sum = nums[i] + nums[p1] + nums[p2]
+        while(j < k){
+            let sum = nums[i] + nums[j] + nums[k]
 
             if(sum == 0){
-                triplets.push([nums[i], nums[p1], nums[p2]])
-                p1++
-                p2--
-
-                while(p1 < p2 && nums[p1] == nums[p1-1]) p1++
-                while(p1 < p2 && nums[p2] == nums[p2+1]) p2-- 
-            }
-            else if(sum < 0){
-                p1++
+                ans.push([nums[i], nums[j], nums[k]])
+                j++
+                k--
+                while(j < k && nums[j] == nums[j-1]) j++
+                while(j < k && nums[k] == nums[k+1]) k--
+            }else if(sum < 0){
+                j++
             }else{
-                p2--
+                k--
             }
         }
     }
-    return triplets
+
+    return ans
 };
