@@ -7,17 +7,19 @@ var sortColors = function(nums) {
 
     while(mid <= high){
         if(nums[mid] == 0){
-            [nums[mid], nums[low]] = [nums[low], nums[mid]]
-            mid++
+            swap(mid, low)
             low++
+            mid++
         }else if(nums[mid] == 1){
             mid++
-        }else if(nums[mid] == 2){
-            [nums[mid], nums[high]] = [nums[high], nums[mid]]
+        }else{
+            swap(mid, high)
             high--
         }
     }
 
+    function swap(x,y){
+        [nums[x], nums[y]] = [nums[y], nums[x]]
+    }
     return nums
-    
 };
