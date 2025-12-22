@@ -16,7 +16,6 @@ var characterReplacement = function(s, k) {
             let l_index = s[l].charCodeAt(0) - 'A'.charCodeAt(0)
             map[l_index]--
             l++
-            maxm = Math.max(...map)
         }
 
         maxl = Math.max(maxl, r-l+1)
