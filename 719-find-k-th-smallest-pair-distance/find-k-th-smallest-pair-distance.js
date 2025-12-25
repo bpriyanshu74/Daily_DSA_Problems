@@ -4,33 +4,14 @@
  * @return {number}
  */
 var smallestDistancePair = function(nums, k) {
-    // binary search on answers and pair counting
-
-
+    // binary search on pairs
     nums.sort((a,b) => a-b)
-    let n = nums.length
 
-    let l = 0, r = nums[n-1] - nums[0]
+    const countPairs = (dis) => {
+        let count = 0, l = 0
 
-    // binary search
-
-    while(l < r){
-        let mid = l + Math.floor((r-l)/2)
-
-        if(countPairs(mid) >= k){
-            r = mid
-        }else{
-            l = mid + 1
-        }
-    }   
-
-    function countPairs(d){
-        let l = 0, count = 0
-
-        for(let r=0; r<nums.length; r++){
-            while(nums[r] - nums[l] > d){
-                l++
-            }
+        for(let r=0; r<n; r++){
+            while(nums[r] - nums[l] > dis) l++
 
             count += r-l
         }
@@ -38,5 +19,13 @@ var smallestDistancePair = function(nums, k) {
         return count
     }
 
+    let n = nums.length, l = 0, r = nums[n-1] - nums[0]
+
+    while(l < r){
+        let mid = l + Math.floor((r-l) / 2)
+
+        if(countPairs(mid) >= k) r = mid
+        else l = mid + 1
+    }
     return l
 };
