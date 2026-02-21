@@ -11,21 +11,18 @@
  * @return {number[]}
  */
 var inorderTraversal = function(root) {
-    if(!root) return []
-
-    let res = []
-
-    function inorder(node){
+    function dfs(node){
         if(!node) return
 
-        inorder(node.left)
-
-        res.push(node.val)
-
-        inorder(node.right)
+        dfs(node.left)
+        ans.push(node.val)
+        dfs(node.right)
     }
 
-    inorder(root)
+    let ans = []
 
-    return res
+    dfs(root)
+
+    return ans
+    
 };
