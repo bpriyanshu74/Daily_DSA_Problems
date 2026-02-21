@@ -12,13 +12,13 @@
  */
 var levelOrder = function(root) {
     if(!root) return []
-    let res = [], q = [root]
+    let res = [], q = [root], front = 0
 
-    while(q.length){
-        let size = q.length
+    while(front < q.length){
+        let size = q.length - front
         let level = []
         for(let i=0; i<size; i++){
-            let node = q.shift()
+            let node = q[front++]
 
             level.push(node.val)
 
