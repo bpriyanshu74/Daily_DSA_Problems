@@ -11,18 +11,36 @@
  * @return {number[]}
  */
 var postorderTraversal = function(root) {
-    function dfs(node){
-        if(!node) return
+    // iterative postorder 
 
-        dfs(node.left)
-        dfs(node.right)
+    // reverse the preorder trick, 
+
+    // preorder = root-l-r, so push left first then right making it to root - r - l then reverse the result
+    // postorder = l-r-root
+
+    if(!root) return []
+
+    let stack = [root], ans = []
+
+    while(stack.length){
+        let node = stack.pop()
 
         ans.push(node.val)
+
+        if(node.left) stack.push(node.left)
+        if(node.right) stack.push(node.right)
     }
 
-    let ans = []
-
-    dfs(root)
+    function reverse(arr){
+        let l = 0, r = arr.length-1
+        while(l < r){
+            [arr[l], arr[r]] = [arr[r], arr[l]]
+            l++
+            r--
+        }
+    }
+    reverse(ans)
 
     return ans
+
 };
