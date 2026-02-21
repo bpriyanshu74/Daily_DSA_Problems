@@ -11,15 +11,18 @@
  * @return {number[]}
  */
 var preorderTraversal = function(root) {
-    function dfs(node){
-        if(!node) return 
+    // iterative preorder traversal
+    if(!root) return []
 
+    let stack = [root], ans = []
+
+    while(stack.length){
+        let node = stack.pop()
         ans.push(node.val)
-        dfs(node.left)
-        dfs(node.right)
+
+        if(node.right) stack.push(node.right)
+        if(node.left) stack.push(node.left) 
     }
 
-    let ans = []
-    dfs(root)
     return ans
 };
