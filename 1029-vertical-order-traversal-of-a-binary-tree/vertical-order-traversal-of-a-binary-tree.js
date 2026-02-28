@@ -11,21 +11,38 @@
  * @return {number[][]}
  */
 var verticalTraversal = function(root) {
-    // queue element = [y, [x, node]]
-    if(root == null) return []
+    // use x and y co-ordinates to map the node x - for horizontal, y - for vertical 
 
-    let q = [[0, 0, root]], map = new Map(), ans = [], minX = 0, maxX = 0
+    // level order traversal
 
-    while(q.length){
-        let size = q.length
+    // nested map to store 
+
+    // initial map ket would be the x and since each x can have multiple levels(y) so multiple y can exist for sigle x
+
+    if(!root) return [] 
+
+    let map = new Map(), q = [[0, 0, root]], front = 0
+
+    function insert(x, y, value){
+        if(!map.has(x)){
+            map.set(x, new Map())
+        }
+
+        if(!map.get(x).has(y)){
+            map.get(x).set(y, [])
+        }
+
+        map.get(x).get(y).push(value)
+        
+    }
+
+    while(front < q.length){
+        let size = q.length - front
+
         for(let i=0; i<size; i++){
-            [x, y, node] = q.shift()
-            if(!map.has(x)) map.set(x, [])
+            let [x, y, node] = q[front++]
 
-            map.get(x).push([y, node.val])
-
-            minX = Math.min(minX, x)
-            maxX = Math.max(maxX, x)
+            insert(x,y,node.val)
 
             if(node.left){
                 q.push([x-1, y+1, node.left])
@@ -36,19 +53,26 @@ var verticalTraversal = function(root) {
         }
     }
 
-    for(let x = minX; x <= maxX; x++){
-        let level = map.get(x)
+    let ans = []
 
-        level.sort((a,b) => {
-            if(a[0] != b[0]) return a[0] - b[0]
+    // sorting the map to get left to right order
+    let sortedX = [...map.keys()].sort((a,b) => a-b)
 
-            return a[1] - b[1]
-        })
+    // now sorting each of the item
 
-        ans.push(level.map(([_, val]) => val))
+    for(let x of sortedX){
+        let col = []
 
+        let sortedY = [...map.get(x).keys()].sort((a,b) => a-b)
+
+        for(let y of sortedY){
+            col.push(...map.get(x).get(y).sort((a,b)=> a-b))
+        }
+
+        ans.push(col)
     }
 
     return ans
+    
     
 };
