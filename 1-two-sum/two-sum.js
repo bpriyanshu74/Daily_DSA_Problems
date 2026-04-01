@@ -4,27 +4,17 @@
  * @return {number[]}
  */
 var twoSum = function(nums, target) {
-    // let hm = {}
-
-    // for(let i=0; i<nums.length; i++){
-    //     let rem = target - nums[i]
-
-    //     if(hm[rem]){
-    //         return [i, hm[rem]]
-    //     }else{
-    //         hm[nums[i]] = i
-    //     }
-    // }
-
-    let hashmap = new Map()
+    let hm = {}
 
     for(let i=0; i<nums.length; i++){
         let rem = target - nums[i]
 
-        if(hashmap.has(rem)){
-            return [i, hashmap.get(rem)]
+        if(hm[rem] != undefined){
+            return [i, hm[rem]]
         }else{
-            hashmap.set(nums[i], i)
+            hm[nums[i]] = i
         }
     }
+
+    
 };
