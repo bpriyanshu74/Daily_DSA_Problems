@@ -4,20 +4,31 @@
  */
 var groupAnagrams = function(strs) {
 
-    let map = {}
+    let hashmap = new Map()
 
-    for(let str of strs){
-        let freq = new Array(26).fill(0)
-        for(let ch of str){
-            let index = ch.charCodeAt(0) - 97
-            freq[index]++
+    // function createKey(word){
+    //     let hm = new Map()
+
+    //     for(let ch of word){
+    //         if(hm.has(ch)){
+    //             hm.set(ch, hm.get(ch) + 1)
+    //         }else{
+    //             hm.set(ch, 1)
+    //         }
+    //     }
+
+    //     return hm
+    // }
+
+    for(let w of strs){
+        let key = w.split('').sort().join('');
+
+        if(hashmap.has(key)){
+            hashmap.get(key).push(w)
+        }else{
+            hashmap.set(key, [w])
         }
-        let key = freq.join('#')
-        if(!map[key]) map[key] = []
-
-        map[key].push(str)
     }
 
-    return Object.values(map)
-    
+    return [...hashmap.values()]
 };
