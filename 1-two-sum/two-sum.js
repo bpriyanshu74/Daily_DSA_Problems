@@ -4,15 +4,17 @@
  * @return {number[]}
  */
 var twoSum = function(nums, target) {
-    // brute force 
+    // let hm = {}
 
-    // for(let i=0; i<nums.length-1; i++){
-    //     for(let j=i+1; j<nums.length; j++){
-    //         if(nums[i] + nums[j] == target) return [i,j]
+    // for(let i=0; i<nums.length; i++){
+    //     let rem = target - nums[i]
+
+    //     if(hm[rem]){
+    //         return [i, hm[rem]]
+    //     }else{
+    //         hm[nums[i]] = i
     //     }
     // }
-
-    // optimise using hashmap
 
     let hashmap = new Map()
 
@@ -21,7 +23,8 @@ var twoSum = function(nums, target) {
 
         if(hashmap.has(rem)){
             return [i, hashmap.get(rem)]
+        }else{
+            hashmap.set(nums[i], i)
         }
-        hashmap.set(nums[i], i)
     }
 };
