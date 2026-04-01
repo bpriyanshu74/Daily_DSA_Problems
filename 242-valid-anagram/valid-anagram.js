@@ -4,29 +4,29 @@
  * @return {boolean}
  */
 var isAnagram = function(s, t) {
-    let hashmap = new Map()
+    let hashmap = {}
 
     for(let ch of s){
-        if(hashmap.has(ch)){
-            hashmap.set(ch, hashmap.get(ch) + 1)
+        if(hashmap[ch] != undefined){
+            hashmap[ch] += 1
         }else{
-            hashmap.set(ch, 1)
+            hashmap[ch] = 1
         }
     }
 
     // now traversing the t string
 
     for(let ch of t){
-        if(hashmap.has(ch) && hashmap.get(ch) > 0){
-            hashmap.set(ch, hashmap.get(ch)-1)
-            if(hashmap.get(ch) == 0){
-                hashmap.delete(ch)
+        if(hashmap[ch] != undefined && hashmap[ch] > 0){
+            hashmap[ch]--
+            if(hashmap[ch] == 0){
+                delete hashmap[ch]
             }
         }else{
             return false
         }
     }
 
-    return hashmap.size == 0 ? true : false
+    return Object.keys(hashmap).length == 0
     
 };
