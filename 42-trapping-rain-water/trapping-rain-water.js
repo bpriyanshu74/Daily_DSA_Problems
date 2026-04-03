@@ -2,30 +2,29 @@
  * @param {number[]} height
  * @return {number}
  */
-var trap = function(height){
-    let lb = new Array(height.length).fill(0)
-    let rb = new Array(height.length).fill(0)
-    let trap = 0
+var trap = function(height) {
+    if(height.length <= 2) return 0
 
-    for(let i=0; i<height.length; i++){
-        if(i == 0) lb[i] = height[i]
-        else{
-            lb[i] = Math.max(lb[i-1], height[i])
+    let water = 0, stack = [0]
+
+    for(let r=1; r < height.length; r++){
+        while(height[r] > height[stack[stack.length-1]]){
+            let valley = height[stack.pop()]
+
+            if(stack.length == 0) break
+
+            let lb = stack[stack.length-1]
+
+            let w = r - lb - 1
+            let h = Math.min(height[r], height[lb]) - valley
+
+            water += h*w
         }
+        stack.push(r)
     }
 
-    for(let i=height.length-1; i>=0; i--){
-        if(i == height.length-1){
-            rb[i] = height[i]
-        }
-        else{
-            rb[i] = Math.max(rb[i+1], height[i])
-        }
-    }
+    return water
+
     
-    for(let i=0; i<height.length; i++){
-        trap += Math.min(lb[i], rb[i]) - height[i]
-    }
 
-    return trap
 };
