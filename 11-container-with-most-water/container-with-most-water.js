@@ -1,21 +1,18 @@
 /**
  * @param {number[]} height
- * @return {number} 
+ * @return {number}
  */
 var maxArea = function(height) {
-    let l = 0, r = height.length-1, maxwater = 0
+    let maxwater = 0, l = 0, r = height.length-1
 
     while(l < r){
         let h = Math.min(height[l], height[r])
-        let b = r-l
+        let w = r-l
 
-        maxwater = Math.max(maxwater, h*b)
+        maxwater = Math.max(maxwater, h*w)
 
-        if(height[l] < height[r]){
-            l++
-        }else{
-            r--
-        }
+        if(height[l] <= height[r]) l++
+        else r--
     }
 
     return maxwater
