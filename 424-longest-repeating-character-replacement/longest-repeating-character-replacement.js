@@ -4,22 +4,21 @@
  * @return {number}
  */
 var characterReplacement = function(s, k) {
-    let l = 0, maxl = 0, map = new Array(26).fill(0), maxm = -Infinity
-    for(let r=0; r<s.length; r++){
-        let index = s[r].charCodeAt(0) - 'A'.charCodeAt(0)
+    let l = 0, map = {}, maxch = 0, longest = 0
 
-        map[index]++
+    for (let r = 0; r < s.length; r++) {
+        let ch = s[r]
+        map[ch] = (map[ch] || 0) + 1
 
-        maxm = Math.max(maxm, map[index])
+        maxch = Math.max(maxch, map[ch])
 
-        while(r-l+1 - maxm > k){
-            let l_index = s[l].charCodeAt(0) - 'A'.charCodeAt(0)
-            map[l_index]--
+        while ((r - l + 1) - maxch > k) {
+            map[s[l]]--
             l++
         }
 
-        maxl = Math.max(maxl, r-l+1)
+        longest = Math.max(longest, r - l + 1)
     }
 
-    return maxl
+    return longest
 };
