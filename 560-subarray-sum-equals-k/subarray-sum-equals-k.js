@@ -5,20 +5,13 @@
  */
 var subarraySum = function(nums, k) {
     let count = 0
-
-    let map = new Map(), prefix = 0
-    map.set(0, 1)
-
-    for(let num of nums){
-        prefix += num
-
-        if(map.has(prefix - k)){
-            count += map.get(prefix - k)
+    for(let i=0; i<nums.length; i++){
+        let sum = 0
+        for(let j=i; j<nums.length; j++){
+            sum += nums[j]
+            if(sum == k) count++
         }
-
-        map.set(prefix, (map.get(prefix) || 0) + 1)
     }
 
     return count
-    
 };
