@@ -3,32 +3,26 @@
  * @return {string[][]}
  */
 var groupAnagrams = function(strs) {
-
     let hashmap = new Map()
 
-    // function createKey(word){
-    //     let hm = new Map()
+    for(let str of strs){
+        let freq = new Array(26).fill(0)
 
-    //     for(let ch of word){
-    //         if(hm.has(ch)){
-    //             hm.set(ch, hm.get(ch) + 1)
-    //         }else{
-    //             hm.set(ch, 1)
-    //         }
-    //     }
+        for(let ch of str){
+            let index = ch.charCodeAt(0) - 97
+            freq[index]++
+        }
 
-    //     return hm
-    // }
-
-    for(let w of strs){
-        let key = w.split('').sort().join('');
+        let key = freq.toString()
 
         if(hashmap.has(key)){
-            hashmap.get(key).push(w)
+            hashmap.get(key).push(str)
         }else{
-            hashmap.set(key, [w])
+            hashmap.set(key, [str])
         }
     }
 
     return [...hashmap.values()]
+
+    
 };
