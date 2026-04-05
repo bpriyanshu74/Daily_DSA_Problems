@@ -4,13 +4,16 @@
  * @return {number}
  */
 var subarraySum = function(nums, k) {
-    let count = 0
-    for(let i=0; i<nums.length; i++){
-        let sum = 0
-        for(let j=i; j<nums.length; j++){
-            sum += nums[j]
-            if(sum == k) count++
+    let hashmap = {0:1}, cursum = 0, count = 0
+
+    for(let num of nums){
+        cursum += num
+
+        if(hashmap[cursum-k] != undefined){
+            count += hashmap[cursum-k]
         }
+
+        hashmap[cursum] = (hashmap[cursum] || 0) + 1
     }
 
     return count
