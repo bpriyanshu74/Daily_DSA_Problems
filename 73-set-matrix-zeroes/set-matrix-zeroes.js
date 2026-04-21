@@ -3,26 +3,31 @@
  * @return {void} Do not return anything, modify matrix in-place instead.
  */
 var setZeroes = function(matrix) {
-    // checking whether colzero or rowzero possible
-    let colzero = false
-    for(let row=0; row < matrix.length; row++){
-        if(matrix[row][0] == 0){
-            colzero = true
+    let rowzero = 0, colzero = 0
+
+    // checking rowzero and colzero
+
+    let rows = matrix.length, cols = matrix[0].length
+
+    for(let i=0; i<rows; i++){
+        if(matrix[i][0] == 0){
+            colzero = 1
+            break
+        }
+        
+    }
+
+    for(let j=0; j<cols; j++){
+        if(matrix[0][j] == 0){
+            rowzero = 1
             break
         }
     }
 
-    let rowzero = false
-    for(let col = 0; col < matrix[0].length; col++){
-        if(matrix[0][col] == 0){
-            rowzero = true
-            break
-        }
-    }
-    // setting up first row and first col
+    // checking the internal boxes and setting the first row and col
 
-    for(let i=1; i<matrix.length; i++){
-        for(let j=1; j<matrix[0].length; j++){
+    for(let i=1; i<rows; i++){
+        for(let j=1; j<cols; j++){
             if(matrix[i][j] == 0){
                 matrix[i][0] = 0
                 matrix[0][j] = 0
@@ -30,25 +35,29 @@ var setZeroes = function(matrix) {
         }
     }
 
-    for(let i=1; i<matrix.length; i++){
-        for(let j=1; j<matrix[0].length; j++){
-            if(matrix[i][0] == 0 || matrix[0][j] == 0){
+    // now setting the internal boxes
+
+    for(let i=1; i<rows; i++){
+        for(let j=1; j<cols; j++){
+            if(matrix[0][j] == 0 || matrix[i][0] == 0){
                 matrix[i][j] = 0
             }
         }
     }
 
-    if(colzero){
-        for(let row=0; row < matrix.length; row++){
-            matrix[row][0] = 0
+    // now setting the first row and first column
+
+    if(rowzero){
+        for(let j=0; j<cols; j++){
+            matrix[0][j] = 0
         }
     }
-    if(rowzero){
-        for(let col = 0; col < matrix[0].length; col++){
-            matrix[0][col] = 0
+
+    if(colzero){
+        for(let i=0; i<rows; i++){
+            matrix[i][0] = 0 
         }
     }
 
     return matrix
-    
 };
