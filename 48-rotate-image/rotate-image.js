@@ -3,10 +3,10 @@
  * @return {void} Do not return anything, modify matrix in-place instead.
  */
 var rotate = function(matrix) {
-    // doing transpose only on the upper half
+    let rows = matrix.length, cols = matrix[0].length
 
-    for(let i=0; i<matrix.length; i++){
-        for(let j=i; j<matrix[0].length; j++){
+    for(let i=0; i<rows; i++){
+        for(let j=i; j<cols; j++){
             [matrix[i][j], matrix[j][i]] = [matrix[j][i], matrix[i][j]]
         }
     }
@@ -14,15 +14,18 @@ var rotate = function(matrix) {
     // now reverse each row
 
     for(let row of matrix){
-        let l = 0, r = row.length-1
+        reverse(row)
+    }
+
+    return matrix
+
+    function reverse(arr){
+        let l = 0, r = arr.length-1
 
         while(l < r){
-            [row[l], row[r]] = [row[r], row[l]]
+            [arr[l], arr[r]] = [arr[r], arr[l]]
             l++
             r--
         }
     }
-
-    return matrix
-    
 };
