@@ -3,25 +3,26 @@
  * @return {number[][]}
  */
 var merge = function(intervals) {
-    if(intervals.length <= 1) return intervals
-    let ans = []
+    // sort the intervals by their start time
+    let res = []
 
-    intervals.sort((a,b)=> a[0]-b[0])
+    intervals.sort((a,b) => a[0] - b[0])
 
-    let [s,e] = intervals[0]
+    let start = intervals[0][0], end = intervals[0][1]
 
     for(let i=1; i<intervals.length; i++){
-        if(intervals[i][0] <= e){
-            e = Math.max(e, intervals[i][1])
-            s = Math.min(s, intervals[i][0])
-        }else{
-            ans.push([s,e])
-            s = intervals[i][0]
-            e = intervals[i][1]
+        let [si, ei] = intervals[i]
+
+        if(si > end){
+            res.push([start,end])
+            start = si
+            end = ei
+        }else if(ei > end){
+            end = ei
         }
     }
 
-    if(ans[ans.length-1] != [s,e]) ans.push([s,e])
+    res.push([start, end])
 
-    return ans
+    return res
 };
