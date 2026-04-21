@@ -3,23 +3,22 @@
  * @return {void} Do not return anything, modify nums in-place instead.
  */
 var sortColors = function(nums) {
-    let low = 0, mid = 0, high = nums.length-1
+    let l = 0, r = nums.length-1, mid = l
 
-    while(mid <= high){
+    while(mid <= r){
         if(nums[mid] == 0){
-            swap(mid, low)
-            low++
+            swap(l, mid)
             mid++
+            l++
         }else if(nums[mid] == 1){
             mid++
         }else{
-            swap(mid, high)
-            high--
+            swap(mid, r)
+            r--
         }
     }
 
-    function swap(x,y){
-        [nums[x], nums[y]] = [nums[y], nums[x]]
+    function swap(i,j){
+        [nums[i], nums[j]] = [nums[j], nums[i]]
     }
-    return nums
 };
