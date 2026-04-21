@@ -3,21 +3,20 @@
  * @return {number[][]}
  */
 var generate = function(numRows) {
-    if(numRows == 0) return []
     if(numRows == 1) return [[1]]
+    if(numRows == 2) return [[1], [1,1]]
 
-    let res = [[1]]
+    let ans = [[1], [1,1]]
 
-    for(let i=2; i<=numRows; i++){
-        let prev = res[res.length-1]
-        prev = [-Infinity, ...prev, -Infinity]
-        let temp = []
-        for(let i=1; i<prev.length; i++){
-            let val = (prev[i] == -Infinity ? 0 : prev[i]) + (prev[i-1] == -Infinity ? 0 : prev[i-1])
-            temp.push(val)
+    while(numRows - 2 > 0){
+        let temp = [], top = ans[ans.length-1]
+        for(let i=0; i<top.length-1; i++){
+            temp.push(top[i] + top[i+1])
         }
-        res.push(temp)
+
+        ans.push([1,...temp,1])
+        numRows--
     }
 
-    return res
+    return ans
 };
