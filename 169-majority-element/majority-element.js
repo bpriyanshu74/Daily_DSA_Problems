@@ -3,12 +3,22 @@
  * @return {number}
  */
 var majorityElement = function(nums) {
-    let map = {}
-    for(let num of nums){
-        map[num] = (map[num] || 0) + 1
+    let ht = {}
 
-        if(map[num] > Math.floor(nums.length/2)){
-            return num
+    for(let num of nums){
+        ht[num] = (ht[num] || 0) + 1
+    }
+
+    let freq = 0, maj_ele = -1
+
+    for(let [key,val] of Object.entries(ht)){
+        if(val > freq){
+            freq = val
+            maj_ele = Number(key)
         }
     }
+
+    return maj_ele
+
+
 };
