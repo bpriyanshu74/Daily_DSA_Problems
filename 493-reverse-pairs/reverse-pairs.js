@@ -3,63 +3,58 @@
  * @return {number}
  */
 var reversePairs = function(nums) {
+    return mergesort(nums, 0, nums.length)
 
-    function merge(arr,low,mid,high){
-        let temparr = []
-        let left = low, right = mid+1
+    function mergesort(arr,l,r){
+        if(r-l <= 1) return 0
 
-        while(left <= mid && right <= high){
-            if(arr[left] <= arr[right]){
-                temparr.push(arr[left])
-                left++
-            }
-            else{
-                temparr.push(arr[right])
-                right++
-            }
-        }
-
-        while(left<= mid){
-            temparr.push(arr[left])
-            left++
-        }
-
-        while(right <= high){
-            temparr.push(arr[right])
-            right++
-        }
-
-        for(let i=low; i<= high; i++){
-            arr[i] = temparr[i-low]
-        }
-    }
-    function countPairs(arr,low,mid,high){
         let count = 0
-        let right = mid+1
 
-        for(let i=low; i<= mid; i++){
-            while(right <= high && arr[i] > 2*arr[right]){
-                right++
-            }
-            count += right - (mid+1)
-        }
+        let mid = l + Math.floor((r-l)/2)
+
+        count += mergesort(arr, l ,mid)
+        count += mergesort(arr, mid, r)
+        count += countPairs(arr, l , mid, r)
+
+        merge(arr, l , mid, r)
+
         return count
     }
 
+    function countPairs(arr, l, mid, r){
+        let j=mid, count = 0
 
-    function mergesort(arr,low,high){
-        let count = 0
-        if(low >= high) return count
+        for(let i=l; i<mid; i++){
+            while(j < r && arr[i] > 2*arr[j]){
+                j++
+            }
 
-        let mid = Math.floor((low+high)/2)
-
-        count += mergesort(arr,low,mid)
-        count += mergesort(arr,mid+1,high)
-        count += countPairs(arr,low,mid, high)
-
-        merge(arr,low,mid,high)
+            count += j - mid
+        }
 
         return count
     }
-    return mergesort(nums,0,nums.length-1)
+
+    function merge(arr, l, mid, r){
+        let i=l, j = mid, temp = []
+
+        while( i< mid && j < r){
+            if(arr[i] <= arr[j]){
+                temp.push(arr[i++])
+            }else{
+                temp.push(arr[j++])
+            }
+        }
+
+        while( i < mid){
+            temp.push(arr[i++])
+        }
+        while(j < r){
+            temp.push(arr[j++])
+        }
+
+        for(let k=0; k<temp.length; k++){
+            arr[l + k] = temp[k]
+        }
+    }
 };
