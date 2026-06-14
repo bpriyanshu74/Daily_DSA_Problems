@@ -5,27 +5,24 @@
 var evalRPN = function(tokens) {
     let stack = []
 
-    for(let token of tokens){
-        if(token == '+'){
-            let a = stack.pop(), b = stack.pop()
-            stack.push(a+b)
-        }
-        else if(token == '-'){
-            let a = stack.pop(), b = stack.pop()
-            stack.push(b-a)
-        }
-        else if(token == '*'){
-            let a = stack.pop(), b = stack.pop()
-            stack.push(a*b)
-        }
-        else if(token =='/'){
-            let a = stack.pop(), b = stack.pop()
-            stack.push(parseInt(b/a))
+    for(let t of tokens){
+        if(['+', '-', '*', '/'].includes(t)){
+            let b = stack.pop()
+            let a = stack.pop()
+
+            if(t == '+'){
+                stack.push(a+b)
+            }else if(t == '-'){
+                stack.push(a-b)
+            }else if(t == '*'){
+                stack.push(a*b)
+            }else{
+                stack.push(Math.trunc(a/b))
+            }
         }else{
-            stack.push(Number(token))
+            stack.push(Number(t))
         }
     }
 
-    return stack.pop()
-    
+    return stack[stack.length-1]
 };
